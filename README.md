@@ -25,20 +25,35 @@ Herramienta de una sola página (`index.html`, sin build) para que el cliente co
 
 Abre `index.html` directamente en el navegador (doble clic o `open index.html`). No requiere servidor propio: el backend es Supabase, ya está conectado desde el HTML.
 
+## Panel de administración (historial de cambios)
+
+`admin.html` es una página aparte, sin link desde la app del cliente, donde el equipo puede ver **todas** las cotizaciones creadas y el historial completo de movimientos de cada una (qué característica se movió, de dónde a dónde, cuándo, quién creó un módulo personalizado, cuándo se restableció, cuándo el cliente descargó su cotización formal, etc.). Así queda registro aunque el cliente cambie algo y después lo vuelva a poner como estaba.
+
+**Acceso:** https://rengifojjrr.github.io/cotizaciones-interactivas/admin.html — entras con tu correo autorizado (sin contraseña, se envía un enlace de acceso al correo). Solo `rengifojjrr@gmail.com` está autorizado por ahora; para agregar más correos del equipo hay que actualizar la política en Supabase (ver abajo).
+
+**Configuración pendiente (una sola vez):** para que el enlace de acceso funcione, hay que autorizar la URL del panel en Supabase:
+1. Entra a https://supabase.com/dashboard/project/vajbsfgojtunamhrzrpf/auth/url-configuration
+2. En "Redirect URLs" agrega: `https://rengifojjrr.github.io/cotizaciones-interactivas/admin.html`
+3. Guarda. Sin este paso, Supabase no te dejará entrar aunque el correo esté autorizado.
+
 ## Backend (Supabase)
 
 - Proyecto: `cotizaciones-interactivas` (organización de Supabase del equipo).
 - Tabla `public.quotes`: `id uuid` (uno por cotización/cliente), `client jsonb`, `quote_state jsonb`, timestamps.
-- RLS está activo y **sin políticas** sobre la tabla: nadie puede leer ni listar `quotes` directamente vía la API. Todo el acceso pasa por dos funciones `SECURITY DEFINER` expuestas como RPC:
+- Tabla `public.quote_events`: historial append-only de acciones (`quote_id`, `event_type`, `summary`, `detail jsonb`, `created_at`).
+- RLS está activo y **sin políticas públicas** sobre ninguna de las dos tablas: nadie puede leer ni listar filas directamente vía la API con la clave pública. Todo el acceso del cliente pasa por tres funciones `SECURITY DEFINER` expuestas como RPC:
   - `get_quote(p_id uuid)` — devuelve una cotización por su ID exacto.
   - `upsert_quote(p_id uuid, p_client jsonb, p_state jsonb)` — crea o actualiza una cotización por ID.
-- Esto evita que alguien con la clave pública (anon key, embebida en el HTML — es normal que sea pública) pueda enumerar o listar las cotizaciones de otros clientes; solo puede operar sobre un ID que ya conoce (el que viene en su link).
-- El guardado hacia Supabase tiene un debounce de ~700ms tras cada cambio. Si no hay conexión, el indicador cambia a "⚠️ Sin conexión" y el cambio queda respaldado en `localStorage` del navegador hasta que vuelva la conexión y se edite algo de nuevo.
+  - `log_quote_event(p_quote_id uuid, p_type text, p_summary text, p_detail jsonb)` — agrega una entrada al historial (solo inserta, nunca permite leer).
+- Esto evita que alguien con la clave pública (anon key, embebida en el HTML — es normal que sea pública) pueda enumerar o listar las cotizaciones o el historial de otros clientes; solo puede operar sobre un ID que ya conoce (el que viene en su link).
+- La **lectura** de `quotes` y `quote_events` (para el panel de administración) solo está permitida a usuarios autenticados por Supabase Auth cuyo correo esté en la lista blanca (`rengifojjrr@gmail.com`), sin importar si iniciaron sesión con ese correo o cualquier otro — un correo fuera de la lista simplemente no ve datos.
+- El guardado hacia Supabase tiene un debounce de ~700ms tras cada cambio. Si no hay conexión, el indicador cambia a "⚠️ Sin conexión" y el cambio queda respaldado en `localStorage` del navegador hasta que vuelva la conexión y se edite algo de nuevo. El historial (`quote_events`) se registra al momento de cada acción, no con debounce.
 
 ## Estructura
 
 ```
 index.html   → aplicación completa (HTML + CSS + JS, con supabase-js vía CDN)
+admin.html   → panel privado con el listado de cotizaciones y su historial de cambios
 docs/        → documento original de levantamiento de requerimientos y planificación modular
 ```
 

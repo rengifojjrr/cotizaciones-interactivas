@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de administración — Cotizador</title>
+<style>
+:root {
+--bg: #f5f7fb;
+--surface: #ffffff;
+--surface-soft: #f8fafc;
+--ink: #162033;
+--muted: #667085;
+--line: #e3e8f0;
+--primary: #5b4ce1;
+--primary-soft: #eeebff;
+--green: #067647;
+--green-soft: #ecfdf3;
+--red: #b42318;
+--red-soft: #fef3f2;
+--radius: 14px;
+}
+* { box-sizing: border-box; }
+body {
+margin: 0;
+font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+color: var(--ink);
+background: var(--bg);
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: var(--primary); }
+
+.topbar {
+border-bottom: 1px solid var(--line);
+background: rgba(245,247,251,.9);
+position: sticky;
+top: 0;
+z-index: 10;
+}
+.topbar-inner {
+max-width: 1100px;
+margin: 0 auto;
+padding: 14px 22px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand-mark {
+width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center;
+color: white; font-weight: 800; background: linear-gradient(135deg, #6557e8, #8f6cff);
+}
+.brand strong { display: block; font-size: 14px; }
+.brand span { display: block; font-size: 11px; color: var(--muted); }
+
+.btn {
+border: 1px solid var(--line);
+background: var(--surface);
+color: var(--ink);
+border-radius: 11px;
+padding: 9px 13px;
+font-weight: 700;
+font-size: 13px;
+}
+.btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
+.btn:disabled { opacity: .55; cursor: default; }
+
+.shell { max-width: 1100px; margin: 0 auto; padding: 32px 22px 60px; }
+
+.login-card {
+max-width: 420px;
+margin: 60px auto;
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: var(--radius);
+padding: 28px;
+}
+.login-card h1 { font-size: 19px; margin: 0 0 6px; }
+.login-card p { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 0 0 18px; }
+.field { display: grid; gap: 6px; margin-bottom: 12px; }
+.field label { font-size: 12px; font-weight: 800; }
+.field input {
+width: 100%;
+border: 1px solid var(--line);
+border-radius: 11px;
+padding: 10px 12px;
+outline: none;
+}
+.field input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+.status { font-size: 12.5px; margin-top: 12px; line-height: 1.5; }
+.status.error { color: var(--red); }
+.status.ok { color: var(--green); }
+
+.quotes-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+.quotes-head h1 { font-size: 21px; margin: 0; }
+.quotes-head span { color: var(--muted); font-size: 12.5px; }
+
+.quote-card {
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: var(--radius);
+padding: 14px 16px;
+margin-bottom: 10px;
+}
+.quote-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+.quote-name { font-size: 15px; font-weight: 800; }
+.quote-name .muted { font-weight: 500; color: var(--muted); }
+.quote-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; font-size: 12px; color: var(--muted); }
+.quote-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.quote-actions a, .quote-actions button { font-size: 12.5px; padding: 7px 11px; }
+
+.history { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px; display: none; }
+.history.open { display: block; }
+.event { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+.event:last-child { border-bottom: 0; }
+.event time { flex: 0 0 auto; color: var(--muted); font-size: 11px; white-space: nowrap; padding-top: 1px; }
+.event .empty { color: var(--muted); font-style: italic; }
+
+.empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+<div class="topbar-inner">
+<div class="brand">
+<div class="brand-mark">CQ</div>
+<div>
+<strong>Panel de administración</strong>
+<span id="sessionLabel">Historial de cotizaciones de clientes</span>
+</div>
+</div>
+<button class="btn hidden" id="logoutBtn">Cerrar sesión</button>
+</div>
+</header>
+
+<main class="shell">
+
+<section id="loginView" class="login-card">
+<h1>Acceso de administrador</h1>
+<p>Escribe tu correo autorizado. Te enviamos un enlace de acceso por correo — sin contraseña.</p>
+<div class="field">
+<label for="emailInput">Correo</label>
+<input id="emailInput" type="email" placeholder="tu@correo.com" autocomplete="email">
+</div>
+<button class="btn primary" id="sendLinkBtn" style="width:100%">Enviar enlace de acceso</button>
+<div class="status" id="loginStatus"></div>
+</section>
+
+<div id="dashboardView" class="hidden">
+<div class="quotes-head">
+<h1>Cotizaciones</h1>
+<span id="quotesCount"></span>
+</div>
+<div id="quotesList"></div>
+</div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://vajbsfgojtunamhrzrpf.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_Xljd7Ep1GxBXSPp5F4A1hg_Qg-iESzl";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const money = value => new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:0}).format(value || 0);
+const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
+const fmtDateTime = iso => iso ? new Date(iso).toLocaleString("es-ES", {dateStyle:"medium", timeStyle:"short"}) : "—";
+
+const ADMIN_URL = "https://rengifojjrr.github.io/cotizaciones-interactivas/admin.html";
+const historyCache = {};
+
+document.getElementById("sendLinkBtn").onclick = async () => {
+const statusEl = document.getElementById("loginStatus");
+const email = document.getElementById("emailInput").value.trim();
+if (!email) { statusEl.textContent = "Escribe tu correo."; statusEl.className = "status error"; return; }
+document.getElementById("sendLinkBtn").disabled = true;
+statusEl.textContent = "Enviando enlace…";
+statusEl.className = "status";
+const {error} = await supabaseClient.auth.signInWithOtp({
+email,
+options: {emailRedirectTo: ADMIN_URL}
+});
+document.getElementById("sendLinkBtn").disabled = false;
+if (error) { statusEl.textContent = "No se pudo enviar el enlace: " + error.message; statusEl.className = "status error"; return; }
+statusEl.textContent = "Revisa tu correo (" + email + ") y haz clic en el enlace para entrar. Puedes cerrar esta pestaña y abrirlo desde el correo.";
+statusEl.className = "status ok";
+};
+
+document.getElementById("logoutBtn").onclick = async () => {
+await supabaseClient.auth.signOut();
+window.location.reload();
+};
+
+async function showDashboard(session) {
+document.getElementById("loginView").classList.add("hidden");
+document.getElementById("dashboardView").classList.remove("hidden");
+document.getElementById("logoutBtn").classList.remove("hidden");
+document.getElementById("sessionLabel").textContent = "Conectado como " + session.user.email;
+await loadQuotes();
+}
+
+function showLogin() {
+document.getElementById("loginView").classList.remove("hidden");
+document.getElementById("dashboardView").classList.add("hidden");
+document.getElementById("logoutBtn").classList.add("hidden");
+}
+
+async function loadQuotes() {
+const list = document.getElementById("quotesList");
+list.innerHTML = `<div class="empty-state">Cargando…</div>`;
+const {data, error} = await supabaseClient
+.from("quotes")
+.select("id, client, quote_state, created_at, updated_at")
+.order("updated_at", {ascending: false});
+
+if (error) {
+list.innerHTML = `<div class="empty-state">No se pudo cargar el listado (${escapeHtml(error.message)}). Si tu correo no está autorizado, no verás ninguna cotización.</div>`;
+document.getElementById("quotesCount").textContent = "";
+return;
+}
+
+document.getElementById("quotesCount").textContent = `${data.length} cotización(es)`;
+if (!data.length) {
+list.innerHTML = `<div class="empty-state">Todavía no hay cotizaciones registradas. Aparecerán aquí en cuanto un cliente abra su link y haga el primer cambio.</div>`;
+return;
+}
+
+list.innerHTML = data.map(quote => {
+const client = quote.client || {};
+const name = client.name || "(sin nombre todavía)";
+const company = client.company ? ` — ${escapeHtml(client.company)}` : "";
+const includedCount = quote.quote_state?.placements
+? Object.values(quote.quote_state.placements).filter(p => p?.type === "module").length
+: null;
+return `
+<article class="quote-card" data-quote-id="${quote.id}">
+<div class="quote-top">
+<div>
+<div class="quote-name">${escapeHtml(name)}<span class="muted">${company}</span></div>
+<div class="quote-meta">
+<span>Creada: ${fmtDateTime(quote.created_at)}</span>
+<span>Último cambio: ${fmtDateTime(quote.updated_at)}</span>
+${client.email ? `<span>${escapeHtml(client.email)}</span>` : ""}
+${client.phone ? `<span>${escapeHtml(client.phone)}</span>` : ""}
+${includedCount !== null ? `<span>${includedCount} característica(s) incluidas</span>` : ""}
+</div>
+</div>
+<div class="quote-actions">
+<a class="btn" href="index.html?q=${quote.id}" target="_blank" rel="noopener">Abrir cotización ↗</a>
+<button class="btn primary toggle-history" data-quote-id="${quote.id}">Ver historial</button>
+</div>
+</div>
+<div class="history" id="history-${quote.id}"></div>
+</article>`;
+}).join("");
+
+document.querySelectorAll(".toggle-history").forEach(btn => {
+btn.onclick = () => toggleHistory(btn.dataset.quoteId);
+});
+}
+
+async function toggleHistory(quoteId) {
+const el = document.getElementById("history-" + quoteId);
+const isOpen = el.classList.contains("open");
+if (isOpen) { el.classList.remove("open"); return; }
+
+el.classList.add("open");
+if (!historyCache[quoteId]) {
+el.innerHTML = `<div class="event"><span class="empty">Cargando historial…</span></div>`;
+const {data, error} = await supabaseClient
+.from("quote_events")
+.select("id, event_type, summary, created_at")
+.eq("quote_id", quoteId)
+.order("created_at", {ascending: false});
+if (error) {
+el.innerHTML = `<div class="event"><span class="empty">No se pudo cargar el historial (${escapeHtml(error.message)}).</span></div>`;
+return;
+}
+historyCache[quoteId] = data;
+}
+
+const events = historyCache[quoteId];
+el.innerHTML = events.length
+? events.map(ev => `<div class="event"><time>${fmtDateTime(ev.created_at)}</time><span>${escapeHtml(ev.summary)}</span></div>`).join("")
+: `<div class="event"><span class="empty">Todavía no hay movimientos registrados para esta cotización.</span></div>`;
+}
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+if (session) showDashboard(session); else showLogin();
+});
+
+supabaseClient.auth.getSession().then(({data: {session}}) => {
+if (session) showDashboard(session); else showLogin();
+});
+</script>
+</body>
+</html>

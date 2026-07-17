@@ -1150,6 +1150,15 @@ el.textContent = labels[status] || "";
 el.dataset.status = status;
 }
 
+function logEvent(type, summary, detail) {
+supabaseClient.rpc("log_quote_event", {
+p_quote_id: QUOTE_ID,
+p_type: type,
+p_summary: summary,
+p_detail: detail || {}
+}).then(({error}) => { if (error) console.warn("No se pudo registrar el evento:", error.message); });
+}
+
 function allFeatures() {
 return [...featureMap.values(), ...Object.values(state.customFeatures)];
 }
@@ -1485,10 +1494,15 @@ const label = destination.type === "later" ? "Para después" : "No me interesa";
 if (!confirm(`“${feature.title}” es obligatoria. Al moverla a “${label}”, el módulo original quedará incompleto. ¿Deseas continuar?`)) return;
 }
 
+const fromLabel = locationLabel(current);
 state.placements[featureId] = destination;
 saveState();
 render();
 toast("Cotización actualizada.");
+const toLabel = locationLabel(destination);
+if (fromLabel !== toLabel) {
+logEvent("feature_moved", `Movió "${feature.title}" de "${fromLabel}" a "${toLabel}"`, {featureId, featureTitle: feature.title, price: feature.price, from: current || null, to: destination});
+}
 }
 
 function openFeature(id) {
@@ -1565,15 +1579,19 @@ if (editingModuleId) {
 const module = state.customModules.find(m => m.id === editingModuleId);
 module.name = name;
 module.target = target;
+saveState();
+logEvent("module_renamed", `Renombró un módulo personalizado a "${name}" (meta ${money(target)})`, {moduleId: editingModuleId, name, target});
 } else {
+const newModuleId = `custom-module-${Date.now()}`;
 state.customModules.push({
-id: `custom-module-${Date.now()}`,
+id: newModuleId,
 name,
 target,
 number: null
 });
-}
 saveState();
+logEvent("module_created", `Creó el módulo personalizado "${name}" (meta ${money(target)})`, {moduleId: newModuleId, name, target});
+}
 document.getElementById("moduleDialog").close();
 render();
 toast("Módulo guardado.");
@@ -1593,6 +1611,7 @@ state.placements[feature.id] = {type:"module", moduleId:feature.originModuleId};
 state.customModules = state.customModules.filter(m => m.id !== moduleId);
 delete state.collapsed[moduleId];
 saveState(); render(); toast("Módulo eliminado.");
+logEvent("module_deleted", `Eliminó el módulo personalizado "${module.name}"`, {moduleId, name: module.name});
 }
 
 function openCustomFeatureDialog(moduleId) {
@@ -1633,6 +1652,7 @@ saveState();
 document.getElementById("customFeatureDialog").close();
 render();
 toast("Característica añadida.");
+logEvent("feature_created", `Agregó la característica personalizada "${title}" (${money(state.customFeatures[id].price)}) en "${getModule(customFeatureModuleId)?.name || "un módulo personalizado"}"`, {featureId: id, title, price: state.customFeatures[id].price, moduleId: customFeatureModuleId});
 };
 
 document.querySelectorAll("[data-close-dialog]").forEach(button => {
@@ -1823,6 +1843,7 @@ const filename = `cotizacion-${slug.toLowerCase().replace(/[^a-z0-9]+/g,"-").rep
 downloadBlob(html, filename, "text/html;charset=utf-8");
 document.getElementById("clientQuoteDialog").close();
 toast("Cotización generada y descargada.");
+logEvent("client_quote_downloaded", `Descargó la cotización formal (${client.name}${client.company ? " — " + client.company : ""}) por ${money(countsAndTotals().includedTotal)}`, {client, total: countsAndTotals().includedTotal});
 };
 
 document.getElementById("previewClientQuoteBtn").onclick = () => {
@@ -1837,6 +1858,7 @@ win.document.write(html);
 win.document.close();
 win.focus();
 setTimeout(() => win.print(), 350);
+logEvent("client_quote_previewed", `Abrió la vista previa/impresión de la cotización formal (${client.name}${client.company ? " — " + client.company : ""}) por ${money(countsAndTotals().includedTotal)}`, {client, total: countsAndTotals().includedTotal});
 };
 
 document.getElementById("addModuleBtn").onclick = () => openModuleDialog();
@@ -1858,6 +1880,7 @@ document.getElementById("resetBtn").onclick = () => {
 if (!confirm("¿Restablecer la configuración completa? Se eliminarán módulos y características personalizadas.")) return;
 state = defaultState();
 saveState(); render(); toast("Configuración restablecida.");
+logEvent("quote_reset", "Restableció toda la configuración a los 13 módulos originales ($13,000)", {});
 };
 
 document.getElementById("downloadBtn").onclick = downloadSummary;
