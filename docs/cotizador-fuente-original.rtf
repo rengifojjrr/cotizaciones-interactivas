@@ -1,0 +1,1585 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf0 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 <!doctype html>\
+<html lang="es">\
+<head>\
+<meta charset="utf-8">\
+<meta name="viewport" content="width=device-width, initial-scale=1">\
+<meta name="color-scheme" content="light">\
+<title>Cotizador interactivo \'97 Ecosistema web integral</title>\
+<style>\
+:root \{\
+--bg: #f5f7fb;\
+--surface: #ffffff;\
+--surface-soft: #f8fafc;\
+--ink: #162033;\
+--muted: #667085;\
+--line: #e3e8f0;\
+--primary: #5b4ce1;\
+--primary-soft: #eeebff;\
+--green: #067647;\
+--green-soft: #ecfdf3;\
+--amber: #b54708;\
+--amber-soft: #fffaeb;\
+--red: #b42318;\
+--red-soft: #fef3f2;\
+--blue: #175cd3;\
+--blue-soft: #eff8ff;\
+--shadow: none;\
+--radius: 14px;\
+\}\
+\
+* \{ box-sizing: border-box; \}\
+html \{ scroll-behavior: smooth; \}\
+body \{\
+margin: 0;\
+font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;\
+color: var(--ink);\
+background: var(--bg);\
+\}\
+button, input, select, textarea \{ font: inherit; \}\
+button \{ cursor: pointer; \}\
+a \{ color: inherit; \}\
+\
+.topbar \{\
+position: sticky;\
+top: 0;\
+z-index: 40;\
+backdrop-filter: blur(18px);\
+background: rgba(245,247,251,.9);\
+border-bottom: 1px solid rgba(227,232,240,.9);\
+\}\
+.topbar-inner \{\
+max-width: 1560px;\
+margin: 0 auto;\
+padding: 12px 22px;\
+display: flex;\
+gap: 14px;\
+align-items: center;\
+justify-content: space-between;\
+\}\
+.brand \{\
+display: flex;\
+align-items: center;\
+gap: 11px;\
+min-width: 220px;\
+\}\
+.brand-mark \{\
+width: 38px;\
+height: 38px;\
+display: grid;\
+place-items: center;\
+border-radius: 12px;\
+color: white;\
+font-weight: 800;\
+background: linear-gradient(135deg, #6557e8, #8f6cff);\
+box-shadow: 0 8px 20px rgba(91,76,225,.25);\
+\}\
+.brand strong \{ display: block; font-size: 14px; \}\
+.brand span \{ display: block; font-size: 11px; color: var(--muted); \}\
+\
+.toolbar \{\
+display: flex;\
+flex-wrap: wrap;\
+gap: 8px;\
+justify-content: flex-end;\
+\}\
+.btn \{\
+border: 1px solid var(--line);\
+background: var(--surface);\
+color: var(--ink);\
+border-radius: 11px;\
+padding: 9px 12px;\
+font-weight: 700;\
+font-size: 13px;\
+transition: .18s ease;\
+\}\
+.btn:hover \{ transform: translateY(-1px); border-color: #cbd3df; \}\
+.btn.primary \{ background: var(--primary); color: white; border-color: var(--primary); \}\
+.btn.ghost \{ background: transparent; \}\
+.btn.danger \{ color: var(--red); \}\
+.btn.small \{ padding: 7px 9px; font-size: 12px; \}\
+\
+.shell \{\
+max-width: 1560px;\
+margin: 0 auto;\
+padding: 28px 22px 60px;\
+\}\
+\
+.hero \{\
+border-radius: 18px;\
+padding: 26px;\
+background: var(--surface);\
+color: var(--ink);\
+border: 1px solid var(--line);\
+\}\
+.hero-grid \{\
+display: grid;\
+grid-template-columns: minmax(0, 1.55fr) minmax(310px, .75fr);\
+gap: 26px;\
+align-items: center;\
+\}\
+.eyebrow \{\
+display: inline-flex;\
+gap: 8px;\
+align-items: center;\
+padding: 6px 10px;\
+border-radius: 999px;\
+background: var(--primary-soft);\
+color: var(--primary);\
+font-size: 12px;\
+font-weight: 800;\
+letter-spacing: .04em;\
+text-transform: uppercase;\
+\}\
+.hero h1 \{\
+margin: 16px 0 12px;\
+max-width: 850px;\
+font-size: clamp(31px, 4vw, 53px);\
+line-height: 1.02;\
+letter-spacing: -.045em;\
+\}\
+.hero p \{\
+color: var(--muted);\
+max-width: 850px;\
+line-height: 1.65;\
+margin: 0;\
+\}\
+.hero-steps \{\
+display: grid;\
+gap: 10px;\
+\}\
+.hero-step \{\
+display: grid;\
+grid-template-columns: 34px 1fr;\
+gap: 11px;\
+padding: 12px;\
+border-bottom: 1px solid var(--line);\
+background: transparent;\
+border-radius: 0;\
+\}\
+.hero-step b \{\
+width: 34px;\
+height: 34px;\
+display: grid;\
+place-items: center;\
+border-radius: 10px;\
+background: var(--primary-soft);\
+color: var(--primary);\
+\}\
+.hero-step strong \{ display: block; font-size: 13px; margin: 1px 0 3px; \}\
+.hero-step span \{ color: var(--muted); font-size: 12px; line-height: 1.45; \}\
+.hero-step:last-child \{ border-bottom: 0; \}\
+\
+.summary \{\
+display: grid;\
+grid-template-columns: repeat(5, minmax(150px,1fr));\
+gap: 12px;\
+margin: 18px 0;\
+\}\
+.summary-card \{\
+background: var(--surface);\
+border: 1px solid var(--line);\
+border-radius: 16px;\
+padding: 16px;\
+box-shadow: 0 5px 18px rgba(16,24,40,.04);\
+\}\
+.summary-card .label \{\
+color: var(--muted);\
+font-size: 12px;\
+font-weight: 700;\
+margin-bottom: 7px;\
+\}\
+.summary-card .value \{\
+font-size: 24px;\
+font-weight: 850;\
+letter-spacing: -.025em;\
+\}\
+.summary-card .sub \{\
+margin-top: 4px;\
+color: var(--muted);\
+font-size: 11px;\
+\}\
+.summary-card.current .value \{ color: var(--green); \}\
+.summary-card.later .value \{ color: var(--amber); \}\
+.summary-card.no .value \{ color: var(--red); \}\
+\
+.controls \{\
+display: grid;\
+grid-template-columns: minmax(280px,1fr) auto auto;\
+gap: 10px;\
+margin: 18px 0;\
+align-items: center;\
+\}\
+.search \{\
+width: 100%;\
+background: var(--surface);\
+border: 1px solid var(--line);\
+border-radius: 13px;\
+padding: 12px 14px;\
+outline: none;\
+\}\
+.search:focus \{ border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); \}\
+\
+.board \{\
+display: grid;\
+grid-template-columns: minmax(0, 1fr) 360px;\
+gap: 18px;\
+align-items: start;\
+height: calc(100vh - 210px);\
+min-height: 580px;\
+\}\
+.main-column \{\
+min-width: 0;\
+height: 100%;\
+overflow-y: auto;\
+padding-right: 6px;\
+scrollbar-width: thin;\
+scrollbar-color: #cbd3df transparent;\
+\}\
+.sidebar \{\
+position: static;\
+display: grid;\
+gap: 14px;\
+height: 100%;\
+overflow-y: auto;\
+padding-right: 5px;\
+scrollbar-width: thin;\
+scrollbar-color: #cbd3df transparent;\
+\}\
+.main-column::-webkit-scrollbar,\
+.sidebar::-webkit-scrollbar \{ width: 8px; \}\
+.main-column::-webkit-scrollbar-thumb,\
+.sidebar::-webkit-scrollbar-thumb \{\
+background: #cbd3df;\
+border-radius: 999px;\
+\}\
+\
+.stage \{\
+margin-bottom: 12px;\
+background: var(--surface);\
+border: 1px solid var(--line);\
+border-radius: var(--radius);\
+overflow: hidden;\
+\}\
+.stage-toggle \{\
+width: 100%;\
+border: 0;\
+background: var(--surface);\
+padding: 16px;\
+display: flex;\
+align-items: center;\
+justify-content: space-between;\
+gap: 14px;\
+text-align: left;\
+\}\
+.stage-toggle:hover \{ background: var(--surface-soft); \}\
+.stage-toggle-main \{ display: flex; align-items: center; gap: 11px; min-width: 0; \}\
+.stage-index \{\
+width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;\
+flex: 0 0 auto; background: var(--primary-soft); color: var(--primary);\
+font-weight: 800; font-size: 12px;\
+\}\
+.stage-toggle h2 \{ margin: 0 0 3px; font-size: 17px; letter-spacing: -.02em; \}\
+.stage-toggle p \{ margin: 0; color: var(--muted); font-size: 12px; \}\
+.stage-toggle-side \{ display: flex; align-items: center; gap: 12px; flex: 0 0 auto; \}\
+.stage-chevron \{ color: var(--muted); font-size: 18px; transition: transform .18s ease; \}\
+.stage.collapsed .stage-chevron \{ transform: rotate(-90deg); \}\
+.stage-body \{ padding: 0 12px 12px; border-top: 1px solid var(--line); \}\
+.stage.collapsed .stage-body \{ display: none; \}\
+.stage-header \{\
+display: flex;\
+align-items: flex-end;\
+justify-content: space-between;\
+gap: 14px;\
+margin: 0 0 10px;\
+\}\
+.stage-header h2 \{\
+margin: 0;\
+font-size: 21px;\
+letter-spacing: -.025em;\
+\}\
+.stage-header span \{\
+color: var(--muted);\
+font-size: 12px;\
+\}\
+\
+.module-grid \{\
+display: grid;\
+grid-template-columns: 1fr;\
+gap: 14px;\
+\}\
+.module-card \{\
+min-width: 0;\
+background: var(--surface);\
+border: 1px solid var(--line);\
+border-radius: var(--radius);\
+overflow: hidden;\
+box-shadow: 0 7px 23px rgba(16,24,40,.05);\
+transition: .18s ease;\
+\}\
+.module-card.drag-over \{\
+border-color: var(--primary);\
+box-shadow: 0 0 0 4px var(--primary-soft);\
+\}\
+.module-card.incomplete \{\
+border-color: #f5b7b1;\
+\}\
+.module-head \{\
+padding: 14px 15px;\
+border-bottom: 0;\
+cursor: pointer;\
+\}\
+.module-card.open .module-head \{ border-bottom: 1px solid var(--line); \}\
+.module-title-row \{\
+display: flex;\
+align-items: flex-start;\
+justify-content: space-between;\
+gap: 12px;\
+\}\
+.module-kicker \{\
+color: var(--primary);\
+font-size: 11px;\
+font-weight: 850;\
+text-transform: uppercase;\
+letter-spacing: .06em;\
+\}\
+.module-head h3 \{\
+margin: 4px 0 7px;\
+font-size: 17px;\
+letter-spacing: -.018em;\
+\}\
+.module-meta \{\
+display: flex;\
+flex-wrap: wrap;\
+gap: 6px;\
+\}\
+.module-price \{\
+min-width: 92px;\
+text-align: right;\
+\}\
+.module-price strong \{ display:block; font-size: 19px; \}\
+.module-price span \{ color: var(--muted); font-size: 10px; \}\
+\
+.progress \{\
+height: 7px;\
+margin-top: 13px;\
+overflow: hidden;\
+border-radius: 999px;\
+background: #edf0f4;\
+\}\
+.progress > div \{\
+height: 100%;\
+background: linear-gradient(90deg, #6658e8, #8c6fff);\
+border-radius: inherit;\
+transition: width .25s ease;\
+\}\
+.module-warning \{\
+margin-top: 9px;\
+padding: 8px 10px;\
+border-radius: 10px;\
+background: var(--red-soft);\
+color: var(--red);\
+font-size: 11px;\
+line-height: 1.4;\
+font-weight: 650;\
+\}\
+\
+.feature-list \{\
+padding: 10px;\
+display: grid;\
+gap: 8px;\
+min-height: 64px;\
+\}\
+.module-card:not(.open) .feature-list,\
+.module-card:not(.open) .module-actions \{ display: none; \}\
+.feature \{\
+position: relative;\
+border: 1px solid var(--line);\
+background: var(--surface-soft);\
+border-radius: 13px;\
+padding: 11px 12px;\
+cursor: pointer;\
+transition: .16s ease;\
+\}\
+.feature:hover \{\
+transform: translateY(-1px);\
+border-color: #c9d0dc;\
+background: white;\
+box-shadow: 0 7px 16px rgba(16,24,40,.06);\
+\}\
+.feature.dragging \{ opacity: .42; \}\
+.feature-top \{\
+display: flex;\
+gap: 8px;\
+align-items: flex-start;\
+justify-content: space-between;\
+\}\
+.feature-title \{\
+min-width: 0;\
+font-size: 13px;\
+font-weight: 780;\
+line-height: 1.35;\
+\}\
+.feature-price \{\
+flex: 0 0 auto;\
+font-size: 12px;\
+font-weight: 850;\
+color: var(--green);\
+\}\
+.feature-badges \{\
+display: flex;\
+flex-wrap: wrap;\
+gap: 5px;\
+margin-top: 8px;\
+\}\
+.badge \{\
+display: inline-flex;\
+align-items: center;\
+gap: 4px;\
+border-radius: 999px;\
+padding: 4px 7px;\
+font-size: 10px;\
+font-weight: 780;\
+line-height: 1;\
+background: #eef1f5;\
+color: #465467;\
+\}\
+.badge.required \{ color: var(--red); background: var(--red-soft); \}\
+.badge.optional \{ color: var(--green); background: var(--green-soft); \}\
+.badge.conditional \{ color: var(--amber); background: var(--amber-soft); \}\
+.badge.priority-critical \{ color: var(--red); background: var(--red-soft); \}\
+.badge.priority-high \{ color: var(--blue); background: var(--blue-soft); \}\
+.badge.separable \{ color: var(--primary); background: var(--primary-soft); \}\
+.badge.locked \{ color: #475467; background: #eaecf0; \}\
+\
+.empty-module \{\
+margin: 4px;\
+border: 1px dashed #cbd3df;\
+border-radius: 12px;\
+padding: 18px;\
+text-align: center;\
+color: var(--muted);\
+font-size: 12px;\
+\}\
+.module-actions \{\
+display: flex;\
+gap: 7px;\
+padding: 0 10px 11px;\
+\}\
+\
+.drop-zone \{\
+background: var(--surface);\
+border: 1px solid var(--line);\
+border-radius: var(--radius);\
+box-shadow: 0 7px 23px rgba(16,24,40,.05);\
+overflow: hidden;\
+\}\
+.drop-zone.drag-over \{\
+border-color: var(--primary);\
+box-shadow: 0 0 0 4px var(--primary-soft);\
+\}\
+.zone-head \{\
+padding: 15px 16px;\
+border-bottom: 1px solid var(--line);\
+display: flex;\
+align-items: center;\
+justify-content: space-between;\
+gap: 12px;\
+\}\
+.zone-head h3 \{ margin: 0; font-size: 15px; \}\
+.zone-head span \{ color: var(--muted); font-size: 11px; \}\
+.zone-list \{\
+padding: 10px;\
+display: grid;\
+gap: 7px;\
+max-height: 340px;\
+overflow: auto;\
+min-height: 74px;\
+\}\
+.zone-empty \{\
+min-height: 62px;\
+border: 1px dashed #ccd3df;\
+border-radius: 12px;\
+display: grid;\
+place-items: center;\
+padding: 14px;\
+color: var(--muted);\
+text-align: center;\
+font-size: 12px;\
+line-height: 1.45;\
+\}\
+.zone-later .zone-head \{ background: var(--amber-soft); \}\
+.zone-no .zone-head \{ background: var(--red-soft); \}\
+\
+.quote-box \{\
+background: #171d2e;\
+color: white;\
+border-radius: var(--radius);\
+padding: 18px;\
+box-shadow: var(--shadow);\
+\}\
+.quote-box h3 \{ margin: 0 0 12px; font-size: 16px; \}\
+.quote-line \{\
+display: flex;\
+justify-content: space-between;\
+gap: 10px;\
+padding: 9px 0;\
+border-bottom: 1px solid rgba(255,255,255,.1);\
+font-size: 12px;\
+color: var(--muted);\
+\}\
+.quote-line:last-of-type \{ border-bottom: 0; \}\
+.quote-line strong \{ color: white; \}\
+.quote-total \{\
+display: flex;\
+align-items: flex-end;\
+justify-content: space-between;\
+margin-top: 14px;\
+gap: 14px;\
+\}\
+.quote-total span \{ font-size: 12px; color: #c7cad6; \}\
+.quote-total strong \{ font-size: 28px; letter-spacing: -.03em; \}\
+\
+.notice \{\
+border: 1px solid #fedf89;\
+background: var(--amber-soft);\
+color: #7a2e0e;\
+border-radius: 13px;\
+padding: 12px 13px;\
+font-size: 11px;\
+line-height: 1.5;\
+\}\
+\
+dialog \{\
+width: min(700px, calc(100vw - 30px));\
+max-height: calc(100vh - 40px);\
+border: 0;\
+border-radius: 22px;\
+padding: 0;\
+box-shadow: 0 30px 80px rgba(16,24,40,.28);\
+color: var(--ink);\
+\}\
+dialog::backdrop \{ background: rgba(15,23,42,.62); backdrop-filter: blur(4px); \}\
+.modal-head \{\
+padding: 20px 22px 16px;\
+border-bottom: 1px solid var(--line);\
+display: flex;\
+align-items: flex-start;\
+justify-content: space-between;\
+gap: 14px;\
+\}\
+.modal-head h2 \{ margin: 5px 0 0; font-size: 22px; letter-spacing: -.025em; \}\
+.close \{\
+width: 36px;\
+height: 36px;\
+border: 0;\
+border-radius: 11px;\
+background: #f0f2f5;\
+font-size: 19px;\
+\}\
+.modal-body \{\
+padding: 20px 22px 24px;\
+overflow: auto;\
+max-height: calc(100vh - 160px);\
+\}\
+.description \{\
+line-height: 1.65;\
+color: #344054;\
+background: var(--surface-soft);\
+border: 1px solid var(--line);\
+border-radius: 14px;\
+padding: 14px;\
+\}\
+.detail-grid \{\
+display: grid;\
+grid-template-columns: repeat(2,minmax(0,1fr));\
+gap: 10px;\
+margin: 14px 0;\
+\}\
+.detail-card \{\
+border: 1px solid var(--line);\
+border-radius: 13px;\
+padding: 12px;\
+\}\
+.detail-card span \{\
+display: block;\
+color: var(--muted);\
+font-size: 10px;\
+font-weight: 800;\
+text-transform: uppercase;\
+letter-spacing: .055em;\
+margin-bottom: 5px;\
+\}\
+.detail-card strong \{ font-size: 13px; line-height: 1.4; \}\
+.dependency \{\
+font-size: 12px;\
+line-height: 1.55;\
+padding: 12px;\
+border-radius: 12px;\
+background: var(--blue-soft);\
+color: #1849a9;\
+margin-bottom: 14px;\
+\}\
+.field \{ display: grid; gap: 6px; margin-top: 12px; \}\
+.field label \{ font-size: 12px; font-weight: 800; \}\
+.field input, .field textarea, .field select \{\
+width: 100%;\
+border: 1px solid var(--line);\
+border-radius: 11px;\
+padding: 10px 11px;\
+background: white;\
+outline: none;\
+\}\
+.field textarea \{ min-height: 100px; resize: vertical; \}\
+.modal-actions \{\
+display: flex;\
+justify-content: flex-end;\
+flex-wrap: wrap;\
+gap: 8px;\
+margin-top: 18px;\
+\}\
+\
+.toast \{\
+position: fixed;\
+left: 50%;\
+bottom: 24px;\
+z-index: 100;\
+transform: translate(-50%, 20px);\
+opacity: 0;\
+pointer-events: none;\
+background: #101828;\
+color: white;\
+border-radius: 12px;\
+padding: 11px 14px;\
+font-size: 12px;\
+font-weight: 700;\
+box-shadow: var(--shadow);\
+transition: .22s ease;\
+\}\
+.toast.show \{ opacity: 1; transform: translate(-50%,0); \}\
+\
+.hidden \{ display: none !important; \}\
+\
+@media (max-width: 1160px) \{\
+.summary \{ grid-template-columns: repeat(3,1fr); \}\
+.board \{ grid-template-columns: 1fr; height: auto; min-height: 0; \}\
+.main-column, .sidebar \{ height: auto; overflow: visible; padding-right: 0; \}\
+.sidebar \{ grid-template-columns: repeat(2,minmax(0,1fr)); \}\
+.quote-box \{ grid-column: 1 / -1; \}\
+\}\
+@media (max-width: 780px) \{\
+.topbar-inner \{ align-items: flex-start; \}\
+.brand span \{ display: none; \}\
+.toolbar .optional-mobile \{ display: none; \}\
+.shell \{ padding: 18px 12px 45px; \}\
+.hero \{ padding: 22px; \}\
+.hero-grid \{ grid-template-columns: 1fr; \}\
+.summary \{ grid-template-columns: repeat(2,1fr); \}\
+.controls \{ grid-template-columns: 1fr; \}\
+.module-grid \{ grid-template-columns: 1fr; \}\
+.sidebar \{ grid-template-columns: 1fr; \}\
+.detail-grid \{ grid-template-columns: 1fr; \}\
+\}\
+\
+@media print \{\
+.topbar, .controls, .sidebar, .module-actions, .hero-steps \{ display: none !important; \}\
+body \{ background: white; \}\
+.shell \{ max-width: none; padding: 0; \}\
+.hero \{ background: white; color: black; box-shadow: none; padding: 0 0 20px; \}\
+.hero p \{ color: #344054; \}\
+.summary \{ grid-template-columns: repeat(5,1fr); \}\
+.module-grid \{ grid-template-columns: 1fr 1fr; \}\
+.module-card, .summary-card \{ break-inside: avoid; box-shadow: none; \}\
+.feature \{ box-shadow: none !important; \}\
+\}\
+</style>\
+</head>\
+<body>\
+<header class="topbar">\
+<div class="topbar-inner">\
+<div class="brand">\
+<div class="brand-mark">CQ</div>\
+<div>\
+<strong>Cotizador del proyecto</strong>\
+<span>Configuraci\'f3n guardada autom\'e1ticamente</span>\
+</div>\
+</div>\
+<div class="toolbar">\
+<button class="btn primary" id="addModuleBtn">+ Nuevo m\'f3dulo</button>\
+<button class="btn optional-mobile" id="downloadBtn">Descargar resumen</button>\
+<button class="btn optional-mobile" id="exportBtn">Exportar datos</button>\
+<button class="btn" onclick="window.print()">Imprimir / PDF</button>\
+<button class="btn danger" id="resetBtn">Restablecer</button>\
+</div>\
+</div>\
+</header>\
+\
+<main class="shell">\
+<section class="hero">\
+<div class="hero-grid">\
+<div>\
+<span class="eyebrow">Configurador de alcance y presupuesto</span>\
+<h1>Construye la cotizaci\'f3n seg\'fan lo que el proyecto realmente necesita.</h1>\
+<p id="projectSummary"></p>\
+</div>\
+<div class="hero-steps">\
+<div class="hero-step"><b>1</b><div><strong>Explora las caracter\'edsticas</strong><span>Haz clic en cualquier ficha para consultar su descripci\'f3n, costo, prioridad y dependencias.</span></div></div>\
+<div class="hero-step"><b>2</b><div><strong>Organiza el alcance</strong><span>Mueve las funciones separables a m\'f3dulos personalizados o env\'eda cualquier funci\'f3n a \'93Para despu\'e9s\'94.</span></div></div>\
+<div class="hero-step"><b>3</b><div><strong>Obt\'e9n la cotizaci\'f3n</strong><span>Los totales y cuotas por m\'f3dulo se recalculan inmediatamente seg\'fan tus decisiones.</span></div></div>\
+</div>\
+</div>\
+</section>\
+\
+<section class="summary" aria-label="Resumen de cotizaci\'f3n">\
+<article class="summary-card current">\
+<div class="label">Cotizaci\'f3n actual</div>\
+<div class="value" id="currentTotal">$0</div>\
+<div class="sub" id="includedCount">0 caracter\'edsticas</div>\
+</article>\
+<article class="summary-card later">\
+<div class="label">Para desarrollar despu\'e9s</div>\
+<div class="value" id="laterTotal">$0</div>\
+<div class="sub" id="laterCount">0 caracter\'edsticas</div>\
+</article>\
+<article class="summary-card no">\
+<div class="label">No me interesa</div>\
+<div class="value" id="noTotal">$0</div>\
+<div class="sub" id="noCount">0 caracter\'edsticas</div>\
+</article>\
+<article class="summary-card">\
+<div class="label">M\'f3dulos con alcance</div>\
+<div class="value" id="activeModules">0</div>\
+<div class="sub">Cuotas o entregas activas</div>\
+</article>\
+<article class="summary-card">\
+<div class="label">Alertas de alcance</div>\
+<div class="value" id="warningCount">0</div>\
+<div class="sub">M\'f3dulos incompletos</div>\
+</article>\
+</section>\
+\
+<section class="controls">\
+<input class="search" id="searchInput" type="search" placeholder="Buscar m\'f3dulo, caracter\'edstica, descripci\'f3n o dependencia\'85">\
+<button class="btn" id="expandBtn">Expandir todo</button>\
+<button class="btn" id="collapseBtn">Contraer todo</button>\
+</section>\
+\
+<div class="board">\
+<section class="main-column" id="modulesRoot"></section>\
+\
+<aside class="sidebar">\
+<section class="drop-zone zone-later" data-drop-zone="later">\
+<div class="zone-head">\
+<div>\
+<h3>\uc0\u9203  Para despu\'e9s</h3>\
+<span>No entra en la cotizaci\'f3n actual</span>\
+</div>\
+<strong id="laterZoneTotal">$0</strong>\
+</div>\
+<div class="zone-list" id="laterZone"></div>\
+</section>\
+\
+<section class="drop-zone zone-no" data-drop-zone="notInterested">\
+<div class="zone-head">\
+<div>\
+<h3>\'97 No me interesa</h3>\
+<span>Se conserva como referencia</span>\
+</div>\
+<strong id="noZoneTotal">$0</strong>\
+</div>\
+<div class="zone-list" id="noZone"></div>\
+</section>\
+\
+<section class="quote-box">\
+<h3>Resumen de cuotas</h3>\
+<div id="installmentList"></div>\
+<div class="quote-total">\
+<span>Total seleccionado</span>\
+<strong id="quoteGrandTotal">$0</strong>\
+</div>\
+</section>\
+\
+<div class="notice">\
+Una caracter\'edstica marcada como obligatoria puede enviarse a \'93Para despu\'e9s\'94 o \'93No me interesa\'94, pero el m\'f3dulo quedar\'e1 se\'f1alado como incompleto. Mover una caracter\'edstica no elimina sus dependencias t\'e9cnicas.\
+</div>\
+</aside>\
+</div>\
+</main>\
+\
+<dialog id="featureDialog">\
+<div class="modal-head">\
+<div>\
+<span class="module-kicker" id="detailOrigin"></span>\
+<h2 id="detailTitle"></h2>\
+</div>\
+<button class="close" data-close-dialog="featureDialog" aria-label="Cerrar">\'d7</button>\
+</div>\
+<div class="modal-body">\
+<div class="description" id="detailDescription"></div>\
+<div class="detail-grid">\
+<div class="detail-card"><span>Precio</span><strong id="detailPrice"></strong></div>\
+<div class="detail-card"><span>Obligatoriedad</span><strong id="detailMandatory"></strong></div>\
+<div class="detail-card"><span>Prioridad</span><strong id="detailPriority"></strong></div>\
+<div class="detail-card"><span>Tiempo estimado</span><strong id="detailTime"></strong></div>\
+<div class="detail-card"><span>\'bfPuede separarse?</span><strong id="detailSeparable"></strong></div>\
+<div class="detail-card"><span>Ubicaci\'f3n actual</span><strong id="detailLocation"></strong></div>\
+</div>\
+<div class="dependency"><strong>Dependencias:</strong> <span id="detailDependencies"></span></div>\
+<div class="field">\
+<label for="moveSelect">Mover esta caracter\'edstica</label>\
+<select id="moveSelect"></select>\
+</div>\
+<div class="modal-actions">\
+<button class="btn" data-close-dialog="featureDialog">Cerrar</button>\
+<button class="btn primary" id="applyMoveBtn">Aplicar cambio</button>\
+</div>\
+</div>\
+</dialog>\
+\
+<dialog id="moduleDialog">\
+<div class="modal-head">\
+<div>\
+<span class="module-kicker">M\'f3dulo personalizado</span>\
+<h2 id="moduleDialogTitle">Crear nuevo m\'f3dulo</h2>\
+</div>\
+<button class="close" data-close-dialog="moduleDialog" aria-label="Cerrar">\'d7</button>\
+</div>\
+<div class="modal-body">\
+<div class="field">\
+<label for="moduleNameInput">Nombre del m\'f3dulo</label>\
+<input id="moduleNameInput" placeholder="Ej. Mejoras y anal\'edtica">\
+</div>\
+<div class="field">\
+<label for="moduleTargetInput">Cuota objetivo (USD)</label>\
+<input id="moduleTargetInput" type="number" min="0" step="10" value="1000">\
+</div>\
+<div class="modal-actions">\
+<button class="btn" data-close-dialog="moduleDialog">Cancelar</button>\
+<button class="btn primary" id="saveModuleBtn">Guardar m\'f3dulo</button>\
+</div>\
+</div>\
+</dialog>\
+\
+<dialog id="customFeatureDialog">\
+<div class="modal-head">\
+<div>\
+<span class="module-kicker">Nueva caracter\'edstica</span>\
+<h2>A\'f1adir requerimiento personalizado</h2>\
+</div>\
+<button class="close" data-close-dialog="customFeatureDialog" aria-label="Cerrar">\'d7</button>\
+</div>\
+<div class="modal-body">\
+<div class="field">\
+<label for="customFeatureTitle">Nombre</label>\
+<input id="customFeatureTitle" placeholder="Ej. Reporte mensual personalizado">\
+</div>\
+<div class="field">\
+<label for="customFeatureDescription">Descripci\'f3n</label>\
+<textarea id="customFeatureDescription" placeholder="Describe qu\'e9 deber\'e1 hacer esta caracter\'edstica."></textarea>\
+</div>\
+<div class="detail-grid">\
+<div class="field">\
+<label for="customFeaturePrice">Precio (USD)</label>\
+<input id="customFeaturePrice" type="number" min="0" step="10" value="100">\
+</div>\
+<div class="field">\
+<label for="customFeaturePriority">Prioridad</label>\
+<select id="customFeaturePriority">\
+<option>Cr\'edtica</option><option>Alta</option><option selected>Media</option><option>Baja</option>\
+</select>\
+</div>\
+<div class="field">\
+<label for="customFeatureMandatory">Obligatoriedad</label>\
+<select id="customFeatureMandatory">\
+<option value="optional">No / Opcional</option>\
+<option value="required">S\'ed / Obligatoria</option>\
+<option value="conditional">Condicional</option>\
+</select>\
+</div>\
+<div class="field">\
+<label for="customFeatureTime">Tiempo estimado</label>\
+<input id="customFeatureTime" placeholder="Ej. 8 a 12 horas">\
+</div>\
+</div>\
+<div class="modal-actions">\
+<button class="btn" data-close-dialog="customFeatureDialog">Cancelar</button>\
+<button class="btn primary" id="saveCustomFeatureBtn">A\'f1adir caracter\'edstica</button>\
+</div>\
+</div>\
+</dialog>\
+\
+<div class="toast" id="toast"></div>\
+\
+<script>\
+const PROJECT = \{"title": "Cotizador interactivo \'97 Ecosistema web integral", "currency": "USD", "baseModules": [\{"id": "m1", "number": 1, "name": "Arquitectura modular y base t\'e9cnica", "stage": "Etapa 1: Base del sistema", "target": 1000, "time": "1 a 2 semanas", "objective": "Construir la base tecnol\'f3gica sobre la que funcionar\'e1n todos los m\'f3dulos posteriores, estableciendo una estructura ordenada, mantenible y preparada para crecer.", "scopeLimit": "No incluye funcionalidades visibles de negocio, dise\'f1o final de todas las pantallas, migraciones masivas ni integraciones completas con terceros. Su alcance es establecer la plataforma t\'e9cnica y sus reglas de construcci\'f3n.", "requiredValue": 940, "optionalValue": 60, "features": [\{"id": "m1-f1", "originModuleId": "m1", "order": 1, "title": "Configuraci\'f3n inicial del proyecto", "description": "Creaci\'f3n del proyecto, repositorios, configuraci\'f3n de tecnolog\'edas, variables de entorno, convenciones de c\'f3digo y estructura de trabajo. Define el punto de partida com\'fan para todo el desarrollo.", "price": 140, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar. Es el inicio obligatorio del sistema.", "dependencies": "Definici\'f3n del stack tecnol\'f3gico, acceso a servidores y decisiones de infraestructura.", "time": "8 a 14 horas"\}, \{"id": "m1-f2", "originModuleId": "m1", "order": 2, "title": "Estructura del backend", "description": "Construcci\'f3n de la capa que procesar\'e1 la l\'f3gica del negocio, las solicitudes del frontend, validaciones, respuestas, manejo de errores y servicios internos.", "price": 180, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Los m\'f3dulos de datos y operaciones necesitan esta base.", "dependencies": "Configuraci\'f3n inicial del proyecto y dise\'f1o preliminar de entidades.", "time": "14 a 24 horas"\}, \{"id": "m1-f3", "originModuleId": "m1", "order": 3, "title": "Estructura del frontend", "description": "Creaci\'f3n de la aplicaci\'f3n visual base, rutas, componentes reutilizables, manejo de estados y estructura que permitir\'e1 incorporar las pantallas de cada m\'f3dulo.", "price": 140, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Las funciones visibles del sistema se apoyar\'e1n en esta estructura.", "dependencies": "Configuraci\'f3n inicial del proyecto y lineamientos de dise\'f1o.", "time": "10 a 18 horas"\}, \{"id": "m1-f4", "originModuleId": "m1", "order": 4, "title": "Dise\'f1o inicial de la base de datos", "description": "Definici\'f3n de las entidades principales, relaciones, llaves, reglas de integridad y migraciones iniciales para usuarios, contenidos, productos y dem\'e1s elementos del ecosistema.", "price": 180, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es una pieza estructural compartida por todos los m\'f3dulos.", "dependencies": "Alcance funcional validado y arquitectura del backend.", "time": "16 a 28 horas"\}, \{"id": "m1-f5", "originModuleId": "m1", "order": 5, "title": "Separaci\'f3n funcional por m\'f3dulos", "description": "Organizaci\'f3n del c\'f3digo y los datos en \'e1reas independientes para reducir errores, facilitar mantenimiento y permitir que cada m\'f3dulo evolucione sin afectar innecesariamente a los dem\'e1s.", "price": 140, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No. Es parte del dise\'f1o t\'e9cnico general.", "dependencies": "Estructura del backend, frontend y base de datos.", "time": "10 a 18 horas"\}, \{"id": "m1-f6", "originModuleId": "m1", "order": 6, "title": "Ambiente de desarrollo y pruebas", "description": "Configuraci\'f3n de un entorno seguro para programar, probar cambios y validar nuevas funciones sin afectar la versi\'f3n utilizada por el cliente.", "price": 80, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar. Debe existir desde el inicio.", "dependencies": "Accesos t\'e9cnicos, repositorio y servicios de prueba.", "time": "5 a 9 horas"\}, \{"id": "m1-f7", "originModuleId": "m1", "order": 7, "title": "Ambiente de producci\'f3n", "description": "Preparaci\'f3n del entorno donde funcionar\'e1 la versi\'f3n p\'fablica o final, incluyendo configuraci\'f3n base, variables seguras y procedimiento inicial de despliegue.", "price": 80, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias. Puede contratarse al final, pero necesita la arquitectura ya terminada.", "dependencies": "Hosting, dominio, certificados, credenciales y ambiente de pruebas.", "time": "5 a 10 horas"\}, \{"id": "m1-f8", "originModuleId": "m1", "order": 8, "title": "Preparaci\'f3n para integraciones futuras", "description": "Creaci\'f3n de puntos de extensi\'f3n, convenciones y estructuras que faciliten conectar posteriormente CRM, ERP, servicios de correo, anal\'edtica u otras herramientas.", "price": 60, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede trasladarse a una etapa de integraciones.", "dependencies": "Arquitectura base y conocimiento de las integraciones probables.", "time": "4 a 7 horas"\}]\}, \{"id": "m2", "number": 2, "name": "Usuarios, roles y seguridad", "stage": "Etapa 1: Base del sistema", "target": 1000, "time": "2 a 3 semanas", "objective": "Permitir que las personas creen cuentas, accedan de forma segura y visualicen \'fanicamente la informaci\'f3n y las acciones correspondientes a su perfil.", "scopeLimit": "No incluye validaci\'f3n legal autom\'e1tica de credenciales profesionales, auditor\'edas externas de ciberseguridad, certificaciones de seguridad ni inicio de sesi\'f3n empresarial avanzado.", "requiredValue": 870, "optionalValue": 130, "features": [\{"id": "m2-f1", "originModuleId": "m2", "order": 1, "title": "Registro de usuarios", "description": "Formulario y proceso para crear cuentas, validar campos b\'e1sicos y almacenar la informaci\'f3n inicial del usuario seg\'fan el tipo de registro definido.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias. Puede implementarse como fase propia, pero requiere la arquitectura y la base de datos.", "dependencies": "M\'f3dulo 1, definici\'f3n de campos y pol\'edticas de privacidad.", "time": "10 a 16 horas"\}, \{"id": "m2-f2", "originModuleId": "m2", "order": 2, "title": "Inicio y cierre de sesi\'f3n", "description": "Proceso de autenticaci\'f3n para verificar credenciales, crear una sesi\'f3n segura y permitir al usuario cerrar el acceso correctamente.", "price": 130, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es el n\'facleo del acceso privado.", "dependencies": "Registro de usuarios, backend y almacenamiento seguro de credenciales.", "time": "12 a 20 horas"\}, \{"id": "m2-f3", "originModuleId": "m2", "order": 3, "title": "Recuperaci\'f3n de contrase\'f1a", "description": "Flujo para solicitar un enlace temporal, confirmar la identidad mediante correo y establecer una nueva contrase\'f1a.", "price": 80, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias. Puede a\'f1adirse despu\'e9s del acceso b\'e1sico.", "dependencies": "Inicio de sesi\'f3n, proveedor de correo y plantillas.", "time": "6 a 10 horas"\}, \{"id": "m2-f4", "originModuleId": "m2", "order": 4, "title": "Verificaci\'f3n de correo", "description": "Env\'edo de un enlace o c\'f3digo para confirmar que la direcci\'f3n registrada pertenece realmente al usuario.", "price": 80, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Registro de usuarios y servicio de correo.", "time": "6 a 10 horas"\}, \{"id": "m2-f5", "originModuleId": "m2", "order": 5, "title": "Gesti\'f3n de roles", "description": "Creaci\'f3n y administraci\'f3n de perfiles como administrador, distribuidor, m\'e9dico, nutricionista, cliente y otros roles acordados.", "price": 130, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Los accesos segmentados dependen de esta funci\'f3n.", "dependencies": "Base de datos de usuarios y definici\'f3n formal de roles.", "time": "10 a 18 horas"\}, \{"id": "m2-f6", "originModuleId": "m2", "order": 6, "title": "Gesti\'f3n de permisos", "description": "Definici\'f3n de lo que cada rol puede ver, crear, editar, descargar o administrar dentro de cada m\'f3dulo.", "price": 160, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar. Es inseparable del control de acceso por roles.", "dependencies": "Gesti\'f3n de roles y listado de acciones por m\'f3dulo.", "time": "14 a 24 horas"\}, \{"id": "m2-f7", "originModuleId": "m2", "order": 7, "title": "Edici\'f3n de perfil", "description": "Pantalla para consultar y actualizar datos personales, profesionales y de contacto, respetando los campos que deban quedar bloqueados.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Cuenta activa, campos de registro y permisos.", "time": "5 a 9 horas"\}, \{"id": "m2-f8", "originModuleId": "m2", "order": 8, "title": "Protecci\'f3n de rutas privadas", "description": "Control t\'e9cnico para impedir que usuarios no autorizados ingresen directamente a p\'e1ginas, paneles o recursos restringidos.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Debe implementarse junto con autenticaci\'f3n y permisos.", "dependencies": "Inicio de sesi\'f3n, roles y frontend.", "time": "9 a 16 horas"\}, \{"id": "m2-f9", "originModuleId": "m2", "order": 9, "title": "Registro b\'e1sico de actividad", "description": "Almacenamiento de acciones relevantes como accesos, cambios de perfil y operaciones administrativas para facilitar soporte y trazabilidad.", "price": 60, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede trasladarse a un m\'f3dulo de auditor\'eda.", "dependencies": "Usuarios, eventos del sistema y almacenamiento de logs.", "time": "4 a 8 horas"\}, \{"id": "m2-f10", "originModuleId": "m2", "order": 10, "title": "Autenticaci\'f3n de dos factores", "description": "Capa adicional de seguridad mediante c\'f3digo temporal o aplicaci\'f3n de autenticaci\'f3n, especialmente para administradores y distribuidores.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Inicio de sesi\'f3n, proveedor de c\'f3digos o autenticador y configuraci\'f3n de seguridad.", "time": "6 a 12 horas"\}]\}, \{"id": "m3", "number": 3, "name": "Panel administrativo base", "stage": "Etapa 1: Base del sistema", "target": 1000, "time": "2 a 3 semanas", "objective": "Entregar al equipo interno un espacio central para administrar los datos y contenidos principales sin depender del desarrollador para cada cambio cotidiano.", "scopeLimit": "No incluye reportes ejecutivos complejos, inteligencia de negocios, edici\'f3n masiva avanzada ni administraci\'f3n completa de m\'f3dulos que todav\'eda no hayan sido desarrollados.", "requiredValue": 610, "optionalValue": 390, "features": [\{"id": "m3-f1", "originModuleId": "m3", "order": 1, "title": "Estructura general del panel", "description": "Creaci\'f3n del espacio administrativo, dise\'f1o de su organizaci\'f3n, control de acceso y patr\'f3n com\'fan para incorporar las pantallas de gesti\'f3n de los dem\'e1s m\'f3dulos.", "price": 150, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es la base del panel administrativo.", "dependencies": "M\'f3dulos 1 y 2.", "time": "14 a 22 horas"\}, \{"id": "m3-f2", "originModuleId": "m3", "order": 2, "title": "Men\'fa y navegaci\'f3n administrativa", "description": "Men\'fa din\'e1mico que muestra las opciones permitidas seg\'fan el rol del usuario y facilita moverse entre las \'e1reas de gesti\'f3n.", "price": 80, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar. Forma parte de la estructura del panel.", "dependencies": "Estructura general, roles y permisos.", "time": "6 a 10 horas"\}, \{"id": "m3-f3", "originModuleId": "m3", "order": 3, "title": "Gesti\'f3n de usuarios", "description": "Listado, b\'fasqueda, consulta, activaci\'f3n, desactivaci\'f3n y edici\'f3n controlada de las cuentas registradas.", "price": 120, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 2 y panel administrativo.", "time": "10 a 18 horas"\}, \{"id": "m3-f4", "originModuleId": "m3", "order": 4, "title": "Gesti\'f3n de roles", "description": "Interfaz para asignar o modificar roles de los usuarios y consultar la distribuci\'f3n de perfiles dentro de la plataforma.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Gesti\'f3n de roles del m\'f3dulo 2 y panel.", "time": "8 a 14 horas"\}, \{"id": "m3-f5", "originModuleId": "m3", "order": 5, "title": "Gesti\'f3n de pa\'edses", "description": "Pantalla para crear, editar, ordenar, activar o desactivar los pa\'edses reconocidos por la plataforma.", "price": 90, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede trasladarse al m\'f3dulo 9.", "dependencies": "Panel administrativo y modelo de pa\'edses.", "time": "7 a 12 horas"\}, \{"id": "m3-f6", "originModuleId": "m3", "order": 6, "title": "Gesti\'f3n de categor\'edas", "description": "Herramienta reutilizable para crear y organizar categor\'edas de productos, documentos o contenidos seg\'fan el alcance contratado.", "price": 90, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias. Puede desarrollarse con el m\'f3dulo que use las categor\'edas.", "dependencies": "Panel administrativo y definici\'f3n de tipos de categor\'edas.", "time": "7 a 12 horas"\}, \{"id": "m3-f7", "originModuleId": "m3", "order": 7, "title": "Buscador administrativo", "description": "B\'fasqueda dentro de los listados del panel para localizar r\'e1pidamente usuarios, registros o contenidos.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede a\'f1adirse cuando existan suficientes datos.", "dependencies": "Panel y fuentes de informaci\'f3n que se deseen consultar.", "time": "5 a 9 horas"\}, \{"id": "m3-f8", "originModuleId": "m3", "order": 8, "title": "Estados activos e inactivos", "description": "Mecanismo para ocultar temporalmente registros sin eliminarlos, conservando su historial y relaciones.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Panel y m\'f3dulos cuyos registros deben poder desactivarse.", "time": "5 a 9 horas"\}, \{"id": "m3-f9", "originModuleId": "m3", "order": 9, "title": "Registro b\'e1sico de cambios", "description": "Historial administrativo de qui\'e9n modific\'f3 un registro, cu\'e1ndo lo hizo y qu\'e9 tipo de acci\'f3n ejecut\'f3.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede convertirse en una ampliaci\'f3n de auditor\'eda.", "dependencies": "Usuarios administrativos y m\'f3dulos que generen cambios.", "time": "8 a 14 horas"\}, \{"id": "m3-f10", "originModuleId": "m3", "order": 10, "title": "Dashboard resumen", "description": "Vista inicial con indicadores generales y accesos r\'e1pidos a las tareas m\'e1s relevantes del equipo.", "price": 130, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede desarrollarse como m\'f3dulo anal\'edtico independiente.", "dependencies": "Datos reales de los m\'f3dulos que se quieran medir.", "time": "10 a 18 horas"\}]\}, \{"id": "m4", "number": 4, "name": "CRM y segmentaci\'f3n b\'e1sica", "stage": "Etapa 1: Base del sistema", "target": 1000, "time": "2 a 3 semanas", "objective": "Centralizar la informaci\'f3n de contactos y leads, registrar sus interacciones y permitir segmentarlos para seguimiento comercial o informativo.", "scopeLimit": "No pretende reemplazar en esta fase una plataforma empresarial completa como Salesforce o HubSpot. No incluye embudos avanzados, pron\'f3sticos de ventas ni campa\'f1as masivas automatizadas.", "requiredValue": 650, "optionalValue": 350, "features": [\{"id": "m4-f1", "originModuleId": "m4", "order": 1, "title": "Ficha individual del contacto", "description": "Perfil central que re\'fane datos personales, profesionales, territoriales y comerciales de cada contacto o usuario.", "price": 130, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es el n\'facleo del CRM.", "dependencies": "Usuarios, base de datos y definici\'f3n de campos.", "time": "12 a 20 horas"\}, \{"id": "m4-f2", "originModuleId": "m4", "order": 2, "title": "Registro de pa\'eds y ubicaci\'f3n", "description": "Asignaci\'f3n del pa\'eds, regi\'f3n u otra ubicaci\'f3n necesaria para segmentar y relacionar al contacto con el distribuidor adecuado.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Cat\'e1logo de pa\'edses y ficha del contacto.", "time": "5 a 9 horas"\}, \{"id": "m4-f3", "originModuleId": "m4", "order": 3, "title": "Registro de profesi\'f3n y empresa", "description": "Campos para identificar ocupaci\'f3n, especialidad, empresa y sector del contacto, especialmente \'fatil para m\'e9dicos, nutricionistas y compradores corporativos.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede a\'f1adirse como extensi\'f3n del perfil.", "dependencies": "Ficha del contacto y definici\'f3n de campos.", "time": "5 a 9 horas"\}, \{"id": "m4-f4", "originModuleId": "m4", "order": 4, "title": "Historial de interacciones", "description": "L\'ednea de tiempo de registros, formularios, eventos, compras, descargas y otras acciones relevantes realizadas por el contacto.", "price": 150, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Requiere integraci\'f3n transversal con los m\'f3dulos que producen interacciones.", "dependencies": "Ficha del contacto y eventos de otros m\'f3dulos.", "time": "14 a 24 horas"\}, \{"id": "m4-f5", "originModuleId": "m4", "order": 5, "title": "Etiquetas de segmentaci\'f3n", "description": "Sistema para clasificar contactos mediante etiquetas administrables como interesado, profesional, distribuidor potencial o cliente activo.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Ficha del contacto y panel administrativo.", "time": "8 a 14 horas"\}, \{"id": "m4-f6", "originModuleId": "m4", "order": 6, "title": "Segmentaci\'f3n por intereses", "description": "Registro y filtrado de temas, productos o servicios que han despertado inter\'e9s en cada contacto.", "price": 90, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Interacciones, productos o formularios que permitan identificar intereses.", "time": "7 a 12 horas"\}, \{"id": "m4-f7", "originModuleId": "m4", "order": 7, "title": "Relaci\'f3n con distribuidores", "description": "Asignaci\'f3n manual o autom\'e1tica de un contacto al distribuidor responsable seg\'fan pa\'eds, territorio o criterio comercial.", "price": 110, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 8, pa\'edses y ficha del contacto.", "time": "9 a 16 horas"\}, \{"id": "m4-f8", "originModuleId": "m4", "order": 8, "title": "Estado comercial del contacto", "description": "Clasificaci\'f3n del avance del contacto mediante estados como nuevo, contactado, interesado, cotizado, cliente o inactivo.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede implementarse como flujo b\'e1sico del CRM.", "dependencies": "Ficha del contacto y reglas comerciales.", "time": "8 a 14 horas"\}, \{"id": "m4-f9", "originModuleId": "m4", "order": 9, "title": "Exportaci\'f3n a Excel o CSV", "description": "Descarga controlada de contactos y campos seleccionados para an\'e1lisis, respaldo o tratamiento autorizado fuera de la plataforma.", "price": 80, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede desarrollarse como herramienta independiente.", "dependencies": "Datos del CRM y permisos de exportaci\'f3n.", "time": "6 a 10 horas"\}, \{"id": "m4-f10", "originModuleId": "m4", "order": 10, "title": "Buscador y filtros del CRM", "description": "Herramientas para localizar contactos por nombre, pa\'eds, profesi\'f3n, estado, distribuidor, etiqueta o inter\'e9s.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Ficha de contactos y campos de segmentaci\'f3n.", "time": "8 a 14 horas"\}]\}, \{"id": "m5", "number": 5, "name": "Comercio electr\'f3nico", "stage": "Etapa 2: Contenido y ventas", "target": 1000, "time": "3 a 5 semanas", "objective": "Permitir presentar productos, agregarlos al carrito y completar compras directas para los clientes autorizados de Estados Unidos.", "scopeLimit": "El precio supone una sola pasarela, una moneda principal y reglas de env\'edo e impuestos de complejidad limitada. No incluye suscripciones, marketplace, inventario multialmac\'e9n ni integraci\'f3n fiscal compleja.", "requiredValue": 570, "optionalValue": 280, "features": [\{"id": "m5-f1", "originModuleId": "m5", "order": 1, "title": "Cat\'e1logo de productos", "description": "P\'e1gina o conjunto de p\'e1ginas donde se muestran los productos disponibles, su imagen, nombre, informaci\'f3n breve y acceso a la ficha completa.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es la base visual del m\'f3dulo comercial.", "dependencies": "Productos cargados, categor\'edas y frontend.", "time": "10 a 18 horas"\}, \{"id": "m5-f2", "originModuleId": "m5", "order": 2, "title": "Categor\'edas de productos", "description": "Organizaci\'f3n del cat\'e1logo por l\'edneas, tipos, beneficios u otra clasificaci\'f3n aprobada para facilitar la navegaci\'f3n.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Cat\'e1logo de productos y panel administrativo.", "time": "5 a 9 horas"\}, \{"id": "m5-f3", "originModuleId": "m5", "order": 3, "title": "Ficha individual del producto", "description": "P\'e1gina completa con im\'e1genes, descripci\'f3n, ingredientes, presentaciones, documentos, videos, disponibilidad y acciones de compra o contacto.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar del cat\'e1logo.", "dependencies": "Cat\'e1logo, contenido del producto y reglas por pa\'eds.", "time": "10 a 18 horas"\}, \{"id": "m5-f4", "originModuleId": "m5", "order": 4, "title": "Buscador de productos", "description": "B\'fasqueda por nombre, palabra clave o categor\'eda para encontrar productos con rapidez.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Productos cargados y cat\'e1logo.", "time": "5 a 9 horas"\}, \{"id": "m5-f5", "originModuleId": "m5", "order": 5, "title": "Filtros del cat\'e1logo", "description": "Controles para limitar resultados por categor\'eda, disponibilidad, pa\'eds, l\'ednea u otros criterios aprobados.", "price": 80, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Datos estructurados de los productos.", "time": "6 a 11 horas"\}, \{"id": "m5-f6", "originModuleId": "m5", "order": 6, "title": "Carrito de compras", "description": "Funci\'f3n para agregar, retirar y modificar cantidades de productos antes de iniciar el pago.", "price": 140, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Necesita cat\'e1logo y es necesario para el checkout.", "dependencies": "Cat\'e1logo, disponibilidad y sesi\'f3n del usuario o invitado.", "time": "14 a 24 horas"\}, \{"id": "m5-f7", "originModuleId": "m5", "order": 7, "title": "Proceso de checkout", "description": "Flujo donde el comprador proporciona datos, direcci\'f3n, m\'e9todo de entrega, revisa el pedido y confirma la operaci\'f3n.", "price": 150, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es el puente entre carrito, pago y pedido.", "dependencies": "Carrito, reglas de compra, env\'edo y usuarios.", "time": "16 a 28 horas"\}, \{"id": "m5-f8", "originModuleId": "m5", "order": 8, "title": "Pasarela de pago para Estados Unidos", "description": "Conexi\'f3n segura con un proveedor de pagos para autorizar transacciones, recibir confirmaciones y registrar el resultado de la compra.", "price": 150, "mandatoryType": "conditional", "mandatoryLabel": "S\'ed, cuando se requiera venta directa", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias. No puede funcionar sin checkout y pedidos.", "dependencies": "Proveedor seleccionado, cuenta aprobada, checkout y ambiente seguro.", "time": "16 a 30 horas"\}, \{"id": "m5-f9", "originModuleId": "m5", "order": 9, "title": "Historial de pedidos", "description": "Secci\'f3n donde el cliente consulta sus compras, estados, fechas y datos principales del pedido.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Pedidos registrados y cuentas de usuario.", "time": "5 a 10 horas"\}, \{"id": "m5-f10", "originModuleId": "m5", "order": 10, "title": "Productos relacionados", "description": "Recomendaciones de productos complementarios o similares dentro de la ficha o el carrito.", "price": 60, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Baja", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Cat\'e1logo, reglas de relaci\'f3n y fichas de producto.", "time": "4 a 8 horas"\}]\}, \{"id": "m6", "number": 6, "name": "Biblioteca profesional", "stage": "Etapa 2: Contenido y ventas", "target": 1000, "time": "3 a 4 semanas", "objective": "Organizar y distribuir documentos, estudios y recursos profesionales con control de acceso, b\'fasqueda y relaci\'f3n directa con los productos.", "scopeLimit": "No incluye gesti\'f3n editorial cient\'edfica, validaci\'f3n de contenido, DRM avanzado, traducci\'f3n autom\'e1tica ni anal\'edtica de lectura de precisi\'f3n acad\'e9mica.", "requiredValue": 540, "optionalValue": 460, "features": [\{"id": "m6-f1", "originModuleId": "m6", "order": 1, "title": "Carga de documentos", "description": "Herramienta administrativa para subir archivos, registrar sus datos principales y almacenarlos de forma organizada.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es la entrada de contenido de la biblioteca.", "dependencies": "Panel, almacenamiento y reglas de archivos permitidos.", "time": "9 a 16 horas"\}, \{"id": "m6-f2", "originModuleId": "m6", "order": 2, "title": "Categor\'edas de documentos", "description": "Clasificaci\'f3n por temas, tipos de recursos, productos, especialidades u otras divisiones acordadas.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Carga de documentos y panel administrativo.", "time": "5 a 9 horas"\}, \{"id": "m6-f3", "originModuleId": "m6", "order": 3, "title": "Etiquetas", "description": "Palabras clave adicionales que permiten relacionar y localizar documentos sin depender \'fanicamente de categor\'edas.", "price": 60, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Documentos y administraci\'f3n de etiquetas.", "time": "4 a 8 horas"\}, \{"id": "m6-f4", "originModuleId": "m6", "order": 4, "title": "Buscador interno", "description": "B\'fasqueda por t\'edtulo, descripci\'f3n, categor\'eda, etiqueta, producto o palabra clave.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Documentos indexados y metadatos correctamente cargados.", "time": "9 a 16 horas"\}, \{"id": "m6-f5", "originModuleId": "m6", "order": 5, "title": "Filtros avanzados", "description": "Opciones para limitar resultados por tipo, pa\'eds, fecha, profesi\'f3n, producto o nivel de acceso.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Metadatos suficientes en los documentos.", "time": "5 a 10 horas"\}, \{"id": "m6-f6", "originModuleId": "m6", "order": 6, "title": "Visualizaci\'f3n de archivos", "description": "Pantalla para abrir o previsualizar archivos compatibles dentro de la plataforma sin obligar al usuario a descargarlos.", "price": 120, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar de la biblioteca.", "dependencies": "Almacenamiento, permisos y formatos compatibles.", "time": "12 a 20 horas"\}, \{"id": "m6-f7", "originModuleId": "m6", "order": 7, "title": "Descarga controlada", "description": "Permite descargar recursos autorizados y registra la acci\'f3n, respetando las restricciones del usuario y del documento.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Documentos, permisos y sistema de almacenamiento.", "time": "9 a 16 horas"\}, \{"id": "m6-f8", "originModuleId": "m6", "order": 8, "title": "Acceso por roles", "description": "Restricci\'f3n de documentos seg\'fan perfil, profesi\'f3n, distribuidor, pa\'eds u otra regla aprobada.", "price": 150, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias. Requiere usuarios y permisos.", "dependencies": "M\'f3dulo 2, metadatos del documento y reglas de acceso.", "time": "14 a 24 horas"\}, \{"id": "m6-f9", "originModuleId": "m6", "order": 9, "title": "Vinculaci\'f3n con productos", "description": "Relaci\'f3n entre cada recurso y uno o varios productos para que el usuario pueda pasar de la informaci\'f3n t\'e9cnica a la ficha comercial o compra.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 5 y documentos cargados.", "time": "8 a 14 horas"\}, \{"id": "m6-f10", "originModuleId": "m6", "order": 10, "title": "Registro de vistas y descargas", "description": "Almacenamiento de qui\'e9n consult\'f3 o descarg\'f3 un recurso, cu\'e1ndo lo hizo y desde qu\'e9 perfil, para alimentar m\'e9tricas y CRM.", "price": 130, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias. Puede convertirse en m\'f3dulo anal\'edtico.", "dependencies": "Usuarios, biblioteca y eventos de actividad.", "time": "12 a 22 horas"\}]\}, \{"id": "m7", "number": 7, "name": "Art\'edculos, noticias y contenido multimedia", "stage": "Etapa 2: Contenido y ventas", "target": 1000, "time": "1,5 a 2,5 semanas", "objective": "Permitir al equipo publicar art\'edculos, noticias y contenido audiovisual que informe, posicione la marca y conecte con productos, documentos y eventos.", "scopeLimit": "No incluye una plataforma editorial multisitio, publicaci\'f3n autom\'e1tica garantizada en todas las redes ni producci\'f3n del contenido escrito, gr\'e1fico o audiovisual.", "requiredValue": 560, "optionalValue": 440, "features": [\{"id": "m7-f1", "originModuleId": "m7", "order": 1, "title": "Creaci\'f3n de art\'edculos", "description": "Editor administrativo para redactar t\'edtulos, introducciones, cuerpo del contenido y metadatos b\'e1sicos.", "price": 120, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es la funci\'f3n principal del m\'f3dulo editorial.", "dependencies": "Panel administrativo y editor de contenido.", "time": "10 a 18 horas"\}, \{"id": "m7-f2", "originModuleId": "m7", "order": 2, "title": "Edici\'f3n y eliminaci\'f3n", "description": "Funciones para corregir, actualizar, retirar o eliminar publicaciones seg\'fan los permisos definidos.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar de la creaci\'f3n de art\'edculos.", "dependencies": "Art\'edculos existentes y permisos.", "time": "8 a 14 horas"\}, \{"id": "m7-f3", "originModuleId": "m7", "order": 3, "title": "Categor\'edas de contenido", "description": "Organizaci\'f3n de publicaciones por temas o l\'edneas editoriales para facilitar navegaci\'f3n y b\'fasqueda.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Art\'edculos y panel administrativo.", "time": "5 a 9 horas"\}, \{"id": "m7-f4", "originModuleId": "m7", "order": 4, "title": "Secci\'f3n de noticias", "description": "Vista diferenciada para novedades corporativas, regulatorias, comerciales o de eventos.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede desarrollarse como secci\'f3n independiente.", "dependencies": "Gesti\'f3n de contenidos y dise\'f1o p\'fablico.", "time": "8 a 14 horas"\}, \{"id": "m7-f5", "originModuleId": "m7", "order": 5, "title": "Im\'e1genes destacadas", "description": "Carga y presentaci\'f3n de una imagen principal para cada publicaci\'f3n en listados, vistas previas y p\'e1gina individual.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Art\'edculos y almacenamiento de im\'e1genes.", "time": "5 a 9 horas"\}, \{"id": "m7-f6", "originModuleId": "m7", "order": 6, "title": "Videos asociados", "description": "Posibilidad de adjuntar o mostrar videos relacionados dentro de una publicaci\'f3n.", "price": 80, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Art\'edculo, proveedor de video o almacenamiento.", "time": "6 a 10 horas"\}, \{"id": "m7-f7", "originModuleId": "m7", "order": 7, "title": "Enlaces de YouTube", "description": "Campo y visualizaci\'f3n integrada de enlaces de YouTube sin necesidad de alojar el video directamente.", "price": 60, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Baja", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Contenido editorial y URL v\'e1lida.", "time": "4 a 7 horas"\}, \{"id": "m7-f8", "originModuleId": "m7", "order": 8, "title": "Contenido relacionado", "description": "Recomendaciones autom\'e1ticas o administradas de art\'edculos, productos, documentos o eventos vinculados.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulos de destino y criterios de relaci\'f3n.", "time": "8 a 14 horas"\}, \{"id": "m7-f9", "originModuleId": "m7", "order": 9, "title": "Vista previa", "description": "Permite revisar una publicaci\'f3n antes de hacerla visible al p\'fablico para reducir errores de formato o contenido.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Editor y estados de publicaci\'f3n.", "time": "8 a 14 horas"\}, \{"id": "m7-f10", "originModuleId": "m7", "order": 10, "title": "Publicaci\'f3n, borradores y estados", "description": "Flujo para guardar borradores, programar o publicar, retirar contenido y controlar qu\'e9 versi\'f3n est\'e1 visible.", "price": 200, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es parte central del funcionamiento editorial.", "dependencies": "Creaci\'f3n y edici\'f3n de contenidos.", "time": "16 a 28 horas"\}]\}, \{"id": "m8", "number": 8, "name": "Distribuidores internacionales", "stage": "Etapa 3: Operaci\'f3n internacional", "target": 1000, "time": "2,5 a 4 semanas", "objective": "Administrar la red de distribuidores, sus territorios, productos autorizados, usuarios y acceso limitado a informaci\'f3n comercial relevante.", "scopeLimit": "No incluye contabilidad de distribuidores, liquidaci\'f3n de comisiones, inventario individual ni administraci\'f3n log\'edstica completa por territorio.", "requiredValue": 540, "optionalValue": 460, "features": [\{"id": "m8-f1", "originModuleId": "m8", "order": 1, "title": "Registro de distribuidores", "description": "Creaci\'f3n de registros para cada distribuidor con identificadores, estado y datos esenciales de la relaci\'f3n comercial.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es la base del m\'f3dulo.", "dependencies": "Panel, usuarios y modelo de distribuidores.", "time": "9 a 16 horas"\}, \{"id": "m8-f2", "originModuleId": "m8", "order": 2, "title": "Perfil e informaci\'f3n comercial", "description": "Ficha con nombre, contactos, empresa, direcciones, enlaces, responsables y otros datos autorizados.", "price": 80, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Registro del distribuidor y permisos.", "time": "6 a 11 horas"\}, \{"id": "m8-f3", "originModuleId": "m8", "order": 3, "title": "Asignaci\'f3n de pa\'edses y territorios", "description": "Relaci\'f3n entre cada distribuidor y los pa\'edses, regiones o zonas que tiene autorizadas.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 9 o cat\'e1logo de pa\'edses.", "time": "10 a 18 horas"\}, \{"id": "m8-f4", "originModuleId": "m8", "order": 4, "title": "Productos autorizados", "description": "Definici\'f3n de los productos que cada distribuidor puede promover, gestionar o recibir como oportunidades.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 5 y distribuidores registrados.", "time": "8 a 14 horas"\}, \{"id": "m8-f5", "originModuleId": "m8", "order": 5, "title": "Panel del distribuidor", "description": "Espacio privado donde el distribuidor consulta sus datos, recursos, leads, eventos y opciones habilitadas.", "price": 150, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es la interfaz principal del distribuidor.", "dependencies": "Usuarios, permisos y datos del distribuidor.", "time": "14 a 24 horas"\}, \{"id": "m8-f6", "originModuleId": "m8", "order": 6, "title": "Usuarios secundarios", "description": "Permite que un distribuidor cree o solicite accesos adicionales para miembros de su equipo con permisos limitados.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 2, panel del distribuidor y reglas de aprobaci\'f3n.", "time": "8 a 14 horas"\}, \{"id": "m8-f7", "originModuleId": "m8", "order": 7, "title": "Acceso a recursos privados", "description": "Biblioteca o \'e1rea de documentos disponible \'fanicamente para distribuidores autorizados.", "price": 90, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 6 y permisos del distribuidor.", "time": "7 a 12 horas"\}, \{"id": "m8-f8", "originModuleId": "m8", "order": 8, "title": "Visualizaci\'f3n de leads", "description": "Listado de contactos asignados al distribuidor, con datos y estado permitidos por las pol\'edticas de privacidad.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 4 y reglas de asignaci\'f3n.", "time": "8 a 14 horas"\}, \{"id": "m8-f9", "originModuleId": "m8", "order": 9, "title": "Estad\'edsticas b\'e1sicas", "description": "Indicadores sobre registros, eventos, recursos consultados o leads correspondientes al distribuidor.", "price": 90, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Datos acumulados en CRM, biblioteca o eventos.", "time": "7 a 12 horas"\}, \{"id": "m8-f10", "originModuleId": "m8", "order": 10, "title": "Edici\'f3n controlada de informaci\'f3n", "description": "Permite al distribuidor proponer o realizar cambios en campos autorizados sin alterar datos protegidos.", "price": 80, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Panel, permisos y flujo de aprobaci\'f3n.", "time": "6 a 11 horas"\}]\}, \{"id": "m9", "number": 9, "name": "Pa\'edses y regulaciones", "stage": "Etapa 3: Operaci\'f3n internacional", "target": 1000, "time": "2 a 3 semanas", "objective": "Controlar la disponibilidad, documentaci\'f3n, mensajes y relaciones comerciales que cambian de un pa\'eds a otro.", "scopeLimit": "La plataforma almacenar\'e1 y aplicar\'e1 reglas aprobadas, pero no determinar\'e1 por s\'ed sola si una regulaci\'f3n es v\'e1lida ni reemplazar\'e1 la revisi\'f3n legal o regulatoria de la empresa.", "requiredValue": 760, "optionalValue": 240, "features": [\{"id": "m9-f1", "originModuleId": "m9", "order": 1, "title": "Administraci\'f3n de pa\'edses", "description": "Permite al equipo crear, editar, ordenar, activar o desactivar pa\'edses dentro del ecosistema. Cada pa\'eds puede funcionar como base para relacionar productos, distribuidores, documentos, formularios y reglas espec\'edficas.", "price": 90, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar del modelo territorial. Puede desarrollarse como base antes del resto del m\'f3dulo.", "dependencies": "Panel administrativo y modelo de datos territorial.", "time": "7 a 12 horas"\}, \{"id": "m9-f2", "originModuleId": "m9", "order": 2, "title": "Selecci\'f3n manual de pa\'eds", "description": "Control visible para que el usuario indique el pa\'eds cuya informaci\'f3n desea consultar, incluso cuando su ubicaci\'f3n real sea distinta.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Pa\'edses activos y reglas de contenido por pa\'eds.", "time": "5 a 9 horas"\}, \{"id": "m9-f3", "originModuleId": "m9", "order": 3, "title": "Asignaci\'f3n de productos por pa\'eds", "description": "Define qu\'e9 productos pueden mostrarse, venderse, cotizarse o permanecer ocultos en cada pa\'eds.", "price": 140, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulos 5 y administraci\'f3n de pa\'edses.", "time": "12 a 22 horas"\}, \{"id": "m9-f4", "originModuleId": "m9", "order": 4, "title": "Asignaci\'f3n de distribuidores", "description": "Relaciona cada pa\'eds o territorio con uno o varios distribuidores para dirigir contactos, consultas y eventos al responsable adecuado.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 8 y pa\'edses activos.", "time": "9 a 16 horas"\}, \{"id": "m9-f5", "originModuleId": "m9", "order": 5, "title": "Documentos regulatorios", "description": "Repositorio de certificados, registros, permisos, fichas o documentos regulatorios relacionados con un pa\'eds y, cuando corresponda, con un producto.", "price": 120, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Administraci\'f3n de pa\'edses y almacenamiento documental.", "time": "10 a 18 horas"\}, \{"id": "m9-f6", "originModuleId": "m9", "order": 6, "title": "Restricciones por territorio", "description": "Reglas que impiden o modifican acciones seg\'fan el pa\'eds, por ejemplo ocultar una compra, restringir un producto o mostrar un aviso legal espec\'edfico.", "price": 130, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar. Es el motor de comportamiento territorial.", "dependencies": "Pa\'edses, productos, usuarios y reglas aprobadas.", "time": "12 a 22 horas"\}, \{"id": "m9-f7", "originModuleId": "m9", "order": 7, "title": "Contenido espec\'edfico por pa\'eds", "description": "Permite mostrar textos, im\'e1genes, enlaces, condiciones o llamadas a la acci\'f3n diferentes seg\'fan el pa\'eds seleccionado.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Gesti\'f3n de contenidos y pa\'edses.", "time": "8 a 14 horas"\}, \{"id": "m9-f8", "originModuleId": "m9", "order": 8, "title": "Disponibilidad de compra por pa\'eds", "description": "Controla si un usuario puede comprar directamente, solicitar cotizaci\'f3n o ser enviado a un distribuidor seg\'fan su territorio.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 5, pa\'edses y restricciones territoriales.", "time": "8 a 16 horas"\}, \{"id": "m9-f9", "originModuleId": "m9", "order": 9, "title": "Mensajes de no disponibilidad", "description": "Avisos claros cuando un producto o servicio no est\'e1 disponible, incluyendo una alternativa de contacto cuando corresponda.", "price": 60, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Reglas de disponibilidad y contenido aprobado.", "time": "4 a 8 horas"\}, \{"id": "m9-f10", "originModuleId": "m9", "order": 10, "title": "Detecci\'f3n autom\'e1tica de ubicaci\'f3n", "description": "Identificaci\'f3n aproximada del pa\'eds mediante la conexi\'f3n del usuario para sugerir una experiencia inicial, manteniendo la opci\'f3n de cambiarlo manualmente.", "price": 80, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Baja", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede incorporarse en una etapa posterior.", "dependencies": "Servicio de geolocalizaci\'f3n por IP y selector manual.", "time": "6 a 11 horas"\}]\}, \{"id": "m10", "number": 10, "name": "Eventos", "stage": "Etapa 3: Operaci\'f3n internacional", "target": 1000, "time": "2,5 a 4 semanas", "objective": "Permitir que administradores y distribuidores publiquen eventos, registren asistentes y utilicen esa informaci\'f3n para seguimiento posterior.", "scopeLimit": "No incluye inicialmente venta de entradas, transmisi\'f3n de video propia, certificados autom\'e1ticos, acreditaci\'f3n f\'edsica, QR de asistencia ni encuestas avanzadas.", "requiredValue": 530, "optionalValue": 470, "features": [\{"id": "m10-f1", "originModuleId": "m10", "order": 1, "title": "Creaci\'f3n de eventos", "description": "Formulario administrativo para registrar nombre, descripci\'f3n, modalidad, fecha, hora, lugar, agenda y dem\'e1s datos esenciales.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es la funci\'f3n principal del m\'f3dulo.", "dependencies": "Panel administrativo y usuarios autorizados.", "time": "10 a 18 horas"\}, \{"id": "m10-f2", "originModuleId": "m10", "order": 2, "title": "Edici\'f3n y cancelaci\'f3n", "description": "Permite corregir informaci\'f3n, actualizar condiciones o cancelar un evento conservando su historial.", "price": 80, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar de la creaci\'f3n.", "dependencies": "Eventos existentes y permisos.", "time": "6 a 11 horas"\}, \{"id": "m10-f3", "originModuleId": "m10", "order": 3, "title": "P\'e1gina individual del evento", "description": "P\'e1gina p\'fablica o privada con todos los detalles, llamados a inscripci\'f3n, recursos y enlaces asociados.", "price": 100, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Evento creado, frontend y contenido.", "time": "8 a 14 horas"\}, \{"id": "m10-f4", "originModuleId": "m10", "order": 4, "title": "Formulario de inscripci\'f3n", "description": "Captura los datos definidos para asistentes y registra su consentimiento y relaci\'f3n con el evento.", "price": 130, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "P\'e1gina del evento, CRM y pol\'edticas de datos.", "time": "12 a 20 horas"\}, \{"id": "m10-f5", "originModuleId": "m10", "order": 5, "title": "Registro de asistentes", "description": "Listado interno de personas inscritas, estado de registro y datos principales para organizaci\'f3n y seguimiento.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Depende del formulario y sostiene la gesti\'f3n del evento.", "dependencies": "Inscripciones y permisos administrativos.", "time": "9 a 16 horas"\}, \{"id": "m10-f6", "originModuleId": "m10", "order": 6, "title": "Asociaci\'f3n con pa\'eds", "description": "Relaciona el evento con un pa\'eds para mostrarlo al p\'fablico correspondiente y aplicar segmentaci\'f3n territorial.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 9 y evento creado.", "time": "5 a 9 horas"\}, \{"id": "m10-f7", "originModuleId": "m10", "order": 7, "title": "Asociaci\'f3n con distribuidor", "description": "Identifica al distribuidor organizador o responsable y limita su acceso a los datos correspondientes.", "price": 80, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 8 y permisos.", "time": "6 a 11 horas"\}, \{"id": "m10-f8", "originModuleId": "m10", "order": 8, "title": "L\'edmite de cupos", "description": "Controla la cantidad m\'e1xima de inscripciones y detiene o modifica el registro al alcanzar el l\'edmite.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Formulario de inscripci\'f3n y reglas del evento.", "time": "5 a 9 horas"\}, \{"id": "m10-f9", "originModuleId": "m10", "order": 9, "title": "Correos de confirmaci\'f3n", "description": "Env\'edo de mensajes autom\'e1ticos con confirmaci\'f3n, detalles y pr\'f3ximas indicaciones despu\'e9s del registro.", "price": 120, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Servicio de correo, evento e inscripci\'f3n.", "time": "10 a 18 horas"\}, \{"id": "m10-f10", "originModuleId": "m10", "order": 10, "title": "Exportaci\'f3n de asistentes", "description": "Descarga autorizada de la lista y campos seleccionados en formatos como Excel o CSV.", "price": 130, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Registros de asistentes y permisos de privacidad.", "time": "10 a 18 horas"\}]\}, \{"id": "m11", "number": 11, "name": "Private Label", "stage": "Etapa 4: Servicios avanzados", "target": 1000, "time": "2 a 3 semanas", "objective": "Presentar los servicios de fabricaci\'f3n personalizada, captar solicitudes y permitir un seguimiento b\'e1sico de oportunidades o proyectos.", "scopeLimit": "No incluye un ERP de producci\'f3n, control de materias primas, fabricaci\'f3n, calidad, facturaci\'f3n, log\'edstica ni gesti\'f3n industrial completa.", "requiredValue": 360, "optionalValue": 640, "features": [\{"id": "m11-f1", "originModuleId": "m11", "order": 1, "title": "P\'e1gina informativa", "description": "P\'e1gina comercial que explica qu\'e9 es el servicio, sus beneficios, capacidades y llamada principal a solicitar informaci\'f3n.", "price": 70, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede contratarse como p\'e1gina independiente.", "dependencies": "Contenido, dise\'f1o y sitio p\'fablico.", "time": "5 a 9 horas"\}, \{"id": "m11-f2", "originModuleId": "m11", "order": 2, "title": "Descripci\'f3n del proceso", "description": "Secci\'f3n que presenta de forma ordenada las etapas generales desde la idea inicial hasta la producci\'f3n o entrega.", "price": 60, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede integrarse en la p\'e1gina informativa.", "dependencies": "Informaci\'f3n suministrada por la empresa.", "time": "4 a 7 horas"\}, \{"id": "m11-f3", "originModuleId": "m11", "order": 3, "title": "Formulario de solicitud", "description": "Captura datos de la empresa, contacto, pa\'eds, producto de inter\'e9s, volumen estimado y necesidades iniciales.", "price": 120, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "CRM, pol\'edticas de datos y campos aprobados.", "time": "10 a 18 horas"\}, \{"id": "m11-f4", "originModuleId": "m11", "order": 4, "title": "Carga de archivos", "description": "Permite adjuntar referencias, especificaciones, dise\'f1os u otros documentos dentro de los l\'edmites y formatos autorizados.", "price": 130, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Formulario, almacenamiento seguro y reglas de archivo.", "time": "12 a 20 horas"\}, \{"id": "m11-f5", "originModuleId": "m11", "order": 5, "title": "Solicitud de cotizaci\'f3n", "description": "Crea un registro formal de inter\'e9s y env\'eda la informaci\'f3n necesaria al equipo responsable para evaluaci\'f3n.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Formulario, CRM y notificaciones internas.", "time": "9 a 16 horas"\}, \{"id": "m11-f6", "originModuleId": "m11", "order": 6, "title": "Registro del cliente", "description": "Vincula la empresa o persona solicitante con una cuenta o ficha del CRM para conservar sus datos e historial.", "price": 90, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulos 2 y 4.", "time": "7 a 12 horas"\}, \{"id": "m11-f7", "originModuleId": "m11", "order": 7, "title": "Panel de solicitudes", "description": "Vista administrativa para consultar, filtrar, asignar y abrir cada solicitud de Private Label.", "price": 140, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Panel administrativo y solicitudes registradas.", "time": "12 a 22 horas"\}, \{"id": "m11-f8", "originModuleId": "m11", "order": 8, "title": "Estados del proyecto", "description": "Seguimiento mediante etapas como recibido, evaluaci\'f3n, cotizaci\'f3n, muestra, aprobaci\'f3n, producci\'f3n y cierre.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Panel de solicitudes y flujo aprobado.", "time": "8 a 14 horas"\}, \{"id": "m11-f9", "originModuleId": "m11", "order": 9, "title": "Notificaciones", "description": "Avisos internos o al cliente cuando se registra una solicitud o cambia un estado relevante.", "price": 80, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Servicio de correo, solicitudes y estados.", "time": "6 a 11 horas"\}, \{"id": "m11-f10", "originModuleId": "m11", "order": 10, "title": "Historial de solicitudes", "description": "Registro cronol\'f3gico de solicitudes, cambios, archivos y comunicaciones principales asociadas al cliente.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "CRM, panel de solicitudes y registro de actividad.", "time": "8 a 14 horas"\}]\}, \{"id": "m12", "number": 12, "name": "Automatizaciones", "stage": "Etapa 4: Servicios avanzados", "target": 1000, "time": "2 a 4 semanas", "objective": "Reducir tareas repetitivas mediante correos, alertas, asignaciones y seguimientos activados por acciones concretas dentro de la plataforma.", "scopeLimit": "El alcance completo incluye los diez flujos descritos, no automatizaciones ilimitadas. No incluye costos de proveedores externos ni campa\'f1as complejas de marketing automation.", "requiredValue": 0, "optionalValue": 890, "features": [\{"id": "m12-f1", "originModuleId": "m12", "order": 1, "title": "Correo de bienvenida", "description": "Mensaje autom\'e1tico que confirma el registro y orienta al nuevo usuario sobre los pr\'f3ximos pasos.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Registro de usuarios, servicio de correo y plantilla aprobada.", "time": "5 a 9 horas"\}, \{"id": "m12-f2", "originModuleId": "m12", "order": 2, "title": "Confirmaci\'f3n de compra", "description": "Correo generado despu\'e9s de una compra v\'e1lida con resumen, n\'famero de pedido y datos principales.", "price": 110, "mandatoryType": "conditional", "mandatoryLabel": "Condicional: obligatoria cuando existe venta directa", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 5, pedidos y proveedor de correo.", "time": "9 a 16 horas"\}, \{"id": "m12-f3", "originModuleId": "m12", "order": 3, "title": "Confirmaci\'f3n de eventos", "description": "Mensaje autom\'e1tico enviado al completar una inscripci\'f3n, con los detalles y condiciones del evento.", "price": 90, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 10 y servicio de correo.", "time": "7 a 12 horas"\}, \{"id": "m12-f4", "originModuleId": "m12", "order": 4, "title": "Recordatorios de eventos", "description": "Env\'edo programado de avisos antes del evento seg\'fan una anticipaci\'f3n definida.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Eventos, inscripciones, tareas programadas y correo.", "time": "8 a 14 horas"\}, \{"id": "m12-f5", "originModuleId": "m12", "order": 5, "title": "Asignaci\'f3n autom\'e1tica de leads", "description": "Regla que relaciona un nuevo contacto con el distribuidor o responsable adecuado seg\'fan pa\'eds, producto u otro criterio.", "price": 130, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "CRM, distribuidores, pa\'edses y reglas de asignaci\'f3n.", "time": "12 a 20 horas"\}, \{"id": "m12-f6", "originModuleId": "m12", "order": 6, "title": "Alertas internas", "description": "Notificaciones al equipo cuando ocurre una acci\'f3n importante, como una solicitud, descarga o registro de alto inter\'e9s.", "price": 90, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulos que generen eventos y canales de notificaci\'f3n.", "time": "7 a 12 horas"\}, \{"id": "m12-f7", "originModuleId": "m12", "order": 7, "title": "Seguimiento posterior", "description": "Mensajes programados despu\'e9s de eventos, descargas, formularios o compras para continuar la relaci\'f3n con el usuario.", "price": 120, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "CRM, consentimiento, reglas de seguimiento y correo.", "time": "10 a 18 horas"\}, \{"id": "m12-f8", "originModuleId": "m12", "order": 8, "title": "Notificaciones a distribuidores", "description": "Avisos autom\'e1ticos cuando un lead, evento o solicitud queda asociado con un distribuidor.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulos 4, 8, 9 o 10 seg\'fan el caso.", "time": "8 a 14 horas"\}, \{"id": "m12-f9", "originModuleId": "m12", "order": 9, "title": "Plantillas administrables", "description": "Interfaz para editar textos b\'e1sicos de correos y notificaciones sin modificar c\'f3digo.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Panel administrativo y motor de mensajes.", "time": "8 a 14 horas"\}, \{"id": "m12-f10", "originModuleId": "m12", "order": 10, "title": "Registro de automatizaciones", "description": "Historial de flujos ejecutados, resultado, fecha y destinatario para soporte y control.", "price": 90, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Automatizaciones activas y sistema de logs.", "time": "7 a 12 horas"\}]\}, \{"id": "m13", "number": 13, "name": "Inteligencia artificial", "stage": "Etapa 4: Servicios avanzados", "target": 1000, "time": "3 a 5 semanas", "objective": "Incorporar un asistente que oriente a los usuarios y consulte informaci\'f3n autorizada de productos y documentos, con l\'edmites claros de uso y responsabilidad.", "scopeLimit": "No incluye entrenamiento de un modelo propio, asesor\'eda m\'e9dica, exactitud cl\'ednica garantizada, consumo ilimitado, infraestructura propia de modelos ni costos recurrentes de la API seleccionada.", "requiredValue": 410, "optionalValue": 590, "features": [\{"id": "m13-f1", "originModuleId": "m13", "order": 1, "title": "Interfaz de chat", "description": "Componente visual donde el usuario escribe preguntas, recibe respuestas y consulta el estado de la conversaci\'f3n.", "price": 90, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias. Puede construirse visualmente, pero necesita un proveedor para responder.", "dependencies": "Frontend, usuarios y lineamientos de experiencia.", "time": "7 a 12 horas"\}, \{"id": "m13-f2", "originModuleId": "m13", "order": 2, "title": "Integraci\'f3n con proveedor de IA", "description": "Conexi\'f3n segura con el servicio externo que generar\'e1 respuestas, manejo de credenciales, errores y par\'e1metros b\'e1sicos.", "price": 150, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No. Es el motor central del m\'f3dulo.", "dependencies": "Cuenta del proveedor, API, infraestructura y pol\'edtica de uso.", "time": "14 a 24 horas"\}, \{"id": "m13-f3", "originModuleId": "m13", "order": 3, "title": "Respuestas sobre productos", "description": "Permite al asistente consultar informaci\'f3n aprobada del cat\'e1logo y orientar al usuario hacia fichas relevantes.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 5 y datos de productos estructurados.", "time": "8 a 14 horas"\}, \{"id": "m13-f4", "originModuleId": "m13", "order": 4, "title": "Consulta de biblioteca", "description": "B\'fasqueda de contenido relevante dentro de documentos autorizados para construir respuestas basadas en fuentes internas.", "price": 170, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Cr\'edtica", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 6, preparaci\'f3n de documentos e infraestructura de b\'fasqueda.", "time": "16 a 30 horas"\}, \{"id": "m13-f5", "originModuleId": "m13", "order": 5, "title": "Respuestas seg\'fan el rol", "description": "Adaptaci\'f3n del contexto, acceso y nivel de detalle seg\'fan sea cliente, profesional, distribuidor o administrador.", "price": 100, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "M\'f3dulo 2, permisos y fuentes segmentadas.", "time": "8 a 16 horas"\}, \{"id": "m13-f6", "originModuleId": "m13", "order": 6, "title": "Historial de conversaciones", "description": "Almacenamiento y consulta de conversaciones anteriores de acuerdo con las pol\'edticas de privacidad y retenci\'f3n.", "price": 80, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Usuarios, base de datos y consentimiento.", "time": "6 a 11 horas"\}, \{"id": "m13-f7", "originModuleId": "m13", "order": 7, "title": "Derivaci\'f3n a soporte humano", "description": "Opci\'f3n para dirigir una consulta no resuelta o sensible a un formulario, correo o persona responsable.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Alta", "separable": true, "hasDependency": false, "separationText": "S\'ed. Puede incorporarse como extensi\'f3n del chat.", "dependencies": "Canal de soporte y datos de contacto.", "time": "5 a 9 horas"\}, \{"id": "m13-f8", "originModuleId": "m13", "order": 8, "title": "Registro de consultas", "description": "Registro anal\'edtico de preguntas, temas y resultados para mejorar contenido y detectar necesidades frecuentes.", "price": 70, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Chat activo y reglas de privacidad.", "time": "5 a 9 horas"\}, \{"id": "m13-f9", "originModuleId": "m13", "order": 9, "title": "Control de fuentes autorizadas", "description": "Reglas que limitan el conocimiento utilizado por el asistente y reducen respuestas basadas en contenido no aprobado.", "price": 110, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Cr\'edtica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar. Es una medida esencial de control.", "dependencies": "Proveedor de IA, biblioteca o fuentes aprobadas.", "time": "10 a 18 horas"\}, \{"id": "m13-f10", "originModuleId": "m13", "order": 10, "title": "L\'edmites de uso y consumo", "description": "Control de frecuencia, cantidad de mensajes o presupuesto de API por usuario o periodo para evitar costos inesperados.", "price": 60, "mandatoryType": "required", "mandatoryLabel": "S\'ed", "priority": "Alta", "separable": true, "hasDependency": true, "separationText": "S\'ed, con dependencias.", "dependencies": "Proveedor de IA, usuarios y m\'e9tricas de consumo.", "time": "4 a 8 horas"\}]\}], "projectSummary": "Plataforma web modular para centralizar comercio electr\'f3nico, biblioteca profesional, usuarios y CRM, distribuidores internacionales, eventos, contenido, servicios Private Label, regulaciones, automatizaciones e inteligencia artificial."\};\
+const STORAGE_KEY = "cotizador-ecosistema-v1";\
+\
+const baseModules = PROJECT.baseModules;\
+const featureMap = new Map();\
+baseModules.forEach(module => module.features.forEach(feature => \{\
+feature.originModuleName = module.name;\
+featureMap.set(feature.id, feature);\
+\}));\
+\
+const defaultState = () => (\{\
+customModules: [],\
+placements: Object.fromEntries(\
+[...featureMap.keys()].map(id => [id, \{type: "module", moduleId: featureMap.get(id).originModuleId\}])\
+),\
+customFeatures: \{\},\
+collapsed: \{\},\
+collapsedStages: Object.fromEntries(\
+[...new Set(baseModules.map(m => m.stage))].map((stage, index) => [stage, index !== 0])\
+),\
+openModules: \{\},\
+updatedAt: new Date().toISOString()\
+\});\
+\
+let state = loadState();\
+let selectedFeatureId = null;\
+let editingModuleId = null;\
+let customFeatureModuleId = null;\
+let searchQuery = "";\
+\
+function loadState() \{\
+try \{\
+const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));\
+if (!stored) return defaultState();\
+const fresh = defaultState();\
+return \{\
+...fresh,\
+...stored,\
+placements: \{...fresh.placements, ...(stored.placements || \{\})\},\
+customModules: stored.customModules || [],\
+customFeatures: stored.customFeatures || \{\},\
+collapsed: stored.collapsed || \{\},\
+collapsedStages: \{...fresh.collapsedStages, ...(stored.collapsedStages || \{\})\},\
+openModules: stored.openModules || \{\}\
+\};\
+\} catch \{\
+return defaultState();\
+\}\
+\}\
+\
+function saveState() \{\
+state.updatedAt = new Date().toISOString();\
+localStorage.setItem(STORAGE_KEY, JSON.stringify(state));\
+\}\
+\
+function allFeatures() \{\
+return [...featureMap.values(), ...Object.values(state.customFeatures)];\
+\}\
+\
+function getFeature(id) \{\
+return featureMap.get(id) || state.customFeatures[id];\
+\}\
+\
+function allModules() \{\
+const base = baseModules.map(m => (\{...m, type: "base"\}));\
+const custom = state.customModules.map(m => (\{\
+...m,\
+type: "custom",\
+stage: "M\'f3dulos personalizados",\
+time: "Seg\'fan caracter\'edsticas seleccionadas",\
+objective: "Agrupaci\'f3n creada por el cliente.",\
+scopeLimit: "Conserva las dependencias t\'e9cnicas de las caracter\'edsticas de origen."\
+\}));\
+return [...base, ...custom];\
+\}\
+\
+function getModule(id) \{\
+return allModules().find(m => m.id === id);\
+\}\
+\
+function money(value) \{\
+return new Intl.NumberFormat("en-US", \{style: "currency", currency: "USD", maximumFractionDigits: 0\}).format(value || 0);\
+\}\
+\
+function featuresAtModule(moduleId) \{\
+return allFeatures()\
+.filter(f => state.placements[f.id]?.type === "module" && state.placements[f.id]?.moduleId === moduleId)\
+.sort((a,b) => (a.originModuleId === moduleId ? a.order || 999 : 999) - (b.originModuleId === moduleId ? b.order || 999 : 999));\
+\}\
+\
+function featuresAtStatus(type) \{\
+return allFeatures().filter(f => state.placements[f.id]?.type === type);\
+\}\
+\
+function moduleTotal(moduleId) \{\
+return featuresAtModule(moduleId).reduce((sum,f) => sum + Number(f.price || 0), 0);\
+\}\
+\
+function missingRequired(moduleId) \{\
+const module = getModule(moduleId);\
+if (!module || module.type !== "base") return [];\
+return module.features.filter(f =>\
+f.mandatoryType === "required" &&\
+!(state.placements[f.id]?.type === "module" && state.placements[f.id]?.moduleId === moduleId)\
+);\
+\}\
+\
+function countsAndTotals() \{\
+const included = allFeatures().filter(f => state.placements[f.id]?.type === "module");\
+const later = featuresAtStatus("later");\
+const no = featuresAtStatus("notInterested");\
+const activeModules = allModules().filter(m => moduleTotal(m.id) > 0);\
+const warnings = baseModules.filter(m => moduleTotal(m.id) > 0 && missingRequired(m.id).length > 0);\
+return \{\
+includedTotal: included.reduce((s,f)=>s+Number(f.price||0),0),\
+laterTotal: later.reduce((s,f)=>s+Number(f.price||0),0),\
+noTotal: no.reduce((s,f)=>s+Number(f.price||0),0),\
+includedCount: included.length,\
+laterCount: later.length,\
+noCount: no.length,\
+activeModules,\
+warnings\
+\};\
+\}\
+\
+function matchesSearch(feature, module) \{\
+if (!searchQuery) return true;\
+const text = [\
+module?.name,\
+feature.title,\
+feature.description,\
+feature.dependencies,\
+feature.priority,\
+feature.mandatoryLabel\
+].join(" ").toLowerCase();\
+return text.includes(searchQuery);\
+\}\
+\
+function stageOrder(stage) \{\
+const match = String(stage).match(/Etapa\\s+(\\d+)/i);\
+if (match) return Number(match[1]);\
+return stage === "M\'f3dulos personalizados" ? 99 : 50;\
+\}\
+\
+function mandatoryBadge(feature) \{\
+if (feature.mandatoryType === "required") return `<span class="badge required">Obligatoria</span>`;\
+if (feature.mandatoryType === "conditional") return `<span class="badge conditional">Condicional</span>`;\
+return `<span class="badge optional">Opcional</span>`;\
+\}\
+\
+function priorityClass(priority) \{\
+const p = (priority || "").toLowerCase();\
+if (p.includes("cr\'edtica")) return "priority-critical";\
+if (p.includes("alta")) return "priority-high";\
+return "";\
+\}\
+\
+function featureCard(feature, compact = false) \{\
+const placement = state.placements[feature.id] || \{\};\
+const module = placement.moduleId ? getModule(placement.moduleId) : getModule(feature.originModuleId);\
+if (!matchesSearch(feature, module)) return "";\
+const draggable = true;\
+return `\
+<article class="feature" draggable="$\{draggable\}" data-feature-id="$\{feature.id\}" tabindex="0" role="button" aria-label="Ver detalle de $\{escapeHtml(feature.title)\}">\
+<div class="feature-top">\
+<div class="feature-title">$\{escapeHtml(feature.title)\}</div>\
+<div class="feature-price">$\{money(feature.price)\}</div>\
+</div>\
+<div class="feature-badges">\
+$\{mandatoryBadge(feature)\}\
+<span class="badge $\{priorityClass(feature.priority)\}">$\{escapeHtml(feature.priority)\}</span>\
+<span class="badge $\{feature.separable ? "separable" : "locked"\}">$\{feature.separable ? "Separable" : "No separable"\}</span>\
+</div>\
+</article>`;\
+\}\
+\
+function render() \{\
+document.getElementById("projectSummary").textContent = PROJECT.projectSummary;\
+const modules = allModules();\
+const grouped = new Map();\
+\
+modules.sort((a,b) => stageOrder(a.stage) - stageOrder(b.stage) || (a.number || 999) - (b.number || 999));\
+modules.forEach(module => \{\
+if (!grouped.has(module.stage)) grouped.set(module.stage, []);\
+grouped.get(module.stage).push(module);\
+\});\
+\
+const root = document.getElementById("modulesRoot");\
+root.innerHTML = [...grouped.entries()].map(([stage, stageModules], stageIndex) => \{\
+const stageTotal = stageModules.reduce((s,m)=>s+moduleTotal(m.id),0);\
+const collapsedStage = !!state.collapsedStages[stage];\
+return `\
+<section class="stage $\{collapsedStage ? "collapsed" : ""\}" data-stage="$\{escapeHtml(stage)\}">\
+<button type="button" class="stage-toggle" data-stage-toggle="$\{escapeHtml(stage)\}">\
+<span class="stage-toggle-main">\
+<span class="stage-index">$\{stageIndex + 1\}</span>\
+<span>\
+<h2>$\{escapeHtml(stage)\}</h2>\
+<p>$\{stageModules.length\} m\'f3dulo(s) \'b7 $\{stageModules.reduce((s,m)=>s+featuresAtModule(m.id).length,0)\} caracter\'edsticas</p>\
+</span>\
+</span>\
+<span class="stage-toggle-side">\
+<strong>$\{money(stageTotal)\}</strong>\
+<span class="stage-chevron">\uc0\u8964 </span>\
+</span>\
+</button>\
+<div class="stage-body">\
+<div class="module-grid">$\{stageModules.map(renderModule).join("")\}</div>\
+</div>\
+</section>`;\
+\}).join("");\
+\
+renderZones();\
+renderSummary();\
+attachInteractions();\
+\}\
+\
+function renderModule(module) \{\
+const features = featuresAtModule(module.id);\
+const visibleFeatures = features.filter(f => matchesSearch(f,module));\
+const total = moduleTotal(module.id);\
+const target = Number(module.target || 1000);\
+const progress = Math.min(100, target ? total / target * 100 : 100);\
+const missing = missingRequired(module.id);\
+const collapsed = !!state.collapsed[module.id];\
+const moduleOpen = !!state.openModules[module.id];\
+const moduleMatches = !searchQuery || [\
+module.name, module.objective, module.scopeLimit, module.stage\
+].join(" ").toLowerCase().includes(searchQuery);\
+const shouldHide = searchQuery && !moduleMatches && visibleFeatures.length === 0;\
+\
+return `\
+<article class="module-card $\{moduleOpen ? "open" : ""\} $\{missing.length && total ? "incomplete" : ""\} $\{shouldHide ? "hidden" : ""\}" data-module-id="$\{module.id\}">\
+<div class="module-head">\
+<div class="module-title-row">\
+<div>\
+<div class="module-kicker">$\{module.type === "custom" ? "M\'f3dulo personalizado" : `M\'f3dulo $\{module.number\}`\}</div>\
+<h3>$\{escapeHtml(module.name)\}</h3>\
+<div class="module-meta">\
+<span class="badge">$\{features.length\} caracter\'edstica(s)</span>\
+<span class="badge">$\{escapeHtml(module.time || "")\}</span>\
+</div>\
+</div>\
+<div class="module-price">\
+<strong>$\{money(total)\}</strong>\
+<span>$\{moduleOpen ? "Cerrar m\'f3dulo" : "Abrir m\'f3dulo"\}</span>\
+</div>\
+</div>\
+<div class="progress"><div style="width:$\{progress\}%"></div></div>\
+$\{missing.length && total ? `<div class="module-warning">Faltan $\{missing.length\} caracter\'edstica(s) obligatoria(s). Este m\'f3dulo podr\'eda no funcionar como se espera.</div>` : ""\}\
+</div>\
+<div class="feature-list" data-module-drop="$\{module.id\}">\
+$\{visibleFeatures.length ? visibleFeatures.map(f=>featureCard(f)).join("") : `<div class="empty-module">$\{searchQuery ? "No hay coincidencias dentro de este m\'f3dulo." : "Arrastra aqu\'ed caracter\'edsticas separables."\}</div>`\}\
+</div>\
+<div class="module-actions">\
+<button class="btn small collapse-module" data-module-id="$\{module.id\}">$\{moduleOpen ? "Cerrar m\'f3dulo" : "Abrir m\'f3dulo"\}</button>\
+$\{module.type === "custom" ? `\
+<button class="btn small edit-module" data-module-id="$\{module.id\}">Editar</button>\
+<button class="btn small add-custom-feature" data-module-id="$\{module.id\}">+ Caracter\'edstica</button>\
+<button class="btn small danger delete-module" data-module-id="$\{module.id\}">Eliminar</button>\
+` : ""\}\
+</div>\
+</article>`;\
+\}\
+\
+function renderZones() \{\
+const later = featuresAtStatus("later").filter(f => matchesSearch(f, getModule(f.originModuleId)));\
+const no = featuresAtStatus("notInterested").filter(f => matchesSearch(f, getModule(f.originModuleId)));\
+document.getElementById("laterZone").innerHTML = later.length ? later.map(f=>featureCard(f,true)).join("") : `<div class="zone-empty">Arrastra aqu\'ed lo que quieras conservar para una etapa posterior.</div>`;\
+document.getElementById("noZone").innerHTML = no.length ? no.map(f=>featureCard(f,true)).join("") : `<div class="zone-empty">Arrastra aqu\'ed lo que no formar\'e1 parte del proyecto, sin borrar su referencia.</div>`;\
+\}\
+\
+function renderSummary() \{\
+const s = countsAndTotals();\
+document.getElementById("currentTotal").textContent = money(s.includedTotal);\
+document.getElementById("laterTotal").textContent = money(s.laterTotal);\
+document.getElementById("noTotal").textContent = money(s.noTotal);\
+document.getElementById("includedCount").textContent = `$\{s.includedCount\} caracter\'edsticas`;\
+document.getElementById("laterCount").textContent = `$\{s.laterCount\} caracter\'edsticas`;\
+document.getElementById("noCount").textContent = `$\{s.noCount\} caracter\'edsticas`;\
+document.getElementById("activeModules").textContent = s.activeModules.length;\
+document.getElementById("warningCount").textContent = s.warnings.length;\
+document.getElementById("laterZoneTotal").textContent = money(s.laterTotal);\
+document.getElementById("noZoneTotal").textContent = money(s.noTotal);\
+document.getElementById("quoteGrandTotal").textContent = money(s.includedTotal);\
+\
+document.getElementById("installmentList").innerHTML = s.activeModules\
+.map((module,index) => `\
+<div class="quote-line">\
+<span>Cuota $\{index + 1\}: $\{escapeHtml(module.name)\}</span>\
+<strong>$\{money(moduleTotal(module.id))\}</strong>\
+</div>`)\
+.join("") || `<div class="quote-line"><span>No hay m\'f3dulos seleccionados</span><strong>$\{money(0)\}</strong></div>`;\
+\}\
+\
+function attachInteractions() \{\
+document.querySelectorAll(".feature").forEach(card => \{\
+card.addEventListener("click", () => openFeature(card.dataset.featureId));\
+card.addEventListener("keydown", e => \{\
+if (e.key === "Enter" || e.key === " ") openFeature(card.dataset.featureId);\
+\});\
+card.addEventListener("dragstart", e => \{\
+e.dataTransfer.setData("text/plain", card.dataset.featureId);\
+e.dataTransfer.effectAllowed = "move";\
+requestAnimationFrame(()=>card.classList.add("dragging"));\
+\});\
+card.addEventListener("dragend", () => card.classList.remove("dragging"));\
+\});\
+\
+document.querySelectorAll("[data-module-drop]").forEach(zone => setupModuleDrop(zone, zone.dataset.moduleDrop));\
+document.querySelectorAll("[data-drop-zone]").forEach(zone => setupStatusDrop(zone, zone.dataset.dropZone));\
+\
+document.querySelectorAll("[data-stage-toggle]").forEach(btn => \{\
+btn.addEventListener("click", () => \{\
+const stage = btn.dataset.stageToggle;\
+state.collapsedStages[stage] = !state.collapsedStages[stage];\
+saveState(); render();\
+\});\
+\});\
+document.querySelectorAll(".module-head").forEach(head => \{\
+head.addEventListener("click", event => \{\
+if (event.target.closest("button")) return;\
+const moduleId = head.closest(".module-card").dataset.moduleId;\
+state.openModules[moduleId] = !state.openModules[moduleId];\
+saveState(); render();\
+\});\
+\});\
+document.querySelectorAll(".collapse-module").forEach(btn => btn.onclick = () => \{\
+state.openModules[btn.dataset.moduleId] = !state.openModules[btn.dataset.moduleId];\
+saveState(); render();\
+\});\
+document.querySelectorAll(".edit-module").forEach(btn => btn.onclick = () => openModuleDialog(btn.dataset.moduleId));\
+document.querySelectorAll(".delete-module").forEach(btn => btn.onclick = () => deleteCustomModule(btn.dataset.moduleId));\
+document.querySelectorAll(".add-custom-feature").forEach(btn => btn.onclick = () => openCustomFeatureDialog(btn.dataset.moduleId));\
+\}\
+\
+function setupModuleDrop(zone, moduleId) \{\
+zone.addEventListener("dragover", e => \{\
+e.preventDefault();\
+zone.closest(".module-card")?.classList.add("drag-over");\
+\});\
+zone.addEventListener("dragleave", () => zone.closest(".module-card")?.classList.remove("drag-over"));\
+zone.addEventListener("drop", e => \{\
+e.preventDefault();\
+zone.closest(".module-card")?.classList.remove("drag-over");\
+const id = e.dataTransfer.getData("text/plain");\
+moveFeature(id, \{type:"module", moduleId\});\
+\});\
+\}\
+\
+function setupStatusDrop(zone, type) \{\
+zone.addEventListener("dragover", e => \{\
+e.preventDefault();\
+zone.classList.add("drag-over");\
+\});\
+zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));\
+zone.addEventListener("drop", e => \{\
+e.preventDefault();\
+zone.classList.remove("drag-over");\
+const id = e.dataTransfer.getData("text/plain");\
+moveFeature(id, \{type\});\
+\});\
+\}\
+\
+function moveFeature(featureId, destination, ask = true) \{\
+const feature = getFeature(featureId);\
+if (!feature) return;\
+const current = state.placements[featureId];\
+\
+if (destination.type === "module") \{\
+const target = getModule(destination.moduleId);\
+if (!target) return;\
+const changingModule = current?.type !== "module" || current.moduleId !== destination.moduleId;\
+const returningHome = destination.moduleId === feature.originModuleId;\
+\
+if (changingModule && !returningHome && !feature.separable && !String(feature.id).startsWith("custom-")) \{\
+toast("Esta caracter\'edstica no puede trasladarse a otro m\'f3dulo. Puedes enviarla a \'93Para despu\'e9s\'94 o devolverla a su m\'f3dulo original.");\
+return;\
+\}\
+\}\
+\
+if (\
+ask &&\
+(destination.type === "later" || destination.type === "notInterested") &&\
+feature.mandatoryType === "required"\
+) \{\
+const label = destination.type === "later" ? "Para despu\'e9s" : "No me interesa";\
+if (!confirm(`\'93$\{feature.title\}\'94 es obligatoria. Al moverla a \'93$\{label\}\'94, el m\'f3dulo original quedar\'e1 incompleto. \'bfDeseas continuar?`)) return;\
+\}\
+\
+state.placements[featureId] = destination;\
+saveState();\
+render();\
+toast("Cotizaci\'f3n actualizada.");\
+\}\
+\
+function openFeature(id) \{\
+selectedFeatureId = id;\
+const feature = getFeature(id);\
+const placement = state.placements[id];\
+const origin = getModule(feature.originModuleId);\
+const currentLocation = locationLabel(placement);\
+\
+document.getElementById("detailOrigin").textContent = `Origen: $\{origin?.name || "Requerimiento personalizado"\}`;\
+document.getElementById("detailTitle").textContent = feature.title;\
+document.getElementById("detailDescription").textContent = feature.description || "Sin descripci\'f3n.";\
+document.getElementById("detailPrice").textContent = money(feature.price);\
+document.getElementById("detailMandatory").textContent = feature.mandatoryLabel || mandatoryText(feature.mandatoryType);\
+document.getElementById("detailPriority").textContent = feature.priority;\
+document.getElementById("detailTime").textContent = feature.time || "Por estimar";\
+document.getElementById("detailSeparable").textContent = feature.separationText || (feature.separable ? "S\'ed" : "No");\
+document.getElementById("detailLocation").textContent = currentLocation;\
+document.getElementById("detailDependencies").textContent = feature.dependencies || "No especificadas.";\
+\
+const options = [];\
+const original = getModule(feature.originModuleId);\
+if (original) options.push(`<option value="module:$\{original.id\}">M\'f3dulo original: $\{escapeHtml(original.name)\}</option>`);\
+state.customModules.forEach(module => \{\
+if (feature.separable || String(feature.id).startsWith("custom-") || module.id === placement?.moduleId) \{\
+options.push(`<option value="module:$\{module.id\}">M\'f3dulo personalizado: $\{escapeHtml(module.name)\}</option>`);\
+\}\
+\});\
+options.push(`<option value="later">Para despu\'e9s</option>`);\
+options.push(`<option value="notInterested">No me interesa</option>`);\
+\
+const select = document.getElementById("moveSelect");\
+select.innerHTML = options.join("");\
+select.value = placement?.type === "module" ? `module:$\{placement.moduleId\}` : placement?.type;\
+document.getElementById("featureDialog").showModal();\
+\}\
+\
+function locationLabel(placement) \{\
+if (!placement) return "Sin ubicaci\'f3n";\
+if (placement.type === "later") return "Para despu\'e9s";\
+if (placement.type === "notInterested") return "No me interesa";\
+return getModule(placement.moduleId)?.name || "M\'f3dulo no disponible";\
+\}\
+\
+function mandatoryText(type) \{\
+return type === "required" ? "S\'ed" : type === "conditional" ? "Condicional" : "No";\
+\}\
+\
+document.getElementById("applyMoveBtn").onclick = () => \{\
+const value = document.getElementById("moveSelect").value;\
+if (value.startsWith("module:")) \{\
+moveFeature(selectedFeatureId, \{type:"module", moduleId:value.slice(7)\});\
+\} else \{\
+moveFeature(selectedFeatureId, \{type:value\});\
+\}\
+document.getElementById("featureDialog").close();\
+\};\
+\
+function openModuleDialog(moduleId = null) \{\
+editingModuleId = moduleId;\
+const module = moduleId ? getModule(moduleId) : null;\
+document.getElementById("moduleDialogTitle").textContent = module ? "Editar m\'f3dulo personalizado" : "Crear nuevo m\'f3dulo";\
+document.getElementById("moduleNameInput").value = module?.name || "";\
+document.getElementById("moduleTargetInput").value = module?.target || 1000;\
+document.getElementById("moduleDialog").showModal();\
+\}\
+\
+document.getElementById("saveModuleBtn").onclick = () => \{\
+const name = document.getElementById("moduleNameInput").value.trim();\
+const target = Number(document.getElementById("moduleTargetInput").value || 1000);\
+if (!name) return toast("Escribe un nombre para el m\'f3dulo.");\
+\
+if (editingModuleId) \{\
+const module = state.customModules.find(m => m.id === editingModuleId);\
+module.name = name;\
+module.target = target;\
+\} else \{\
+state.customModules.push(\{\
+id: `custom-module-$\{Date.now()\}`,\
+name,\
+target,\
+number: null\
+\});\
+\}\
+saveState();\
+document.getElementById("moduleDialog").close();\
+render();\
+toast("M\'f3dulo guardado.");\
+\};\
+\
+function deleteCustomModule(moduleId) \{\
+const module = state.customModules.find(m => m.id === moduleId);\
+if (!module || !confirm(`\'bfEliminar el m\'f3dulo \'93$\{module.name\}\'94? Las caracter\'edsticas originales volver\'e1n a su m\'f3dulo de origen y las creadas manualmente pasar\'e1n a \'93Para despu\'e9s\'94.`)) return;\
+\
+featuresAtModule(moduleId).forEach(feature => \{\
+if (String(feature.id).startsWith("custom-")) \{\
+state.placements[feature.id] = \{type:"later"\};\
+\} else \{\
+state.placements[feature.id] = \{type:"module", moduleId:feature.originModuleId\};\
+\}\
+\});\
+state.customModules = state.customModules.filter(m => m.id !== moduleId);\
+delete state.collapsed[moduleId];\
+saveState(); render(); toast("M\'f3dulo eliminado.");\
+\}\
+\
+function openCustomFeatureDialog(moduleId) \{\
+customFeatureModuleId = moduleId;\
+document.getElementById("customFeatureTitle").value = "";\
+document.getElementById("customFeatureDescription").value = "";\
+document.getElementById("customFeaturePrice").value = 100;\
+document.getElementById("customFeaturePriority").value = "Media";\
+document.getElementById("customFeatureMandatory").value = "optional";\
+document.getElementById("customFeatureTime").value = "";\
+document.getElementById("customFeatureDialog").showModal();\
+\}\
+\
+document.getElementById("saveCustomFeatureBtn").onclick = () => \{\
+const title = document.getElementById("customFeatureTitle").value.trim();\
+if (!title) return toast("Escribe el nombre de la caracter\'edstica.");\
+const id = `custom-feature-$\{Date.now()\}`;\
+const mandatoryType = document.getElementById("customFeatureMandatory").value;\
+state.customFeatures[id] = \{\
+id,\
+originModuleId: customFeatureModuleId,\
+originModuleName: getModule(customFeatureModuleId)?.name || "M\'f3dulo personalizado",\
+order: 999,\
+title,\
+description: document.getElementById("customFeatureDescription").value.trim(),\
+price: Number(document.getElementById("customFeaturePrice").value || 0),\
+mandatoryType,\
+mandatoryLabel: mandatoryText(mandatoryType),\
+priority: document.getElementById("customFeaturePriority").value,\
+separable: true,\
+hasDependency: false,\
+separationText: "S\'ed. Caracter\'edstica personalizada.",\
+dependencies: "Por definir con el equipo de desarrollo.",\
+time: document.getElementById("customFeatureTime").value.trim() || "Por estimar"\
+\};\
+state.placements[id] = \{type:"module", moduleId:customFeatureModuleId\};\
+saveState();\
+document.getElementById("customFeatureDialog").close();\
+render();\
+toast("Caracter\'edstica a\'f1adida.");\
+\};\
+\
+document.querySelectorAll("[data-close-dialog]").forEach(button => \{\
+button.onclick = () => document.getElementById(button.dataset.closeDialog).close();\
+\});\
+\
+document.getElementById("addModuleBtn").onclick = () => openModuleDialog();\
+document.getElementById("searchInput").addEventListener("input", e => \{\
+searchQuery = e.target.value.trim().toLowerCase();\
+render();\
+\});\
+document.getElementById("expandBtn").onclick = () => \{\
+Object.keys(state.collapsedStages).forEach(stage => state.collapsedStages[stage] = false);\
+allModules().forEach(m => state.openModules[m.id] = true);\
+saveState(); render();\
+\};\
+document.getElementById("collapseBtn").onclick = () => \{\
+Object.keys(state.collapsedStages).forEach(stage => state.collapsedStages[stage] = true);\
+state.openModules = \{\};\
+saveState(); render();\
+\};\
+document.getElementById("resetBtn").onclick = () => \{\
+if (!confirm("\'bfRestablecer la configuraci\'f3n completa? Se eliminar\'e1n m\'f3dulos y caracter\'edsticas personalizadas.")) return;\
+state = defaultState();\
+saveState(); render(); toast("Configuraci\'f3n restablecida.");\
+\};\
+\
+document.getElementById("downloadBtn").onclick = downloadSummary;\
+document.getElementById("exportBtn").onclick = exportData;\
+\
+function buildSummaryText() \{\
+const s = countsAndTotals();\
+const lines = [\
+"COTIZACI\'d3N INTERACTIVA \'97 ECOSISTEMA WEB INTEGRAL",\
+`Fecha: $\{new Date().toLocaleString("es-ES")\}`,\
+"",\
+`TOTAL SELECCIONADO: $\{money(s.includedTotal)\}`,\
+`PARA DESPU\'c9S: $\{money(s.laterTotal)\}`,\
+`NO ME INTERESA: $\{money(s.noTotal)\}`,\
+"",\
+"M\'d3DULOS Y CUOTAS"\
+];\
+\
+s.activeModules.forEach((module,index) => \{\
+lines.push("");\
+lines.push(`$\{index+1\}. $\{module.name\} \'97 $\{money(moduleTotal(module.id))\}`);\
+featuresAtModule(module.id).forEach(feature => \{\
+lines.push(` \'95 $\{feature.title\} \'97 $\{money(feature.price)\} \'97 $\{mandatoryText(feature.mandatoryType)\} \'97 Prioridad $\{feature.priority\}`);\
+\});\
+const missing = missingRequired(module.id);\
+if (missing.length) lines.push(` ADVERTENCIA: faltan $\{missing.length\} caracter\'edsticas obligatorias.`);\
+\});\
+\
+lines.push("", "PARA DESPU\'c9S");\
+featuresAtStatus("later").forEach(f => lines.push(` \'95 $\{f.title\} \'97 $\{money(f.price)\} \'97 Origen: $\{f.originModuleName\}`));\
+lines.push("", "NO ME INTERESA");\
+featuresAtStatus("notInterested").forEach(f => lines.push(` \'95 $\{f.title\} \'97 $\{money(f.price)\} \'97 Origen: $\{f.originModuleName\}`));\
+lines.push("", "NOTA: Los valores no incluyen hosting, dominios, licencias, consumo de IA, comisiones de pasarela ni servicios externos, salvo que se indiquen expresamente.");\
+return lines.join("\\n");\
+\}\
+\
+function downloadSummary() \{\
+downloadBlob(buildSummaryText(), "resumen-cotizacion.txt", "text/plain;charset=utf-8");\
+\}\
+\
+function exportData() \{\
+const payload = \{\
+project: PROJECT.title,\
+exportedAt: new Date().toISOString(),\
+totals: countsAndTotals(),\
+modules: allModules().map(module => (\{\
+id: module.id,\
+name: module.name,\
+target: module.target,\
+subtotal: moduleTotal(module.id),\
+features: featuresAtModule(module.id)\
+\})),\
+later: featuresAtStatus("later"),\
+notInterested: featuresAtStatus("notInterested")\
+\};\
+// Remove circular/non-serializable derived arrays from totals.\
+payload.totals = \{\
+includedTotal: payload.totals.includedTotal,\
+laterTotal: payload.totals.laterTotal,\
+noTotal: payload.totals.noTotal,\
+includedCount: payload.totals.includedCount,\
+laterCount: payload.totals.laterCount,\
+noCount: payload.totals.noCount,\
+activeModules: payload.totals.activeModules.length,\
+warnings: payload.totals.warnings.length\
+\};\
+downloadBlob(JSON.stringify(payload,null,2), "configuracion-cotizacion.json", "application/json;charset=utf-8");\
+\}\
+\
+function downloadBlob(content, filename, type) \{\
+const blob = new Blob([content], \{type\});\
+const url = URL.createObjectURL(blob);\
+const link = document.createElement("a");\
+link.href = url;\
+link.download = filename;\
+document.body.appendChild(link);\
+link.click();\
+link.remove();\
+URL.revokeObjectURL(url);\
+\}\
+\
+function escapeHtml(value) \{\
+return String(value ?? "").replace(/[&<>"']/g, char => (\{\
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"\
+\})[char]);\
+\}\
+\
+let toastTimer;\
+function toast(message) \{\
+const el = document.getElementById("toast");\
+el.textContent = message;\
+el.classList.add("show");\
+clearTimeout(toastTimer);\
+toastTimer = setTimeout(()=>el.classList.remove("show"), 2600);\
+\}\
+\
+render();\
+</script>\
+</body>\
+</html>\
+}
