@@ -16,6 +16,7 @@ Herramienta de una sola página (`index.html`, sin build) para que el cliente co
 - **Explorar**: clic en cualquier ficha para ver descripción, precio, prioridad, tiempo estimado y dependencias.
 - **Ajustar el alcance**: arrastra fichas separables entre módulos, o al panel lateral "Para después" / "No me interesa". También puedes moverlas desde el detalle de la ficha (selector "Mover esta característica").
 - **Módulos personalizados**: botón "+ Nuevo módulo" para agrupar necesidades propias del cliente, con sus propias características.
+- **Vista previa: solo lo obligatorio**: casilla debajo del buscador que, sin mover ni cambiar nada de la cotización real, marca visualmente las características no obligatorias como excluidas y muestra el total y las horas estimadas de desarrollo de quedarse solo con lo obligatorio. Es una simulación de solo lectura (no se guarda ni afecta la cotización real).
 - **Cotización para el cliente**: genera un documento formal (HTML imprimible / descargable como PDF vía "Imprimir → Guardar como PDF") con los datos del cliente, el desglose por módulo y el total, listo para enviar.
 - **Descargar resumen**: exporta un `.txt` con el resumen de la configuración actual.
 - **Exportar datos**: exporta un `.json` con el estado completo de la cotización.

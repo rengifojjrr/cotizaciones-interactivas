@@ -219,6 +219,57 @@ outline: none;
 }
 .search:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
 
+.preview-bar {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 14px;
+margin: 0 0 18px;
+padding: 12px 15px;
+border-radius: 13px;
+border: 1px solid var(--line);
+background: var(--surface);
+}
+.preview-toggle {
+display: flex;
+align-items: center;
+gap: 9px;
+font-size: 13px;
+font-weight: 700;
+cursor: pointer;
+}
+.preview-toggle input { width: 17px; height: 17px; accent-color: var(--primary); cursor: pointer; }
+.preview-toggle em { color: var(--muted); font-weight: 500; font-style: normal; }
+.preview-result {
+font-size: 12.5px;
+font-weight: 700;
+color: var(--primary);
+background: var(--primary-soft);
+border-radius: 999px;
+padding: 6px 12px;
+}
+body.mandatory-preview .preview-bar { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+
+body.mandatory-preview .feature[data-mandatory]:not([data-mandatory="required"]) {
+opacity: .38;
+filter: grayscale(.55);
+}
+body.mandatory-preview .feature[data-mandatory]:not([data-mandatory="required"])::after {
+content: "Excluida en la vista previa";
+position: absolute;
+inset: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 8px;
+font-size: 11px;
+font-weight: 800;
+color: var(--ink);
+background: rgba(255,255,255,.82);
+border-radius: inherit;
+}
+
 .board {
 display: grid;
 grid-template-columns: minmax(0, 1fr) 360px;
@@ -807,6 +858,14 @@ body { background: white; }
 <button class="btn" id="collapseBtn">Contraer todo</button>
 </section>
 
+<section class="preview-bar" id="previewBar">
+<label class="preview-toggle">
+<input type="checkbox" id="mandatoryOnlyToggle">
+<span>👁️ Vista previa: solo lo obligatorio <em>(no mueve nada, solo simula)</em></span>
+</label>
+<div class="preview-result hidden" id="previewResult"></div>
+</section>
+
 <div class="board">
 <section class="main-column" id="modulesRoot"></section>
 
@@ -1229,6 +1288,40 @@ warnings
 };
 }
 
+function parseHoursRange(text) {
+const match = String(text || "").match(/(\d+)\s*a\s*(\d+)\s*horas?/i);
+if (!match) return [0, 0];
+return [Number(match[1]), Number(match[2])];
+}
+
+function mandatoryOnlyPreview() {
+const included = allFeatures().filter(f => state.placements[f.id]?.type === "module");
+const mandatory = included.filter(f => f.mandatoryType === "required");
+let minHours = 0, maxHours = 0;
+mandatory.forEach(f => {
+const [min, max] = parseHoursRange(f.time);
+minHours += min;
+maxHours += max;
+});
+return {
+mandatoryTotal: mandatory.reduce((s,f) => s + Number(f.price || 0), 0),
+mandatoryCount: mandatory.length,
+excludedCount: included.length - mandatory.length,
+minHours,
+maxHours
+};
+}
+
+function renderMandatoryPreview() {
+const active = document.getElementById("mandatoryOnlyToggle").checked;
+document.body.classList.toggle("mandatory-preview", active);
+const resultEl = document.getElementById("previewResult");
+if (!active) { resultEl.classList.add("hidden"); return; }
+const p = mandatoryOnlyPreview();
+resultEl.classList.remove("hidden");
+resultEl.textContent = `Solo obligatorias: ${money(p.mandatoryTotal)} · ${p.mandatoryCount} característica(s) · ${p.minHours}–${p.maxHours} horas estimadas de desarrollo · ${p.excludedCount} excluida(s) en esta vista`;
+}
+
 function matchesSearch(feature, module) {
 if (!searchQuery) return true;
 const text = [
@@ -1267,7 +1360,7 @@ const module = placement.moduleId ? getModule(placement.moduleId) : getModule(fe
 if (!matchesSearch(feature, module)) return "";
 const draggable = true;
 return `
-<article class="feature" draggable="${draggable}" data-feature-id="${feature.id}" tabindex="0" role="button" aria-label="Ver detalle de ${escapeHtml(feature.title)}">
+<article class="feature" draggable="${draggable}" data-feature-id="${feature.id}" data-mandatory="${feature.mandatoryType}" tabindex="0" role="button" aria-label="Ver detalle de ${escapeHtml(feature.title)}">
 <div class="feature-top">
 <div class="feature-title">${escapeHtml(feature.title)}</div>
 <div class="feature-price">${money(feature.price)}</div>
@@ -1318,6 +1411,7 @@ return `
 
 renderZones();
 renderSummary();
+renderMandatoryPreview();
 attachInteractions();
 }
 
@@ -1860,6 +1954,8 @@ win.focus();
 setTimeout(() => win.print(), 350);
 logEvent("client_quote_previewed", `Abrió la vista previa/impresión de la cotización formal (${client.name}${client.company ? " — " + client.company : ""}) por ${money(countsAndTotals().includedTotal)}`, {client, total: countsAndTotals().includedTotal});
 };
+
+document.getElementById("mandatoryOnlyToggle").addEventListener("change", renderMandatoryPreview);
 
 document.getElementById("addModuleBtn").onclick = () => openModuleDialog();
 document.getElementById("searchInput").addEventListener("input", e => {
