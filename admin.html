@@ -142,12 +142,12 @@ margin-bottom: 10px;
 
 <section id="loginView" class="login-card">
 <h1>Acceso de administrador</h1>
-<p>Escribe tu correo autorizado. Te enviamos un enlace de acceso por correo — sin contraseña.</p>
+<p>Escribe la clave de administrador que te compartieron para este proyecto.</p>
 <div class="field">
-<label for="emailInput">Correo</label>
-<input id="emailInput" type="email" placeholder="tu@correo.com" autocomplete="email">
+<label for="adminKeyInput">Clave de administrador</label>
+<input id="adminKeyInput" type="password" placeholder="Clave" autocomplete="off">
 </div>
-<button class="btn primary" id="sendLinkBtn" style="width:100%">Enviar enlace de acceso</button>
+<button class="btn primary" id="loginBtn" style="width:100%">Entrar</button>
 <div class="status" id="loginStatus"></div>
 </section>
 
@@ -167,63 +167,74 @@ const SUPABASE_URL = "https://vajbsfgojtunamhrzrpf.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_Xljd7Ep1GxBXSPp5F4A1hg_Qg-iESzl";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+const ADMIN_KEY_STORAGE = "cotizador-admin-key";
 const money = value => new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:0}).format(value || 0);
 const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
 const fmtDateTime = iso => iso ? new Date(iso).toLocaleString("es-ES", {dateStyle:"medium", timeStyle:"short"}) : "—";
 
-const ADMIN_URL = "https://rengifojjrr.github.io/cotizaciones-interactivas/admin.html";
 const historyCache = {};
+let adminKey = "";
 
-document.getElementById("sendLinkBtn").onclick = async () => {
-const statusEl = document.getElementById("loginStatus");
-const email = document.getElementById("emailInput").value.trim();
-if (!email) { statusEl.textContent = "Escribe tu correo."; statusEl.className = "status error"; return; }
-document.getElementById("sendLinkBtn").disabled = true;
-statusEl.textContent = "Enviando enlace…";
-statusEl.className = "status";
-const {error} = await supabaseClient.auth.signInWithOtp({
-email,
-options: {emailRedirectTo: ADMIN_URL}
-});
-document.getElementById("sendLinkBtn").disabled = false;
-if (error) { statusEl.textContent = "No se pudo enviar el enlace: " + error.message; statusEl.className = "status error"; return; }
-statusEl.textContent = "Revisa tu correo (" + email + ") y haz clic en el enlace para entrar. Puedes cerrar esta pestaña y abrirlo desde el correo.";
-statusEl.className = "status ok";
-};
-
-document.getElementById("logoutBtn").onclick = async () => {
-await supabaseClient.auth.signOut();
-window.location.reload();
-};
-
-async function showDashboard(session) {
-document.getElementById("loginView").classList.add("hidden");
-document.getElementById("dashboardView").classList.remove("hidden");
-document.getElementById("logoutBtn").classList.remove("hidden");
-document.getElementById("sessionLabel").textContent = "Conectado como " + session.user.email;
-await loadQuotes();
-}
-
-function showLogin() {
+function showLogin(message, isError) {
 document.getElementById("loginView").classList.remove("hidden");
 document.getElementById("dashboardView").classList.add("hidden");
 document.getElementById("logoutBtn").classList.add("hidden");
+const statusEl = document.getElementById("loginStatus");
+statusEl.textContent = message || "";
+statusEl.className = "status" + (isError ? " error" : "");
 }
+
+function showDashboard() {
+document.getElementById("loginView").classList.add("hidden");
+document.getElementById("dashboardView").classList.remove("hidden");
+document.getElementById("logoutBtn").classList.remove("hidden");
+document.getElementById("sessionLabel").textContent = "Sesión de administrador activa";
+loadQuotes();
+}
+
+async function tryLogin(key, fromStorage) {
+document.getElementById("loginBtn").disabled = true;
+if (!fromStorage) showLogin("Verificando…");
+const {data, error} = await supabaseClient.rpc("admin_list_quotes", {p_admin_key: key});
+document.getElementById("loginBtn").disabled = false;
+if (error) {
+localStorage.removeItem(ADMIN_KEY_STORAGE);
+adminKey = "";
+showLogin(fromStorage ? "" : "Clave incorrecta.", !fromStorage);
+return;
+}
+adminKey = key;
+localStorage.setItem(ADMIN_KEY_STORAGE, key);
+showDashboard();
+renderQuotes(data);
+}
+
+document.getElementById("loginBtn").onclick = () => {
+const key = document.getElementById("adminKeyInput").value.trim();
+if (!key) { showLogin("Escribe la clave.", true); return; }
+tryLogin(key, false);
+};
+document.getElementById("adminKeyInput").addEventListener("keydown", e => {
+if (e.key === "Enter") document.getElementById("loginBtn").click();
+});
+
+document.getElementById("logoutBtn").onclick = () => {
+localStorage.removeItem(ADMIN_KEY_STORAGE);
+adminKey = "";
+document.getElementById("adminKeyInput").value = "";
+showLogin();
+};
 
 async function loadQuotes() {
 const list = document.getElementById("quotesList");
 list.innerHTML = `<div class="empty-state">Cargando…</div>`;
-const {data, error} = await supabaseClient
-.from("quotes")
-.select("id, client, quote_state, created_at, updated_at")
-.order("updated_at", {ascending: false});
-
-if (error) {
-list.innerHTML = `<div class="empty-state">No se pudo cargar el listado (${escapeHtml(error.message)}). Si tu correo no está autorizado, no verás ninguna cotización.</div>`;
-document.getElementById("quotesCount").textContent = "";
-return;
+const {data, error} = await supabaseClient.rpc("admin_list_quotes", {p_admin_key: adminKey});
+if (error) { showLogin("Tu sesión venció o la clave ya no es válida.", true); return; }
+renderQuotes(data);
 }
 
+function renderQuotes(data) {
+const list = document.getElementById("quotesList");
 document.getElementById("quotesCount").textContent = `${data.length} cotización(es)`;
 if (!data.length) {
 list.innerHTML = `<div class="empty-state">Todavía no hay cotizaciones registradas. Aparecerán aquí en cuanto un cliente abra su link y haga el primer cambio.</div>`;
@@ -272,11 +283,7 @@ if (isOpen) { el.classList.remove("open"); return; }
 el.classList.add("open");
 if (!historyCache[quoteId]) {
 el.innerHTML = `<div class="event"><span class="empty">Cargando historial…</span></div>`;
-const {data, error} = await supabaseClient
-.from("quote_events")
-.select("id, event_type, summary, created_at")
-.eq("quote_id", quoteId)
-.order("created_at", {ascending: false});
+const {data, error} = await supabaseClient.rpc("admin_list_events", {p_admin_key: adminKey, p_quote_id: quoteId});
 if (error) {
 el.innerHTML = `<div class="event"><span class="empty">No se pudo cargar el historial (${escapeHtml(error.message)}).</span></div>`;
 return;
@@ -290,13 +297,12 @@ el.innerHTML = events.length
 : `<div class="event"><span class="empty">Todavía no hay movimientos registrados para esta cotización.</span></div>`;
 }
 
-supabaseClient.auth.onAuthStateChange((event, session) => {
-if (session) showDashboard(session); else showLogin();
-});
-
-supabaseClient.auth.getSession().then(({data: {session}}) => {
-if (session) showDashboard(session); else showLogin();
-});
+const storedKey = localStorage.getItem(ADMIN_KEY_STORAGE);
+if (storedKey) {
+tryLogin(storedKey, true);
+} else {
+showLogin();
+}
 </script>
 </body>
 </html>
