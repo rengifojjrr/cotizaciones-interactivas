@@ -7,107 +7,139 @@
 <title>Panel de administración</title>
 <style>
 :root {
---bg: #f5f7fb; --surface: #ffffff; --surface-soft: #f8fafc;
---ink: #162033; --muted: #667085; --line: #e3e8f0;
---primary: #5b4ce1; --primary-soft: #eeebff;
---green: #067647; --green-soft: #ecfdf3;
---amber: #b54708; --amber-soft: #fffaeb;
---red: #b42318; --red-soft: #fef3f2;
---blue: #175cd3; --blue-soft: #eff8ff;
---radius: 14px;
+--bg:#f5f7fb; --surface:#fff; --surface-soft:#f8fafc;
+--ink:#162033; --muted:#667085; --line:#e3e8f0;
+--primary:#5b4ce1; --primary-soft:#eeebff;
+--green:#067647; --green-soft:#ecfdf3;
+--amber:#b54708; --amber-soft:#fffaeb;
+--red:#b42318; --red-soft:#fef3f2;
+--blue:#175cd3; --blue-soft:#eff8ff;
+--radius:14px;
 }
-* { box-sizing: border-box; }
-body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
-button, input, textarea, select { font: inherit; }
-button { cursor: pointer; }
-a { color: var(--primary); }
+* { box-sizing:border-box; }
+body { margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:var(--ink); background:var(--bg); }
+button, input, textarea, select { font:inherit; }
+button { cursor:pointer; }
+a { color:var(--primary); }
 
-.topbar { border-bottom: 1px solid var(--line); background: rgba(245,247,251,.94); }
-.topbar-inner { max-width: 1180px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.brand { display: flex; align-items: center; gap: 11px; }
-.brand-mark { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; color: white; font-weight: 800; background: linear-gradient(135deg,#6557e8,#8f6cff); }
-.brand strong { display: block; font-size: 14px; }
-.brand span { display: block; font-size: 11px; color: var(--muted); }
-.toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
+.topbar { border-bottom:1px solid var(--line); background:rgba(245,247,251,.94); }
+.topbar-inner { max-width:1180px; margin:0 auto; padding:14px 22px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.brand { display:flex; align-items:center; gap:11px; }
+.brand-mark { width:36px; height:36px; border-radius:11px; display:grid; place-items:center; color:#fff; font-weight:800; background:linear-gradient(135deg,#6557e8,#8f6cff); }
+.brand strong { display:block; font-size:14px; }
+.brand span { display:block; font-size:11px; color:var(--muted); }
+.toolbar { display:flex; gap:8px; flex-wrap:wrap; }
 
-.btn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 11px; padding: 9px 13px; font-weight: 700; font-size: 13px; }
-.btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
-.btn.danger { color: var(--red); }
-.btn.small { padding: 7px 10px; font-size: 12px; }
-.btn:disabled { opacity: .55; cursor: default; }
+.btn { border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:11px; padding:9px 13px; font-weight:700; font-size:13px; }
+.btn.primary { background:var(--primary); color:#fff; border-color:var(--primary); }
+.btn.danger { color:var(--red); }
+.btn.small { padding:6px 10px; font-size:12px; }
+.btn:disabled { opacity:.55; cursor:default; }
 
-.shell { max-width: 1180px; margin: 0 auto; padding: 28px 22px 60px; }
+.shell { max-width:1180px; margin:0 auto; padding:24px 22px 60px; }
 
-.login-card { max-width: 420px; margin: 8vh auto; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 30px; }
-.login-card h1 { font-size: 19px; margin: 0 0 6px; }
-.login-card p { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 0 0 18px; }
-.field { display: grid; gap: 6px; margin-bottom: 12px; }
-.field label { font-size: 12px; font-weight: 800; }
-.field input, .field textarea, .field select { width: 100%; border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; outline: none; background: white; }
-.field textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 1.5; }
-.field input:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
-.status { font-size: 12.5px; margin-top: 12px; line-height: 1.5; }
-.status.error { color: var(--red); }
-.status.ok { color: var(--green); }
+.login-card { max-width:420px; margin:8vh auto; background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:30px; }
+.login-card h1 { font-size:19px; margin:0 0 6px; }
+.login-card p { color:var(--muted); font-size:13px; line-height:1.55; margin:0 0 18px; }
+.field { display:grid; gap:6px; margin-bottom:12px; }
+.field label { font-size:12px; font-weight:800; }
+.field input, .field textarea, .field select { width:100%; border:1px solid var(--line); border-radius:11px; padding:10px 12px; outline:none; background:#fff; }
+.field textarea.code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; line-height:1.5; }
+.field input:focus, .field textarea:focus, .field select:focus { border-color:var(--primary); box-shadow:0 0 0 4px var(--primary-soft); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.status { font-size:12.5px; margin-top:12px; line-height:1.5; }
+.status.error { color:var(--red); }
+.status.ok { color:var(--green); }
 
-.section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
-.section-head h1 { font-size: 21px; margin: 0; }
-.section-head span { color: var(--muted); font-size: 12.5px; }
+.nav { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+.nav button { border:1px solid var(--line); background:var(--surface); color:var(--muted); border-radius:11px; padding:9px 15px; font-weight:700; font-size:13px; }
+.nav button.active { background:var(--ink); color:#fff; border-color:var(--ink); }
 
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
-.proj-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
-.proj-name { font-size: 16px; font-weight: 800; }
-.proj-name .muted { font-weight: 500; color: var(--muted); }
-.proj-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 7px; font-size: 12px; color: var(--muted); align-items: center; }
-.proj-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.section-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:8px; }
+.section-head h1 { font-size:21px; margin:0; }
+.section-head span { color:var(--muted); font-size:12.5px; }
 
-.badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 4px 9px; font-size: 11px; font-weight: 800; background: #eef1f5; color: #465467; }
-.badge.propuesta { background: var(--primary-soft); color: var(--primary); }
-.badge.aprobado { background: var(--blue-soft); color: var(--blue); }
-.badge.en_desarrollo { background: var(--amber-soft); color: var(--amber); }
-.badge.entregado { background: var(--green-soft); color: var(--green); }
-.badge.pendiente { background: #eef1f5; color: #465467; }
-.badge.en_curso { background: var(--amber-soft); color: var(--amber); }
-.badge.completada, .badge.completado { background: var(--green-soft); color: var(--green); }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px; margin-bottom:10px; }
+.card.click { cursor:pointer; }
+.card.click:hover { border-color:#cbd3df; }
+.row-top { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:flex-start; }
+.row-name { font-size:16px; font-weight:800; }
+.row-name .muted { font-weight:500; color:var(--muted); }
+.row-meta { display:flex; flex-wrap:wrap; gap:10px; margin-top:7px; font-size:12px; color:var(--muted); align-items:center; }
+.row-actions { display:flex; gap:8px; flex-wrap:wrap; }
 
-.detail { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 14px; display: none; }
-.detail.open { display: block; }
-.detail h3 { font-size: 13px; margin: 16px 0 8px; }
-.phase-row { border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; margin-bottom: 8px; background: var(--surface-soft); }
-.phase-row-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
-.phase-row-name { font-size: 13.5px; font-weight: 800; }
-.sub-item { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; flex-wrap: wrap; }
-.sub-item:last-child { border-bottom: 0; }
-select.status-select { border: 1px solid var(--line); border-radius: 9px; padding: 5px 8px; font-size: 11.5px; background: white; }
+.badge { display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:4px 9px; font-size:11px; font-weight:800; background:#eef1f5; color:#465467; }
+.badge.propuesta { background:var(--primary-soft); color:var(--primary); }
+.badge.aprobado { background:var(--blue-soft); color:var(--blue); }
+.badge.en_desarrollo { background:var(--amber-soft); color:var(--amber); }
+.badge.entregado, .badge.completada, .badge.completado, .badge.activo { background:var(--green-soft); color:var(--green); }
+.badge.pendiente, .badge.inactivo { background:#eef1f5; color:#465467; }
+.badge.en_curso, .badge.prospecto { background:var(--amber-soft); color:var(--amber); }
 
-.event { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
-.event:last-child { border-bottom: 0; }
-.event time { flex: 0 0 auto; color: var(--muted); font-size: 11px; white-space: nowrap; padding-top: 1px; }
-.event .who { flex: 0 0 auto; font-size: 10.5px; font-weight: 800; color: var(--primary); text-transform: uppercase; }
+.detail { margin-top:14px; border-top:1px solid var(--line); padding-top:14px; display:none; }
+.detail.open { display:block; }
+.detail h3 { font-size:13px; margin:16px 0 8px; }
+.phase-row { border:1px solid var(--line); border-radius:12px; padding:11px 13px; margin-bottom:8px; background:var(--surface-soft); }
+.phase-row-top { display:flex; justify-content:space-between; gap:10px; align-items:center; flex-wrap:wrap; }
+.phase-row-name { font-size:13.5px; font-weight:800; }
+.sub-item { display:flex; justify-content:space-between; gap:10px; align-items:center; padding:7px 0; border-bottom:1px solid var(--line); font-size:12.5px; flex-wrap:wrap; }
+.sub-item:last-child { border-bottom:0; }
+select.status-select { border:1px solid var(--line); border-radius:9px; padding:5px 8px; font-size:11.5px; background:#fff; }
 
-.notes-box { background: var(--amber-soft); border: 1px solid #fedf89; border-radius: 12px; padding: 12px 14px; font-size: 12.5px; line-height: 1.55; color: #7a2e0e; margin-top: 10px; }
+.event { display:flex; gap:10px; padding:7px 0; border-bottom:1px solid var(--line); font-size:12.5px; }
+.event:last-child { border-bottom:0; }
+.event time { flex:0 0 auto; color:var(--muted); font-size:11px; white-space:nowrap; padding-top:1px; }
+.event .who { flex:0 0 auto; font-size:10.5px; font-weight:800; color:var(--primary); text-transform:uppercase; }
 
-.empty { text-align: center; padding: 50px 20px; color: var(--muted); font-size: 13.5px; }
-.hidden { display: none !important; }
+.notes-box { background:var(--amber-soft); border:1px solid #fedf89; border-radius:12px; padding:12px 14px; font-size:12.5px; line-height:1.55; color:#7a2e0e; margin-top:10px; }
 
-dialog { width: min(760px, calc(100vw - 30px)); max-height: calc(100vh - 40px); border: 0; border-radius: 18px; padding: 0; color: var(--ink); }
-dialog::backdrop { background: rgba(15,23,42,.62); }
-.modal-head { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.modal-head h2 { margin: 0; font-size: 18px; }
-.modal-body { padding: 18px 20px 22px; overflow: auto; max-height: calc(100vh - 150px); }
-.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-.close { width: 34px; height: 34px; border: 0; border-radius: 10px; background: #f0f2f5; font-size: 18px; }
-.hint { font-size: 12px; color: var(--muted); line-height: 1.55; margin: 0 0 12px; }
+/* Ficha de cliente */
+.back-link { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--muted); background:none; border:0; padding:0; margin-bottom:14px; }
+.client-header { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:22px; margin-bottom:18px; }
+.client-header h1 { margin:0 0 4px; font-size:24px; letter-spacing:-.02em; }
+.client-header .sub { color:var(--muted); font-size:13.5px; }
+.contact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin-top:16px; }
+.contact-item { border:1px solid var(--line); border-radius:12px; padding:11px 13px; }
+.contact-item span { display:block; font-size:10px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px; }
+.contact-item strong { font-size:13.5px; font-weight:700; word-break:break-word; }
+.contact-item.empty strong { color:var(--muted); font-weight:500; }
 
-.toast { position: fixed; left: 50%; bottom: 24px; z-index: 200; transform: translate(-50%,20px); opacity: 0; pointer-events: none; background: #101828; color: white; border-radius: 12px; padding: 11px 14px; font-size: 12.5px; font-weight: 700; transition: .22s ease; max-width: 90vw; }
-.toast.show { opacity: 1; transform: translate(-50%,0); }
+.stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin-bottom:18px; }
+.stat { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; }
+.stat .label { color:var(--muted); font-size:11.5px; font-weight:700; margin-bottom:5px; }
+.stat .value { font-size:21px; font-weight:850; letter-spacing:-.02em; }
 
-@media (max-width: 780px) {
-.topbar-inner { flex-direction: column; align-items: stretch; }
-.toolbar .btn { width: 100%; }
-.shell { padding: 18px 13px 45px; }
-.proj-actions { width: 100%; }
-.proj-actions .btn { flex: 1 1 auto; }
+/* Bloque de clave de acceso */
+.access-box { background:var(--primary-soft); border:1px solid #d6d0ff; border-radius:12px; padding:13px 15px; margin-top:12px; }
+.access-title { font-size:11px; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:.05em; margin-bottom:9px; }
+.access-line { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.access-line:last-child { margin-bottom:0; }
+.access-label { font-size:12px; color:var(--muted); font-weight:700; min-width:56px; }
+.access-value { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13.5px; font-weight:700; background:#fff; border:1px solid #d6d0ff; border-radius:9px; padding:6px 11px; letter-spacing:.04em; }
+.access-value.hidden-key { letter-spacing:.18em; color:var(--muted); }
+
+.empty { text-align:center; padding:50px 20px; color:var(--muted); font-size:13.5px; }
+.hidden { display:none !important; }
+.hint { font-size:12px; color:var(--muted); line-height:1.55; margin:0 0 12px; }
+
+dialog { width:min(760px, calc(100vw - 30px)); max-height:calc(100vh - 40px); border:0; border-radius:18px; padding:0; color:var(--ink); }
+dialog::backdrop { background:rgba(15,23,42,.62); }
+.modal-head { padding:18px 20px 14px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.modal-head h2 { margin:0; font-size:18px; }
+.modal-body { padding:18px 20px 22px; overflow:auto; max-height:calc(100vh - 150px); }
+.modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:14px; flex-wrap:wrap; }
+.close { width:34px; height:34px; border:0; border-radius:10px; background:#f0f2f5; font-size:18px; }
+
+.toast { position:fixed; left:50%; bottom:24px; z-index:200; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#101828; color:#fff; border-radius:12px; padding:11px 14px; font-size:12.5px; font-weight:700; transition:.22s ease; max-width:90vw; }
+.toast.show { opacity:1; transform:translate(-50%,0); }
+
+@media (max-width:780px) {
+.topbar-inner { flex-direction:column; align-items:stretch; }
+.toolbar .btn { width:100%; }
+.shell { padding:18px 13px 45px; }
+.row-actions { width:100%; }
+.row-actions .btn { flex:1 1 auto; }
+.grid-2 { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -119,11 +151,10 @@ dialog::backdrop { background: rgba(15,23,42,.62); }
 <div class="brand-mark">CQ</div>
 <div>
 <strong>Panel de administración</strong>
-<span id="sessionLabel">Proyectos, cotizaciones e historial</span>
+<span id="sessionLabel">Clientes, proyectos e historial</span>
 </div>
 </div>
 <div class="toolbar hidden" id="adminTools">
-<button class="btn primary" id="newProjectBtn">+ Nuevo proyecto</button>
 <button class="btn" id="refreshBtn">Actualizar</button>
 <button class="btn" id="logoutBtn">Cerrar sesión</button>
 </div>
@@ -134,7 +165,7 @@ dialog::backdrop { background: rgba(15,23,42,.62); }
 
 <section id="loginView" class="login-card">
 <h1>Acceso de administrador</h1>
-<p>Escribe la clave de administrador para ver todos los proyectos, sus avances y el historial de cada cliente.</p>
+<p>Escribe la clave de administrador para ver tus clientes, sus proyectos, sus claves de acceso y el historial de cada uno.</p>
 <div class="field">
 <label for="adminKeyInput">Clave de administrador</label>
 <input id="adminKeyInput" type="password" placeholder="Clave" autocomplete="off">
@@ -144,20 +175,106 @@ dialog::backdrop { background: rgba(15,23,42,.62); }
 </section>
 
 <div id="dashboardView" class="hidden">
+
+<nav class="nav" id="mainNav">
+<button class="active" data-view="clientes">Clientes (CRM)</button>
+<button data-view="proyectos">Proyectos</button>
+<button data-view="cotizaciones">Cotizaciones interactivas</button>
+</nav>
+
+<!-- CRM: listado -->
+<section id="view-clientes">
+<div class="section-head">
+<h1>Clientes</h1>
+<div style="display:flex;gap:10px;align-items:center">
+<span id="clientsCount"></span>
+<button class="btn primary" id="newClientBtn">+ Nuevo cliente</button>
+</div>
+</div>
+<div id="clientsList"></div>
+</section>
+
+<!-- CRM: ficha del cliente -->
+<section id="view-cliente" class="hidden">
+<button class="back-link" id="backToClients">← Volver a clientes</button>
+<div id="clientDetail"></div>
+</section>
+
+<!-- Proyectos -->
+<section id="view-proyectos" class="hidden">
 <div class="section-head">
 <h1>Proyectos</h1>
+<div style="display:flex;gap:10px;align-items:center">
 <span id="projectsCount"></span>
+<button class="btn primary" id="newProjectBtn">+ Nuevo proyecto</button>
+</div>
 </div>
 <div id="projectsList"></div>
+</section>
 
-<div class="section-head" style="margin-top:34px">
+<!-- Cotizaciones -->
+<section id="view-cotizaciones" class="hidden">
+<div class="section-head">
 <h1>Cotizaciones interactivas</h1>
 <span id="quotesCount"></span>
 </div>
 <div id="quotesList"></div>
-</div>
+</section>
 
+</div>
 </main>
+
+<dialog id="clientDialog">
+<div class="modal-head">
+<div>
+<span style="font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.05em">Cliente</span>
+<h2 id="clientDialogTitle">Nuevo cliente</h2>
+</div>
+<button class="close" data-close="clientDialog">×</button>
+</div>
+<div class="modal-body">
+<div class="grid-2">
+<div class="field"><label for="cliName">Nombre del cliente</label><input id="cliName" placeholder="Ej. Juan Pérez"></div>
+<div class="field"><label for="cliCompany">Empresa</label><input id="cliCompany" placeholder="Ej. Salud Global S.A."></div>
+<div class="field"><label for="cliContact">Persona de contacto</label><input id="cliContact" placeholder="Quién atiende el proyecto"></div>
+<div class="field"><label for="cliEmail">Correo</label><input id="cliEmail" type="email" placeholder="cliente@empresa.com"></div>
+<div class="field"><label for="cliPhone">Teléfono / WhatsApp</label><input id="cliPhone" placeholder="+591 …"></div>
+<div class="field"><label for="cliStatus">Estado</label>
+<select id="cliStatus">
+<option value="prospecto">Prospecto</option>
+<option value="activo" selected>Activo</option>
+<option value="inactivo">Inactivo</option>
+</select>
+</div>
+</div>
+<div class="field"><label for="cliNotes">Notas internas (no las ve el cliente)</label><textarea id="cliNotes" rows="4" placeholder="Contexto, acuerdos, cómo llegó, etc."></textarea></div>
+<div class="modal-actions">
+<button class="btn" data-close="clientDialog">Cancelar</button>
+<button class="btn primary" id="saveClientBtn">Guardar cliente</button>
+</div>
+<div class="status" id="clientStatus"></div>
+</div>
+</dialog>
+
+<dialog id="keyDialog">
+<div class="modal-head">
+<div>
+<span style="font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.05em">Clave de acceso</span>
+<h2>Cambiar la clave del proyecto</h2>
+</div>
+<button class="close" data-close="keyDialog">×</button>
+</div>
+<div class="modal-body">
+<p class="hint">Al cambiarla, la clave anterior deja de funcionar de inmediato. Tendrás que enviarle la nueva al cliente.</p>
+<div class="field"><label for="newKeyInput">Nueva clave</label><input id="newKeyInput" placeholder="Ej. ABCD-1234-EFGH"></div>
+<div class="modal-actions">
+<button class="btn" data-close="keyDialog">Cancelar</button>
+<button class="btn" id="genKeyBtn">Generar una</button>
+<button class="btn primary" id="saveKeyBtn">Guardar clave</button>
+</div>
+<div class="status" id="keyStatus"></div>
+</div>
+</dialog>
 
 <dialog id="projectDialog">
 <div class="modal-head">
@@ -165,19 +282,23 @@ dialog::backdrop { background: rgba(15,23,42,.62); }
 <span style="font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.05em">Proyecto</span>
 <h2 id="projectDialogTitle">Nuevo proyecto</h2>
 </div>
-<button class="close" id="closeProjectDialog">×</button>
+<button class="close" data-close="projectDialog">×</button>
 </div>
 <div class="modal-body">
 <p class="hint">
-Pega aquí el proyecto completo en formato JSON (fases, entregables y documentos). Si dejas <code>access_key</code> vacío
-al editar, la clave del cliente no cambia. En un proyecto nuevo, <code>code</code> y <code>access_key</code> son obligatorios.
+Pega el proyecto completo en JSON (fases, entregables y documentos). En un proyecto nuevo,
+<code>code</code> y <code>access_key</code> son obligatorios. Al editar, si dejas <code>access_key</code> vacío, la clave no cambia.
 </p>
 <div class="field">
+<label for="projectClient">Cliente</label>
+<select id="projectClient"></select>
+</div>
+<div class="field">
 <label for="projectJson">JSON del proyecto</label>
-<textarea id="projectJson" rows="20" spellcheck="false"></textarea>
+<textarea id="projectJson" class="code" rows="18" spellcheck="false"></textarea>
 </div>
 <div class="modal-actions">
-<button class="btn" id="cancelProjectBtn">Cancelar</button>
+<button class="btn" data-close="projectDialog">Cancelar</button>
 <button class="btn" id="fillTemplateBtn">Cargar plantilla</button>
 <button class="btn primary" id="saveProjectBtn">Guardar proyecto</button>
 </div>
@@ -197,15 +318,18 @@ const STORAGE = "cotizador-admin-key";
 const money = v => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(Number(v)||0);
 const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
 const fmtDT = iso => iso ? new Date(iso).toLocaleString("es-ES",{dateStyle:"medium",timeStyle:"short"}) : "—";
+const fmtD = iso => iso ? new Date(iso).toLocaleDateString("es-ES",{dateStyle:"medium"}) : "—";
 
-const STATUS_LABEL = {
+const LABEL = {
 propuesta:"Propuesta", aprobado:"Aprobado", en_desarrollo:"En desarrollo", entregado:"Entregado", pausado:"En pausa",
-pendiente:"Pendiente", en_curso:"En curso", completada:"Completada", completado:"Completado"
+pendiente:"Pendiente", en_curso:"En curso", completada:"Completada", completado:"Completado",
+prospecto:"Prospecto", activo:"Activo", inactivo:"Inactivo"
 };
-const label = s => STATUS_LABEL[s] || s || "—";
+const label = s => LABEL[s] || s || "—";
 
 let adminKey = "";
-let PROJECTS = [];
+let CLIENTS = [], PROJECTS = [], QUOTES = [];
+let currentClient = null;
 const detailCache = {};
 
 let toastTimer;
@@ -215,6 +339,8 @@ el.textContent = msg; el.classList.add("show");
 clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove("show"),2800);
 }
 
+document.querySelectorAll("[data-close]").forEach(b => b.onclick = () => document.getElementById(b.dataset.close).close());
+
 function showLogin(msg,isError){
 document.getElementById("loginView").classList.remove("hidden");
 document.getElementById("dashboardView").classList.add("hidden");
@@ -223,17 +349,10 @@ const st = document.getElementById("loginStatus");
 st.textContent = msg || ""; st.className = "status" + (isError?" error":"");
 }
 
-function showDashboard(){
-document.getElementById("loginView").classList.add("hidden");
-document.getElementById("dashboardView").classList.remove("hidden");
-document.getElementById("adminTools").classList.remove("hidden");
-document.getElementById("sessionLabel").textContent = "Sesión de administrador activa";
-}
-
 async function tryLogin(key, fromStorage){
 document.getElementById("loginBtn").disabled = true;
 if(!fromStorage) showLogin("Verificando…");
-const {data, error} = await sb.rpc("cq_admin_list",{p_admin_key:key});
+const {error} = await sb.rpc("cq_admin_clients",{p_admin_key:key});
 document.getElementById("loginBtn").disabled = false;
 if(error){
 localStorage.removeItem(STORAGE); adminKey = "";
@@ -242,10 +361,11 @@ return false;
 }
 adminKey = key;
 localStorage.setItem(STORAGE, key);
-showDashboard();
-PROJECTS = data || [];
-renderProjects();
-loadQuotes();
+document.getElementById("loginView").classList.add("hidden");
+document.getElementById("dashboardView").classList.remove("hidden");
+document.getElementById("adminTools").classList.remove("hidden");
+document.getElementById("sessionLabel").textContent = "Sesión de administrador activa";
+await loadAll();
 return true;
 }
 
@@ -255,27 +375,276 @@ if(!key){ showLogin("Escribe la clave.", true); return; }
 tryLogin(key,false);
 };
 document.getElementById("adminKeyInput").addEventListener("keydown", e => {
-if(e.key === "Enter") document.getElementById("loginBtn").click();
+if(e.key==="Enter") document.getElementById("loginBtn").click();
 });
 document.getElementById("logoutBtn").onclick = () => {
-localStorage.removeItem(STORAGE); adminKey = "";
-document.getElementById("adminKeyInput").value = "";
+localStorage.removeItem(STORAGE); adminKey="";
+document.getElementById("adminKeyInput").value="";
 showLogin();
 };
-document.getElementById("refreshBtn").onclick = () => reloadProjects();
+document.getElementById("refreshBtn").onclick = async () => { await loadAll(); toast("Actualizado."); };
 
-async function reloadProjects(){
-const {data, error} = await sb.rpc("cq_admin_list",{p_admin_key:adminKey});
-if(error){ showLogin("La sesión venció o la clave ya no es válida.", true); return; }
-PROJECTS = data || [];
+document.querySelectorAll("#mainNav button").forEach(b => b.onclick = () => switchView(b.dataset.view));
+
+function switchView(view){
+document.querySelectorAll("#mainNav button").forEach(b => b.classList.toggle("active", b.dataset.view===view));
+["clientes","cliente","proyectos","cotizaciones"].forEach(v => {
+document.getElementById("view-"+v).classList.toggle("hidden", v!==view);
+});
+}
+
+async function loadAll(){
+const [c,p,q] = await Promise.all([
+sb.rpc("cq_admin_clients",{p_admin_key:adminKey}),
+sb.rpc("cq_admin_list",{p_admin_key:adminKey}),
+sb.rpc("admin_list_quotes",{p_admin_key:adminKey})
+]);
+if(c.error){ showLogin("La sesión venció o la clave ya no es válida.", true); return; }
+CLIENTS = c.data || []; PROJECTS = p.data || []; QUOTES = q.data || [];
 Object.keys(detailCache).forEach(k => delete detailCache[k]);
-renderProjects();
+renderClients(); renderProjects(); renderQuotes();
+if(currentClient) openClient(currentClient, true);
 }
 
 function portalLink(code){
 return new URL(`portal.html?p=${encodeURIComponent(code)}`, window.location.href).href;
 }
 
+/* ---------------- CRM: listado de clientes ---------------- */
+function renderClients(){
+const list = document.getElementById("clientsList");
+document.getElementById("clientsCount").textContent = `${CLIENTS.length} cliente(s)`;
+if(!CLIENTS.length){
+list.innerHTML = `<div class="empty">Todavía no hay clientes. Crea el primero con “+ Nuevo cliente”.</div>`;
+return;
+}
+list.innerHTML = CLIENTS.map(c => `
+<article class="card click" data-open-client="${esc(c.id)}">
+<div class="row-top">
+<div>
+<div class="row-name">${esc(c.name)}${c.company ? ` <span class="muted">— ${esc(c.company)}</span>` : ""}</div>
+<div class="row-meta">
+<span class="badge ${esc(c.status)}">${esc(label(c.status))}</span>
+${c.email ? `<span>${esc(c.email)}</span>` : ""}
+${c.phone ? `<span>${esc(c.phone)}</span>` : ""}
+<span>${c.projects_total} proyecto(s)</span>
+<span>${c.quotes_total} cotización(es)</span>
+<span>${money(c.value_total)}</span>
+${c.last_activity ? `<span>Última actividad: ${fmtDT(c.last_activity)}</span>` : ""}
+</div>
+</div>
+<div class="row-actions">
+<button class="btn small primary" data-open-client="${esc(c.id)}">Ver ficha →</button>
+</div>
+</div>
+</article>`).join("");
+
+list.querySelectorAll("[data-open-client]").forEach(el => {
+el.onclick = e => { e.stopPropagation(); openClient(el.dataset.openClient); };
+});
+}
+
+/* ---------------- CRM: ficha del cliente ---------------- */
+async function openClient(id, keepView){
+currentClient = id;
+if(!keepView) switchView("cliente");
+document.getElementById("view-cliente").classList.remove("hidden");
+const root = document.getElementById("clientDetail");
+if(!keepView) root.innerHTML = `<div class="empty">Cargando…</div>`;
+
+const {data, error} = await sb.rpc("cq_admin_client",{p_admin_key:adminKey, p_client_id:id});
+if(error){ root.innerHTML = `<div class="empty">No se pudo cargar la ficha (${esc(error.message)}).</div>`; return; }
+
+const c = data.client, projects = data.projects||[], quotes = data.quotes||[], events = data.events||[];
+const valorTotal = projects.reduce((s,p)=>s+Number(p.total||0),0);
+
+root.innerHTML = `
+<div class="client-header">
+<div class="row-top">
+<div>
+<h1>${esc(c.name)}</h1>
+<div class="sub">${c.company ? esc(c.company) : "Sin empresa registrada"} · <span class="badge ${esc(c.status)}">${esc(label(c.status))}</span></div>
+</div>
+<div class="row-actions">
+<button class="btn small" id="editClientBtn">Editar datos</button>
+</div>
+</div>
+<div class="contact-grid">
+<div class="contact-item ${c.contact_name?"":"empty"}"><span>Contacto</span><strong>${esc(c.contact_name || "—")}</strong></div>
+<div class="contact-item ${c.email?"":"empty"}"><span>Correo</span><strong>${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : "—"}</strong></div>
+<div class="contact-item ${c.phone?"":"empty"}"><span>Teléfono</span><strong>${esc(c.phone || "—")}</strong></div>
+<div class="contact-item"><span>Cliente desde</span><strong>${fmtD(c.created_at)}</strong></div>
+</div>
+${c.notes ? `<div class="notes-box"><strong>Notas internas:</strong> ${esc(c.notes)}</div>` : ""}
+</div>
+
+<div class="stat-row">
+<div class="stat"><div class="label">Proyectos</div><div class="value">${projects.length}</div></div>
+<div class="stat"><div class="label">Valor total</div><div class="value">${money(valorTotal)}</div></div>
+<div class="stat"><div class="label">Cotizaciones</div><div class="value">${quotes.length}</div></div>
+<div class="stat"><div class="label">Movimientos</div><div class="value">${events.length}</div></div>
+</div>
+
+<div class="section-head"><h1 style="font-size:17px">Proyectos y accesos</h1></div>
+${projects.length ? projects.map(p => {
+const pct = p.items_total ? Math.round(p.items_done/p.items_total*100) : 0;
+return `
+<article class="card">
+<div class="row-top">
+<div>
+<div class="row-name">${esc(p.project_name)}</div>
+<div class="row-meta">
+<span class="badge ${esc(p.status)}">${esc(label(p.status))}</span>
+<span>${money(p.total)}</span>
+<span>${p.phases_done}/${p.phases_total} fases · ${p.items_done}/${p.items_total} entregables (${pct}%)</span>
+<span>${p.documents_total} documento(s)</span>
+</div>
+</div>
+<div class="row-actions">
+<a class="btn small" href="${esc(portalLink(p.code))}" target="_blank" rel="noopener">Abrir portal ↗</a>
+<button class="btn small" data-edit-project="${esc(p.id)}">Editar</button>
+</div>
+</div>
+
+<div class="access-box">
+<div class="access-title">Datos de acceso del cliente</div>
+<div class="access-line">
+<span class="access-label">Código</span>
+<span class="access-value">${esc(p.code)}</span>
+<button class="btn small" data-copy="${esc(p.code)}">Copiar</button>
+</div>
+<div class="access-line">
+<span class="access-label">Clave</span>
+<span class="access-value hidden-key" id="key-${esc(p.id)}" data-key="${esc(p.access_key || "")}">••••••••••</span>
+<button class="btn small" data-toggle-key="${esc(p.id)}">Ver</button>
+<button class="btn small" data-copy="${esc(p.access_key || "")}">Copiar</button>
+<button class="btn small" data-change-key="${esc(p.id)}">Cambiar</button>
+</div>
+<div class="access-line">
+<span class="access-label">Link</span>
+<button class="btn small" data-copy="${esc(portalLink(p.code))}">Copiar link del portal</button>
+<button class="btn small primary" data-copy-all="${esc(p.id)}" data-code="${esc(p.code)}" data-key2="${esc(p.access_key || "")}">Copiar todo para enviar</button>
+</div>
+</div>
+</article>`;
+}).join("") : `<div class="empty">Este cliente todavía no tiene proyectos. Créalo desde la pestaña “Proyectos”.</div>`}
+
+<div class="section-head" style="margin-top:26px"><h1 style="font-size:17px">Cotizaciones interactivas</h1></div>
+${quotes.length ? quotes.map(q => `
+<article class="card">
+<div class="row-top">
+<div>
+<div class="row-name">${esc(q.client?.name || "Cotización sin nombre")}${q.client?.company ? ` <span class="muted">— ${esc(q.client.company)}</span>` : ""}</div>
+<div class="row-meta">
+<span>Creada: ${fmtDT(q.created_at)}</span>
+<span>Último cambio: ${fmtDT(q.updated_at)}</span>
+</div>
+</div>
+<div class="row-actions">
+<a class="btn small" href="index.html?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir cotización ↗</a>
+</div>
+</div>
+</article>`).join("") : `<div class="empty">Sin cotizaciones interactivas asignadas a este cliente.</div>`}
+
+<div class="section-head" style="margin-top:26px"><h1 style="font-size:17px">Actividad</h1></div>
+<div class="card">
+${events.length ? events.map(e => `
+<div class="event">
+<time>${fmtDT(e.created_at)}</time>
+<span class="who">${esc(e.actor)}</span>
+<span>${esc(e.summary)}${e.project_name ? ` <span style="color:var(--muted)">· ${esc(e.project_name)}</span>` : ""}</span>
+</div>`).join("") : `<div class="hint">Sin actividad registrada todavía.</div>`}
+</div>
+`;
+
+root.querySelectorAll("[data-toggle-key]").forEach(b => b.onclick = () => {
+const el = document.getElementById("key-" + b.dataset.toggleKey);
+const showing = !el.classList.contains("hidden-key");
+if(showing){ el.textContent = "••••••••••"; el.classList.add("hidden-key"); b.textContent = "Ver"; }
+else { el.textContent = el.dataset.key || "(sin clave guardada)"; el.classList.remove("hidden-key"); b.textContent = "Ocultar"; }
+});
+root.querySelectorAll("[data-copy]").forEach(b => b.onclick = async () => {
+const val = b.dataset.copy;
+if(!val){ toast("No hay nada que copiar."); return; }
+try { await navigator.clipboard.writeText(val); toast("Copiado."); } catch { toast(val); }
+});
+root.querySelectorAll("[data-copy-all]").forEach(b => b.onclick = async () => {
+const p = projects.find(x => x.id === b.dataset.copyAll);
+const txt = `Hola, aquí tienes el acceso a tu proyecto:\n\n${p.project_name}\nLink: ${portalLink(p.code)}\nCódigo: ${p.code}\nClave: ${p.access_key || "(sin clave)"}\n`;
+try { await navigator.clipboard.writeText(txt); toast("Mensaje copiado, listo para enviar."); } catch { toast(txt); }
+});
+root.querySelectorAll("[data-change-key]").forEach(b => b.onclick = () => openKeyDialog(b.dataset.changeKey));
+root.querySelectorAll("[data-edit-project]").forEach(b => b.onclick = () => openProjectDialog(b.dataset.editProject));
+document.getElementById("editClientBtn").onclick = () => openClientDialog(c);
+}
+
+document.getElementById("backToClients").onclick = () => { currentClient = null; switchView("clientes"); };
+
+/* ---------------- Diálogo de cliente ---------------- */
+let editingClientId = null;
+function openClientDialog(c){
+editingClientId = c ? c.id : null;
+document.getElementById("clientDialogTitle").textContent = c ? "Editar cliente" : "Nuevo cliente";
+document.getElementById("cliName").value = c?.name || "";
+document.getElementById("cliCompany").value = c?.company || "";
+document.getElementById("cliContact").value = c?.contact_name || "";
+document.getElementById("cliEmail").value = c?.email || "";
+document.getElementById("cliPhone").value = c?.phone || "";
+document.getElementById("cliStatus").value = c?.status || "activo";
+document.getElementById("cliNotes").value = c?.notes || "";
+document.getElementById("clientStatus").textContent = "";
+document.getElementById("clientDialog").showModal();
+}
+document.getElementById("newClientBtn").onclick = () => openClientDialog(null);
+
+document.getElementById("saveClientBtn").onclick = async () => {
+const st = document.getElementById("clientStatus");
+const payload = {
+name: document.getElementById("cliName").value.trim(),
+company: document.getElementById("cliCompany").value.trim(),
+contact_name: document.getElementById("cliContact").value.trim(),
+email: document.getElementById("cliEmail").value.trim(),
+phone: document.getElementById("cliPhone").value.trim(),
+status: document.getElementById("cliStatus").value,
+notes: document.getElementById("cliNotes").value.trim()
+};
+if(!payload.name){ st.textContent = "Escribe al menos el nombre."; st.className="status error"; return; }
+if(editingClientId) payload.id = editingClientId;
+
+st.textContent = "Guardando…"; st.className = "status";
+const {error} = await sb.rpc("cq_admin_save_client",{p_admin_key:adminKey, p_payload:payload});
+if(error){ st.textContent = "No se pudo guardar: " + error.message; st.className="status error"; return; }
+document.getElementById("clientDialog").close();
+toast("Cliente guardado.");
+await loadAll();
+};
+
+/* ---------------- Cambiar clave ---------------- */
+let keyProjectId = null;
+function openKeyDialog(pid){
+keyProjectId = pid;
+document.getElementById("newKeyInput").value = "";
+document.getElementById("keyStatus").textContent = "";
+document.getElementById("keyDialog").showModal();
+}
+document.getElementById("genKeyBtn").onclick = () => {
+const alfa = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const part = () => Array.from({length:4},()=>alfa[Math.floor(Math.random()*alfa.length)]).join("");
+document.getElementById("newKeyInput").value = `${part()}-${part()}-${part()}`;
+};
+document.getElementById("saveKeyBtn").onclick = async () => {
+const st = document.getElementById("keyStatus");
+const nk = document.getElementById("newKeyInput").value.trim();
+if(!nk){ st.textContent = "Escribe o genera una clave."; st.className="status error"; return; }
+st.textContent = "Guardando…"; st.className="status";
+const {error} = await sb.rpc("cq_admin_set_key",{p_admin_key:adminKey, p_project_id:keyProjectId, p_new_key:nk});
+if(error){ st.textContent = "No se pudo cambiar: " + error.message; st.className="status error"; return; }
+document.getElementById("keyDialog").close();
+toast("Clave actualizada. Recuerda enviársela al cliente.");
+await loadAll();
+};
+
+/* ---------------- Proyectos ---------------- */
 function renderProjects(){
 const list = document.getElementById("projectsList");
 document.getElementById("projectsCount").textContent = `${PROJECTS.length} proyecto(s)`;
@@ -284,26 +653,25 @@ list.innerHTML = `<div class="empty">Todavía no hay proyectos. Crea el primero 
 return;
 }
 list.innerHTML = PROJECTS.map(p => {
-const pct = p.items_total ? Math.round(p.items_done / p.items_total * 100) : 0;
+const pct = p.items_total ? Math.round(p.items_done/p.items_total*100) : 0;
+const cli = CLIENTS.find(c => c.id === p.client_id);
 return `
 <article class="card" data-project="${esc(p.id)}">
-<div class="proj-top">
+<div class="row-top">
 <div>
-<div class="proj-name">${esc(p.project_name)}${p.client_name ? ` <span class="muted">— ${esc(p.client_name)}</span>` : ""}</div>
-<div class="proj-meta">
+<div class="row-name">${esc(p.project_name)}${cli ? ` <span class="muted">— ${esc(cli.name)}</span>` : ` <span class="muted">— sin cliente asignado</span>`}</div>
+<div class="row-meta">
 <span class="badge ${esc(p.status)}">${esc(label(p.status))}</span>
 <span>Código: <strong>${esc(p.code)}</strong></span>
 <span>${money(p.total)}</span>
 <span>${p.phases_done}/${p.phases_total} fases · ${p.items_done}/${p.items_total} entregables (${pct}%)</span>
-<span>${p.documents_total} documento(s)</span>
 ${p.last_activity ? `<span>Última actividad: ${fmtDT(p.last_activity)}</span>` : ""}
 </div>
 </div>
-<div class="proj-actions">
-<button class="btn small copy-link" data-code="${esc(p.code)}">Copiar link</button>
+<div class="row-actions">
 <a class="btn small" href="${esc(portalLink(p.code))}" target="_blank" rel="noopener">Abrir portal ↗</a>
-<button class="btn small edit-project" data-id="${esc(p.id)}">Editar</button>
-<button class="btn small primary toggle-detail" data-id="${esc(p.id)}">Ver detalle</button>
+<button class="btn small" data-edit-project="${esc(p.id)}">Editar</button>
+<button class="btn small primary" data-detail="${esc(p.id)}">Ver detalle</button>
 </div>
 </div>
 ${p.client_state && p.client_state.notes ? `<div class="notes-box"><strong>Notas del cliente:</strong> ${esc(p.client_state.notes)}</div>` : ""}
@@ -311,33 +679,27 @@ ${p.client_state && p.client_state.notes ? `<div class="notes-box"><strong>Notas
 </article>`;
 }).join("");
 
-list.querySelectorAll(".toggle-detail").forEach(b => b.onclick = () => toggleDetail(b.dataset.id));
-list.querySelectorAll(".edit-project").forEach(b => b.onclick = () => openProjectDialog(b.dataset.id));
-list.querySelectorAll(".copy-link").forEach(b => b.onclick = async () => {
-try { await navigator.clipboard.writeText(portalLink(b.dataset.code)); toast("Link del portal copiado."); }
-catch { toast(portalLink(b.dataset.code)); }
-});
+list.querySelectorAll("[data-detail]").forEach(b => b.onclick = () => toggleDetail(b.dataset.detail));
+list.querySelectorAll("[data-edit-project]").forEach(b => b.onclick = () => openProjectDialog(b.dataset.editProject));
 }
 
 async function toggleDetail(id){
-const el = document.getElementById("detail-" + id);
+const el = document.getElementById("detail-"+id);
 if(el.classList.contains("open")){ el.classList.remove("open"); return; }
 el.classList.add("open");
 el.innerHTML = `<div class="empty">Cargando…</div>`;
-
 const [detail, events] = await Promise.all([
-sb.rpc("cq_admin_get", {p_admin_key: adminKey, p_project_id: id}),
-sb.rpc("cq_admin_events", {p_admin_key: adminKey, p_project_id: id})
+sb.rpc("cq_admin_get",{p_admin_key:adminKey, p_project_id:id}),
+sb.rpc("cq_admin_events",{p_admin_key:adminKey, p_project_id:id})
 ]);
-if(detail.error){ el.innerHTML = `<div class="empty">No se pudo cargar (${esc(detail.error.message)}).</div>`; return; }
+if(detail.error){ el.innerHTML = `<div class="empty">No se pudo cargar.</div>`; return; }
 detailCache[id] = detail.data;
-renderDetail(id, detail.data, events.data || []);
+renderDetail(id, detail.data, events.data||[]);
 }
 
 function renderDetail(id, d, events){
-const el = document.getElementById("detail-" + id);
-const phases = d.phases || [], docs = d.documents || [];
-
+const el = document.getElementById("detail-"+id);
+const phases = d.phases||[], docs = d.documents||[];
 el.innerHTML = `
 <h3>Fases y entregables</h3>
 ${phases.map((ph,i) => `
@@ -347,7 +709,7 @@ ${phases.map((ph,i) => `
 <div style="display:flex;gap:8px;align-items:center">
 <strong>${money(ph.phase_total)}</strong>
 <select class="status-select" data-kind="phase" data-target="${esc(ph.id)}">
-${["pendiente","en_curso","completada"].map(s => `<option value="${s}"${ph.status===s?" selected":""}>${label(s)}</option>`).join("")}
+${["pendiente","en_curso","completada"].map(s=>`<option value="${s}"${ph.status===s?" selected":""}>${label(s)}</option>`).join("")}
 </select>
 </div>
 </div>
@@ -358,120 +720,80 @@ ${(ph.items||[]).map(it => `
 <span style="display:flex;gap:8px;align-items:center">
 <strong>${money(it.cost)}</strong>
 <select class="status-select" data-kind="item" data-target="${esc(it.id)}">
-${["pendiente","en_curso","completado"].map(s => `<option value="${s}"${it.status===s?" selected":""}>${label(s)}</option>`).join("")}
+${["pendiente","en_curso","completado"].map(s=>`<option value="${s}"${it.status===s?" selected":""}>${label(s)}</option>`).join("")}
 </select>
 </span>
 </div>`).join("")}
 </div>
 </div>`).join("")}
-
 <h3>Documentos (${docs.length})</h3>
 ${docs.length ? docs.map(doc => `
-<div class="sub-item">
-<span>${esc(doc.name)}</span>
-<a href="${esc(doc.url)}" target="_blank" rel="noopener">Abrir ↗</a>
-</div>`).join("") : `<div class="hint">Sin documentos publicados todavía.</div>`}
-
+<div class="sub-item"><span>${esc(doc.name)}</span><a href="${esc(doc.url)}" target="_blank" rel="noopener">Abrir ↗</a></div>`).join("")
+: `<div class="hint">Sin documentos todavía.</div>`}
 <h3>Historial (${events.length})</h3>
 ${events.length ? events.map(ev => `
-<div class="event">
-<time>${fmtDT(ev.created_at)}</time>
-<span class="who">${esc(ev.actor)}</span>
-<span>${esc(ev.summary)}</span>
-</div>`).join("") : `<div class="hint">Sin actividad registrada.</div>`}
+<div class="event"><time>${fmtDT(ev.created_at)}</time><span class="who">${esc(ev.actor)}</span><span>${esc(ev.summary)}</span></div>`).join("")
+: `<div class="hint">Sin actividad.</div>`}
 `;
-
 el.querySelectorAll(".status-select").forEach(sel => {
 sel.onchange = async () => {
-const {error} = await sb.rpc("cq_admin_set_status", {
-p_admin_key: adminKey, p_kind: sel.dataset.kind,
-p_target_id: sel.dataset.target, p_status: sel.value
+const {error} = await sb.rpc("cq_admin_set_status",{
+p_admin_key:adminKey, p_kind:sel.dataset.kind, p_target_id:sel.dataset.target, p_status:sel.value
 });
-if(error){ toast("No se pudo actualizar: " + error.message); return; }
+if(error){ toast("No se pudo actualizar: "+error.message); return; }
 toast("Estado actualizado.");
-await reloadProjects();
+await loadAll();
 toggleDetail(id);
 };
 });
 }
 
-/* ---------- Crear / editar proyecto ---------- */
 const PLANTILLA = {
-code: "CODIGO-CORTO",
-access_key: "CLAVE-DEL-CLIENTE",
-client_name: "Nombre del cliente",
-project_name: "Nombre del proyecto",
-summary: "Explicación breve del proyecto, en lenguaje cercano.",
-currency: "USD",
-status: "propuesta",
-hero_note: "Entrega estimada: X semanas.",
-phases: [{
-name: "Fase 1 — Nombre",
-objective: "Qué se logra en esta fase.",
-scope_limit: "Lo que no entra en esta fase.",
-status: "pendiente",
-timeline: "Días 1 a 5",
-items: [{
-title: "Entregable",
-description: "Qué incluye.",
-cost: 100,
-mandatory: "required",
-time_estimate: "4 a 6 horas",
-status: "pendiente"
-}]
-}],
-documents: [{
-name: "Propuesta en PDF",
-description: "Documento con el desglose completo.",
-url: "https://…",
-kind: "pdf"
-}]
+code:"CODIGO-CORTO", access_key:"CLAVE-DEL-CLIENTE",
+project_name:"Nombre del proyecto",
+summary:"Explicación breve del proyecto, en lenguaje cercano.",
+currency:"USD", status:"propuesta", hero_note:"Entrega estimada: X semanas.",
+phases:[{ name:"Fase 1 — Nombre", objective:"Qué se logra en esta fase.",
+scope_limit:"Lo que no entra en esta fase.", status:"pendiente", timeline:"Días 1 a 5",
+items:[{ title:"Entregable", description:"Qué incluye.", cost:100,
+mandatory:"required", time_estimate:"4 a 6 horas", status:"pendiente" }] }],
+documents:[{ name:"Propuesta en PDF", description:"Documento con el desglose completo.", url:"https://…", kind:"pdf" }]
 };
 
-let editingId = null;
-
+let editingProjectId = null;
 function openProjectDialog(id){
-editingId = id || null;
-const dlg = document.getElementById("projectDialog");
+editingProjectId = id || null;
 document.getElementById("projectStatus").textContent = "";
 document.getElementById("projectDialogTitle").textContent = id ? "Editar proyecto" : "Nuevo proyecto";
 
+const sel = document.getElementById("projectClient");
+sel.innerHTML = `<option value="">— sin cliente asignado —</option>` +
+CLIENTS.map(c => `<option value="${esc(c.id)}">${esc(c.name)}${c.company?` — ${esc(c.company)}`:""}</option>`).join("");
+
+const proj = PROJECTS.find(p => p.id === id);
+sel.value = proj?.client_id || (currentClient || "");
+
 if(id && detailCache[id]){
 const d = detailCache[id];
-const payload = {
-id: d.project.id,
-code: d.project.code,
-access_key: "",
-client_name: d.project.client_name,
-project_name: d.project.project_name,
-summary: d.project.summary,
-currency: d.project.currency,
-status: d.project.status,
-hero_note: d.project.hero_note,
+document.getElementById("projectJson").value = JSON.stringify({
+id: d.project.id, code: d.project.code, access_key: "",
+project_name: d.project.project_name, summary: d.project.summary,
+currency: d.project.currency, status: d.project.status, hero_note: d.project.hero_note,
 phases: (d.phases||[]).map(ph => ({
-name: ph.name, objective: ph.objective, scope_limit: ph.scope_limit,
-status: ph.status, timeline: ph.timeline,
-items: (ph.items||[]).map(it => ({
-title: it.title, description: it.description, cost: Number(it.cost),
-mandatory: it.mandatory, time_estimate: it.time_estimate, status: it.status
-}))
+name:ph.name, objective:ph.objective, scope_limit:ph.scope_limit, status:ph.status, timeline:ph.timeline,
+items:(ph.items||[]).map(it => ({ title:it.title, description:it.description, cost:Number(it.cost),
+mandatory:it.mandatory, time_estimate:it.time_estimate, status:it.status }))
 })),
-documents: (d.documents||[]).map(doc => ({
-name: doc.name, description: doc.description, url: doc.url, kind: doc.kind
-}))
-};
-document.getElementById("projectJson").value = JSON.stringify(payload, null, 2);
+documents: (d.documents||[]).map(doc => ({ name:doc.name, description:doc.description, url:doc.url, kind:doc.kind }))
+}, null, 2);
 } else if(id){
-document.getElementById("projectJson").value = JSON.stringify({id, status: "en_desarrollo"}, null, 2);
+document.getElementById("projectJson").value = JSON.stringify({id}, null, 2);
 } else {
 document.getElementById("projectJson").value = JSON.stringify(PLANTILLA, null, 2);
 }
-dlg.showModal();
+document.getElementById("projectDialog").showModal();
 }
-
 document.getElementById("newProjectBtn").onclick = () => openProjectDialog(null);
-document.getElementById("closeProjectDialog").onclick = () => document.getElementById("projectDialog").close();
-document.getElementById("cancelProjectBtn").onclick = () => document.getElementById("projectDialog").close();
 document.getElementById("fillTemplateBtn").onclick = () => {
 document.getElementById("projectJson").value = JSON.stringify(PLANTILLA, null, 2);
 };
@@ -480,69 +802,82 @@ document.getElementById("saveProjectBtn").onclick = async () => {
 const st = document.getElementById("projectStatus");
 let payload;
 try { payload = JSON.parse(document.getElementById("projectJson").value); }
-catch(e){ st.textContent = "El JSON tiene un error de formato: " + e.message; st.className = "status error"; return; }
+catch(e){ st.textContent = "El JSON tiene un error de formato: " + e.message; st.className="status error"; return; }
 
-if(editingId && !payload.id) payload.id = editingId;
+if(editingProjectId && !payload.id) payload.id = editingProjectId;
 if(payload.access_key === "") delete payload.access_key;
+payload.client_id = document.getElementById("projectClient").value || null;
+const cli = CLIENTS.find(c => c.id === payload.client_id);
+if(cli && !payload.client_name) payload.client_name = cli.company || cli.name;
 
-st.textContent = "Guardando…"; st.className = "status";
-const {error} = await sb.rpc("cq_admin_save_project", {p_admin_key: adminKey, p_payload: payload});
-if(error){ st.textContent = "No se pudo guardar: " + error.message; st.className = "status error"; return; }
-
-st.textContent = "Proyecto guardado."; st.className = "status ok";
-toast("Proyecto guardado.");
+st.textContent = "Guardando…"; st.className="status";
+const {error} = await sb.rpc("cq_admin_save_project",{p_admin_key:adminKey, p_payload:payload});
+if(error){ st.textContent = "No se pudo guardar: " + error.message; st.className="status error"; return; }
 document.getElementById("projectDialog").close();
-await reloadProjects();
+toast("Proyecto guardado.");
+await loadAll();
 };
 
-/* ---------- Cotizaciones interactivas (sistema anterior) ---------- */
-async function loadQuotes(){
+/* ---------------- Cotizaciones interactivas ---------------- */
+function renderQuotes(){
 const list = document.getElementById("quotesList");
-const {data, error} = await sb.rpc("admin_list_quotes", {p_admin_key: adminKey});
-if(error){ list.innerHTML = `<div class="empty">No se pudieron cargar las cotizaciones.</div>`; return; }
-document.getElementById("quotesCount").textContent = `${data.length} cotización(es)`;
-if(!data.length){ list.innerHTML = `<div class="empty">Sin cotizaciones interactivas registradas.</div>`; return; }
+document.getElementById("quotesCount").textContent = `${QUOTES.length} cotización(es)`;
+if(!QUOTES.length){ list.innerHTML = `<div class="empty">Sin cotizaciones interactivas.</div>`; return; }
 
-list.innerHTML = data.map(q => {
+list.innerHTML = QUOTES.map(q => {
 const c = q.client || {};
 const included = q.quote_state?.placements
-? Object.values(q.quote_state.placements).filter(p => p?.type === "module").length : null;
+? Object.values(q.quote_state.placements).filter(p => p?.type==="module").length : null;
+const asignado = CLIENTS.find(x => x.id === q.client_id);
 return `
 <article class="card">
-<div class="proj-top">
+<div class="row-top">
 <div>
-<div class="proj-name">${esc(c.name || "(sin nombre todavía)")}${c.company ? ` <span class="muted">— ${esc(c.company)}</span>` : ""}</div>
-<div class="proj-meta">
+<div class="row-name">${esc(c.name || "(sin nombre todavía)")}${c.company?` <span class="muted">— ${esc(c.company)}</span>`:""}</div>
+<div class="row-meta">
 <span>Creada: ${fmtDT(q.created_at)}</span>
 <span>Último cambio: ${fmtDT(q.updated_at)}</span>
-${c.email ? `<span>${esc(c.email)}</span>` : ""}
-${included !== null ? `<span>${included} característica(s) incluidas</span>` : ""}
+${included!==null?`<span>${included} característica(s)</span>`:""}
+<span>${asignado ? `Cliente: <strong>${esc(asignado.name)}</strong>` : "Sin cliente asignado"}</span>
 </div>
 </div>
-<div class="proj-actions">
-<a class="btn small" href="index.html?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir cotización ↗</a>
-<button class="btn small primary quote-history" data-id="${esc(q.id)}">Ver historial</button>
+<div class="row-actions">
+<select class="status-select" data-link-quote="${esc(q.id)}">
+<option value="">— asignar a cliente —</option>
+${CLIENTS.map(c2 => `<option value="${esc(c2.id)}"${q.client_id===c2.id?" selected":""}>${esc(c2.name)}</option>`).join("")}
+</select>
+<a class="btn small" href="index.html?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir ↗</a>
+<button class="btn small primary" data-quote-history="${esc(q.id)}">Historial</button>
 </div>
 </div>
 <div class="detail" id="qdetail-${esc(q.id)}"></div>
 </article>`;
 }).join("");
 
-list.querySelectorAll(".quote-history").forEach(b => b.onclick = async () => {
-const el = document.getElementById("qdetail-" + b.dataset.id);
+list.querySelectorAll("[data-link-quote]").forEach(sel => sel.onchange = async () => {
+const {error} = await sb.rpc("cq_admin_link_quote",{
+p_admin_key:adminKey, p_quote_id:sel.dataset.linkQuote, p_client_id: sel.value || null
+});
+if(error){ toast("No se pudo asignar: "+error.message); return; }
+toast(sel.value ? "Cotización asignada al cliente." : "Cotización desasignada.");
+await loadAll();
+});
+
+list.querySelectorAll("[data-quote-history]").forEach(b => b.onclick = async () => {
+const el = document.getElementById("qdetail-"+b.dataset.quoteHistory);
 if(el.classList.contains("open")){ el.classList.remove("open"); return; }
 el.classList.add("open");
 el.innerHTML = `<div class="empty">Cargando…</div>`;
-const {data, error} = await sb.rpc("admin_list_events", {p_admin_key: adminKey, p_quote_id: b.dataset.id});
-if(error){ el.innerHTML = `<div class="empty">No se pudo cargar el historial.</div>`; return; }
+const {data,error} = await sb.rpc("admin_list_events",{p_admin_key:adminKey, p_quote_id:b.dataset.quoteHistory});
+if(error){ el.innerHTML = `<div class="empty">No se pudo cargar.</div>`; return; }
 el.innerHTML = data.length
 ? data.map(ev => `<div class="event"><time>${fmtDT(ev.created_at)}</time><span>${esc(ev.summary)}</span></div>`).join("")
-: `<div class="hint">Sin movimientos registrados.</div>`;
+: `<div class="hint">Sin movimientos.</div>`;
 });
 }
 
 const stored = localStorage.getItem(STORAGE);
-if(stored) tryLogin(stored, true); else showLogin();
+if(stored) tryLogin(stored,true); else showLogin();
 </script>
 </body>
 </html>

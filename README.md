@@ -10,7 +10,7 @@ todos los proyectos, su historial y se actualiza el avance.
 | Página | Para quién | Qué hace |
 |---|---|---|
 | `portal.html` | Clientes | Entra con código + clave: cotización, fases, avance, documentos y notas. |
-| `admin.html` | Equipo interno | Todos los proyectos, historial, avance y alta de proyectos nuevos. |
+| `admin.html` | Equipo interno | CRM de clientes con sus claves de acceso, proyectos, avance e historial. |
 | `index.html` | Clientes (cotizador) | Cotizador interactivo de alcance por módulos (proyecto "Ecosistema web integral"). |
 
 ## Cómo compartir un proyecto con un cliente
@@ -22,6 +22,28 @@ todos los proyectos, su historial y se actualiza el avance.
    El link ya lleva el código puesto (`portal.html?p=CODIGO`), el cliente solo escribe la clave.
 
 Cada proyecto tiene su propia clave: una clave no abre el proyecto de otro cliente.
+
+## CRM de clientes
+
+`admin.html` abre en la pestaña **Clientes (CRM)**. Cada cliente tiene una ficha con:
+
+- Sus datos de contacto (nombre, empresa, persona de contacto, correo, teléfono) y notas internas
+  que el cliente nunca ve.
+- Sus proyectos, cada uno con un bloque **Datos de acceso del cliente**: código, clave (oculta,
+  con botón *Ver*), link del portal y un botón **Copiar todo para enviar** que arma el mensaje
+  completo listo para pegarle al cliente por WhatsApp o correo.
+- **Cambiar** la clave cuando haga falta: la anterior deja de servir al instante.
+- Sus cotizaciones interactivas y todo su historial de actividad.
+
+Un cliente puede tener varios proyectos y varias cotizaciones. Desde la pestaña *Cotizaciones
+interactivas* se asigna cada cotización a un cliente con el selector de la derecha.
+
+### Sobre las claves de acceso
+
+La clave de cada proyecto se guarda de dos formas: **hasheada** (para validar el acceso) y
+**cifrada** (para poder mostrártela si el cliente la pierde). El cifrado solo se abre desde una
+función que exige tu clave de administrador, así que un volcado de la base de datos no la revela.
+Con la clave pública de la web no se puede leer ninguna tabla del CRM ni recuperar ninguna clave.
 
 ## Cómo actualizar el avance
 
@@ -69,10 +91,10 @@ En **Ver detalle** de cada proyecto hay un selector de estado por fase y por ent
 
 ## Backend (Supabase)
 
-Proyecto `cotizaciones-interactivas`. Tablas del portal: `cq_projects`, `cq_phases`, `cq_items`,
+Proyecto `cotizaciones-interactivas`. Tablas: `cq_clients`, `cq_projects`, `cq_phases`, `cq_items`,
 `cq_documents`, `cq_events`.
 
-Las cinco tablas tienen RLS activo y **sin políticas públicas**: con la clave pública no se puede
+Todas las tablas tienen RLS activo y **sin políticas públicas**: con la clave pública no se puede
 leer ni listar nada directamente. Todo pasa por funciones `SECURITY DEFINER`:
 
 | Función | Quién la usa | Qué exige |
@@ -84,9 +106,14 @@ leer ni listar nada directamente. Todo pasa por funciones `SECURITY DEFINER`:
 | `cq_admin_save_project(key, payload)` | Equipo | Clave de administrador |
 | `cq_admin_set_status(key, …)` | Equipo | Clave de administrador |
 | `cq_admin_delete_project(key, id)` | Equipo | Clave de administrador |
+| `cq_admin_clients / client / save_client` | Equipo | Clave de administrador |
+| `cq_admin_reveal_key(key, project_id)` | Equipo | Clave de administrador |
+| `cq_admin_set_key(key, project_id, nueva)` | Equipo | Clave de administrador |
+| `cq_admin_link_quote(key, quote_id, client_id)` | Equipo | Clave de administrador |
 
-La clave del cliente y la de administrador se guardan **hasheadas** (SHA-256), nunca en texto plano,
-y no están en este repositorio.
+La clave de administrador se guarda **hasheada** (SHA-256). La de cada cliente se guarda hasheada
+para validar el acceso y además cifrada, para poder reenviársela desde el CRM. Ninguna clave está
+en este repositorio ni en texto plano en la base de datos.
 
 ## Cotizador interactivo (`index.html`)
 
