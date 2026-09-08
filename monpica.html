@@ -1215,6 +1215,7 @@ async function pushRemoteState() {
 try {
 const {error} = await supabaseClient.rpc("upsert_quote", {
 p_id: QUOTE_ID,
+p_cotizador: "monpica.html",
 p_client: state.client,
 p_state: {
 customModules: state.customModules,

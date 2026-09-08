@@ -666,7 +666,7 @@ ${quotes.length ? quotes.map(q => `
 </div>
 </div>
 <div class="row-actions">
-<a class="btn small" href="index.html?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir cotización ↗</a>
+<a class="btn small" href="${esc(q.cotizador || "index.html")}?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir cotización ↗</a>
 </div>
 </div>
 </article>`).join("") : `<div class="empty">Sin cotizaciones interactivas asignadas a este cliente.</div>`}
@@ -1023,7 +1023,7 @@ ${included!==null?`<span>${included} característica(s)</span>`:""}
 <option value="">— asignar a cliente —</option>
 ${CLIENTS.map(c2 => `<option value="${esc(c2.id)}"${q.client_id===c2.id?" selected":""}>${esc(c2.name)}</option>`).join("")}
 </select>
-<a class="btn small" href="index.html?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir ↗</a>
+<a class="btn small" href="${esc(q.cotizador || "index.html")}?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir ↗</a>
 <button class="btn small primary" data-quote-history="${esc(q.id)}">Historial</button>
 </div>
 </div>
