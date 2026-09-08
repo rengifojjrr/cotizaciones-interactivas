@@ -35,6 +35,13 @@ Hay dos formas de acceso, y ambas funcionan:
 - **Por proyecto:** la clave de un proyecto abre solo ese proyecto. Sirve para compartir una sola
   cosa, y mantiene vivos los links entregados antes de que existiera el acceso por cliente.
 
+## Plantilla para levantar un proyecto nuevo
+
+`PLANTILLA-PROYECTO.md` es un formulario en blanco para pasárselo al chat donde se está
+conversando el proyecto. Ese chat lo rellena con el cliente, el alcance, las fases, los costos y
+los tiempos, y el archivo devuelto tiene todo lo necesario para armar la cotización, cargar el
+proyecto en el portal y generar los documentos por fase.
+
 ## Cómo compartir un proyecto con un cliente
 
 1. Entra a `admin.html` con la clave de administrador.
