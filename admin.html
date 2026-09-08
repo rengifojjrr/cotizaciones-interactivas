@@ -345,6 +345,7 @@ function showLogin(msg,isError){
 document.getElementById("loginView").classList.remove("hidden");
 document.getElementById("dashboardView").classList.add("hidden");
 document.getElementById("adminTools").classList.add("hidden");
+document.getElementById("sessionLabel").textContent = "Clientes, proyectos e historial";
 const st = document.getElementById("loginStatus");
 st.textContent = msg || ""; st.className = "status" + (isError?" error":"");
 }
@@ -356,7 +357,7 @@ const {error} = await sb.rpc("cq_admin_clients",{p_admin_key:key});
 document.getElementById("loginBtn").disabled = false;
 if(error){
 localStorage.removeItem(STORAGE); adminKey = "";
-showLogin(fromStorage ? "" : "Clave incorrecta.", !fromStorage);
+showLogin(fromStorage ? "" : "Clave incorrecta. Ojo: esta es tu clave de administrador (larga), no la que le das a un cliente para su portal.", !fromStorage);
 return false;
 }
 adminKey = key;
