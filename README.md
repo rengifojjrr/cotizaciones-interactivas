@@ -13,6 +13,15 @@ todos los proyectos, su historial y se actualiza el avance.
 | `admin.html` | Equipo interno | CRM de clientes con sus claves de acceso, proyectos, avance e historial. |
 | `index.html` | Clientes (cotizador) | Cotizador interactivo de alcance por módulos (proyecto "Ecosistema web integral"). |
 
+## Tema claro y oscuro
+
+Las tres páginas tienen un botón de tema (🌗) junto al logo que cicla entre **automático**
+(sigue la configuración del teléfono o del sistema), **claro** y **oscuro**. La elección se guarda
+en el navegador de cada persona, así que el cliente puede verlo oscuro aunque tú lo uses claro.
+
+El documento de cotización que se descarga o imprime se mantiene siempre en claro, como debe ser
+para un PDF que se envía o se imprime.
+
 ## Cómo entra el cliente
 
 El portal abre en un menú de botones grandes — **Cotizaciones**, **Fases y avance**, **Documentos**
