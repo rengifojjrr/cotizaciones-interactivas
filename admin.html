@@ -4,123 +4,111 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Panel de administración — Cotizador</title>
+<title>Panel de administración</title>
 <style>
 :root {
---bg: #f5f7fb;
---surface: #ffffff;
---surface-soft: #f8fafc;
---ink: #162033;
---muted: #667085;
---line: #e3e8f0;
---primary: #5b4ce1;
---primary-soft: #eeebff;
---green: #067647;
---green-soft: #ecfdf3;
---red: #b42318;
---red-soft: #fef3f2;
+--bg: #f5f7fb; --surface: #ffffff; --surface-soft: #f8fafc;
+--ink: #162033; --muted: #667085; --line: #e3e8f0;
+--primary: #5b4ce1; --primary-soft: #eeebff;
+--green: #067647; --green-soft: #ecfdf3;
+--amber: #b54708; --amber-soft: #fffaeb;
+--red: #b42318; --red-soft: #fef3f2;
+--blue: #175cd3; --blue-soft: #eff8ff;
 --radius: 14px;
 }
 * { box-sizing: border-box; }
-body {
-margin: 0;
-font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-color: var(--ink);
-background: var(--bg);
-}
-button, input { font: inherit; }
+body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: var(--bg); }
+button, input, textarea, select { font: inherit; }
 button { cursor: pointer; }
 a { color: var(--primary); }
 
-.topbar {
-border-bottom: 1px solid var(--line);
-background: rgba(245,247,251,.9);
-position: sticky;
-top: 0;
-z-index: 10;
-}
-.topbar-inner {
-max-width: 1100px;
-margin: 0 auto;
-padding: 14px 22px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 12px;
-}
+.topbar { border-bottom: 1px solid var(--line); background: rgba(245,247,251,.94); }
+.topbar-inner { max-width: 1180px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .brand { display: flex; align-items: center; gap: 11px; }
-.brand-mark {
-width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center;
-color: white; font-weight: 800; background: linear-gradient(135deg, #6557e8, #8f6cff);
-}
+.brand-mark { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; color: white; font-weight: 800; background: linear-gradient(135deg,#6557e8,#8f6cff); }
 .brand strong { display: block; font-size: 14px; }
 .brand span { display: block; font-size: 11px; color: var(--muted); }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
 
-.btn {
-border: 1px solid var(--line);
-background: var(--surface);
-color: var(--ink);
-border-radius: 11px;
-padding: 9px 13px;
-font-weight: 700;
-font-size: 13px;
-}
+.btn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 11px; padding: 9px 13px; font-weight: 700; font-size: 13px; }
 .btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
+.btn.danger { color: var(--red); }
+.btn.small { padding: 7px 10px; font-size: 12px; }
 .btn:disabled { opacity: .55; cursor: default; }
 
-.shell { max-width: 1100px; margin: 0 auto; padding: 32px 22px 60px; }
+.shell { max-width: 1180px; margin: 0 auto; padding: 28px 22px 60px; }
 
-.login-card {
-max-width: 420px;
-margin: 60px auto;
-background: var(--surface);
-border: 1px solid var(--line);
-border-radius: var(--radius);
-padding: 28px;
-}
+.login-card { max-width: 420px; margin: 8vh auto; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 30px; }
 .login-card h1 { font-size: 19px; margin: 0 0 6px; }
 .login-card p { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 0 0 18px; }
 .field { display: grid; gap: 6px; margin-bottom: 12px; }
 .field label { font-size: 12px; font-weight: 800; }
-.field input {
-width: 100%;
-border: 1px solid var(--line);
-border-radius: 11px;
-padding: 10px 12px;
-outline: none;
-}
-.field input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+.field input, .field textarea, .field select { width: 100%; border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; outline: none; background: white; }
+.field textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 1.5; }
+.field input:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
 .status { font-size: 12.5px; margin-top: 12px; line-height: 1.5; }
 .status.error { color: var(--red); }
 .status.ok { color: var(--green); }
 
-.quotes-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
-.quotes-head h1 { font-size: 21px; margin: 0; }
-.quotes-head span { color: var(--muted); font-size: 12.5px; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+.section-head h1 { font-size: 21px; margin: 0; }
+.section-head span { color: var(--muted); font-size: 12.5px; }
 
-.quote-card {
-background: var(--surface);
-border: 1px solid var(--line);
-border-radius: var(--radius);
-padding: 14px 16px;
-margin-bottom: 10px;
-}
-.quote-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
-.quote-name { font-size: 15px; font-weight: 800; }
-.quote-name .muted { font-weight: 500; color: var(--muted); }
-.quote-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; font-size: 12px; color: var(--muted); }
-.quote-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.quote-actions a, .quote-actions button { font-size: 12.5px; padding: 7px 11px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
+.proj-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+.proj-name { font-size: 16px; font-weight: 800; }
+.proj-name .muted { font-weight: 500; color: var(--muted); }
+.proj-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 7px; font-size: 12px; color: var(--muted); align-items: center; }
+.proj-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-.history { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px; display: none; }
-.history.open { display: block; }
-.event { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+.badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 4px 9px; font-size: 11px; font-weight: 800; background: #eef1f5; color: #465467; }
+.badge.propuesta { background: var(--primary-soft); color: var(--primary); }
+.badge.aprobado { background: var(--blue-soft); color: var(--blue); }
+.badge.en_desarrollo { background: var(--amber-soft); color: var(--amber); }
+.badge.entregado { background: var(--green-soft); color: var(--green); }
+.badge.pendiente { background: #eef1f5; color: #465467; }
+.badge.en_curso { background: var(--amber-soft); color: var(--amber); }
+.badge.completada, .badge.completado { background: var(--green-soft); color: var(--green); }
+
+.detail { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 14px; display: none; }
+.detail.open { display: block; }
+.detail h3 { font-size: 13px; margin: 16px 0 8px; }
+.phase-row { border: 1px solid var(--line); border-radius: 12px; padding: 11px 13px; margin-bottom: 8px; background: var(--surface-soft); }
+.phase-row-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
+.phase-row-name { font-size: 13.5px; font-weight: 800; }
+.sub-item { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; flex-wrap: wrap; }
+.sub-item:last-child { border-bottom: 0; }
+select.status-select { border: 1px solid var(--line); border-radius: 9px; padding: 5px 8px; font-size: 11.5px; background: white; }
+
+.event { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
 .event:last-child { border-bottom: 0; }
 .event time { flex: 0 0 auto; color: var(--muted); font-size: 11px; white-space: nowrap; padding-top: 1px; }
-.event .empty { color: var(--muted); font-style: italic; }
+.event .who { flex: 0 0 auto; font-size: 10.5px; font-weight: 800; color: var(--primary); text-transform: uppercase; }
 
-.empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+.notes-box { background: var(--amber-soft); border: 1px solid #fedf89; border-radius: 12px; padding: 12px 14px; font-size: 12.5px; line-height: 1.55; color: #7a2e0e; margin-top: 10px; }
+
+.empty { text-align: center; padding: 50px 20px; color: var(--muted); font-size: 13.5px; }
 .hidden { display: none !important; }
+
+dialog { width: min(760px, calc(100vw - 30px)); max-height: calc(100vh - 40px); border: 0; border-radius: 18px; padding: 0; color: var(--ink); }
+dialog::backdrop { background: rgba(15,23,42,.62); }
+.modal-head { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.modal-head h2 { margin: 0; font-size: 18px; }
+.modal-body { padding: 18px 20px 22px; overflow: auto; max-height: calc(100vh - 150px); }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.close { width: 34px; height: 34px; border: 0; border-radius: 10px; background: #f0f2f5; font-size: 18px; }
+.hint { font-size: 12px; color: var(--muted); line-height: 1.55; margin: 0 0 12px; }
+
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 200; transform: translate(-50%,20px); opacity: 0; pointer-events: none; background: #101828; color: white; border-radius: 12px; padding: 11px 14px; font-size: 12.5px; font-weight: 700; transition: .22s ease; max-width: 90vw; }
+.toast.show { opacity: 1; transform: translate(-50%,0); }
+
+@media (max-width: 780px) {
+.topbar-inner { flex-direction: column; align-items: stretch; }
+.toolbar .btn { width: 100%; }
+.shell { padding: 18px 13px 45px; }
+.proj-actions { width: 100%; }
+.proj-actions .btn { flex: 1 1 auto; }
+}
 </style>
 </head>
 <body>
@@ -131,10 +119,14 @@ margin-bottom: 10px;
 <div class="brand-mark">CQ</div>
 <div>
 <strong>Panel de administración</strong>
-<span id="sessionLabel">Historial de cotizaciones de clientes</span>
+<span id="sessionLabel">Proyectos, cotizaciones e historial</span>
 </div>
 </div>
-<button class="btn hidden" id="logoutBtn">Cerrar sesión</button>
+<div class="toolbar hidden" id="adminTools">
+<button class="btn primary" id="newProjectBtn">+ Nuevo proyecto</button>
+<button class="btn" id="refreshBtn">Actualizar</button>
+<button class="btn" id="logoutBtn">Cerrar sesión</button>
+</div>
 </div>
 </header>
 
@@ -142,7 +134,7 @@ margin-bottom: 10px;
 
 <section id="loginView" class="login-card">
 <h1>Acceso de administrador</h1>
-<p>Escribe la clave de administrador que te compartieron para este proyecto.</p>
+<p>Escribe la clave de administrador para ver todos los proyectos, sus avances y el historial de cada cliente.</p>
 <div class="field">
 <label for="adminKeyInput">Clave de administrador</label>
 <input id="adminKeyInput" type="password" placeholder="Clave" autocomplete="off">
@@ -152,8 +144,14 @@ margin-bottom: 10px;
 </section>
 
 <div id="dashboardView" class="hidden">
-<div class="quotes-head">
-<h1>Cotizaciones</h1>
+<div class="section-head">
+<h1>Proyectos</h1>
+<span id="projectsCount"></span>
+</div>
+<div id="projectsList"></div>
+
+<div class="section-head" style="margin-top:34px">
+<h1>Cotizaciones interactivas</h1>
 <span id="quotesCount"></span>
 </div>
 <div id="quotesList"></div>
@@ -161,148 +159,390 @@ margin-bottom: 10px;
 
 </main>
 
+<dialog id="projectDialog">
+<div class="modal-head">
+<div>
+<span style="font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.05em">Proyecto</span>
+<h2 id="projectDialogTitle">Nuevo proyecto</h2>
+</div>
+<button class="close" id="closeProjectDialog">×</button>
+</div>
+<div class="modal-body">
+<p class="hint">
+Pega aquí el proyecto completo en formato JSON (fases, entregables y documentos). Si dejas <code>access_key</code> vacío
+al editar, la clave del cliente no cambia. En un proyecto nuevo, <code>code</code> y <code>access_key</code> son obligatorios.
+</p>
+<div class="field">
+<label for="projectJson">JSON del proyecto</label>
+<textarea id="projectJson" rows="20" spellcheck="false"></textarea>
+</div>
+<div class="modal-actions">
+<button class="btn" id="cancelProjectBtn">Cancelar</button>
+<button class="btn" id="fillTemplateBtn">Cargar plantilla</button>
+<button class="btn primary" id="saveProjectBtn">Guardar proyecto</button>
+</div>
+<div class="status" id="projectStatus"></div>
+</div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://vajbsfgojtunamhrzrpf.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_Xljd7Ep1GxBXSPp5F4A1hg_Qg-iESzl";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const STORAGE = "cotizador-admin-key";
 
-const ADMIN_KEY_STORAGE = "cotizador-admin-key";
-const money = value => new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:0}).format(value || 0);
-const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
-const fmtDateTime = iso => iso ? new Date(iso).toLocaleString("es-ES", {dateStyle:"medium", timeStyle:"short"}) : "—";
+const money = v => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(Number(v)||0);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
+const fmtDT = iso => iso ? new Date(iso).toLocaleString("es-ES",{dateStyle:"medium",timeStyle:"short"}) : "—";
 
-const historyCache = {};
+const STATUS_LABEL = {
+propuesta:"Propuesta", aprobado:"Aprobado", en_desarrollo:"En desarrollo", entregado:"Entregado", pausado:"En pausa",
+pendiente:"Pendiente", en_curso:"En curso", completada:"Completada", completado:"Completado"
+};
+const label = s => STATUS_LABEL[s] || s || "—";
+
 let adminKey = "";
+let PROJECTS = [];
+const detailCache = {};
 
-function showLogin(message, isError) {
+let toastTimer;
+function toast(msg){
+const el = document.getElementById("toast");
+el.textContent = msg; el.classList.add("show");
+clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove("show"),2800);
+}
+
+function showLogin(msg,isError){
 document.getElementById("loginView").classList.remove("hidden");
 document.getElementById("dashboardView").classList.add("hidden");
-document.getElementById("logoutBtn").classList.add("hidden");
-const statusEl = document.getElementById("loginStatus");
-statusEl.textContent = message || "";
-statusEl.className = "status" + (isError ? " error" : "");
+document.getElementById("adminTools").classList.add("hidden");
+const st = document.getElementById("loginStatus");
+st.textContent = msg || ""; st.className = "status" + (isError?" error":"");
 }
 
-function showDashboard() {
+function showDashboard(){
 document.getElementById("loginView").classList.add("hidden");
 document.getElementById("dashboardView").classList.remove("hidden");
-document.getElementById("logoutBtn").classList.remove("hidden");
+document.getElementById("adminTools").classList.remove("hidden");
 document.getElementById("sessionLabel").textContent = "Sesión de administrador activa";
-loadQuotes();
 }
 
-async function tryLogin(key, fromStorage) {
+async function tryLogin(key, fromStorage){
 document.getElementById("loginBtn").disabled = true;
-if (!fromStorage) showLogin("Verificando…");
-const {data, error} = await supabaseClient.rpc("admin_list_quotes", {p_admin_key: key});
+if(!fromStorage) showLogin("Verificando…");
+const {data, error} = await sb.rpc("cq_admin_list",{p_admin_key:key});
 document.getElementById("loginBtn").disabled = false;
-if (error) {
-localStorage.removeItem(ADMIN_KEY_STORAGE);
-adminKey = "";
+if(error){
+localStorage.removeItem(STORAGE); adminKey = "";
 showLogin(fromStorage ? "" : "Clave incorrecta.", !fromStorage);
-return;
+return false;
 }
 adminKey = key;
-localStorage.setItem(ADMIN_KEY_STORAGE, key);
+localStorage.setItem(STORAGE, key);
 showDashboard();
-renderQuotes(data);
+PROJECTS = data || [];
+renderProjects();
+loadQuotes();
+return true;
 }
 
 document.getElementById("loginBtn").onclick = () => {
 const key = document.getElementById("adminKeyInput").value.trim();
-if (!key) { showLogin("Escribe la clave.", true); return; }
-tryLogin(key, false);
+if(!key){ showLogin("Escribe la clave.", true); return; }
+tryLogin(key,false);
 };
 document.getElementById("adminKeyInput").addEventListener("keydown", e => {
-if (e.key === "Enter") document.getElementById("loginBtn").click();
+if(e.key === "Enter") document.getElementById("loginBtn").click();
 });
-
 document.getElementById("logoutBtn").onclick = () => {
-localStorage.removeItem(ADMIN_KEY_STORAGE);
-adminKey = "";
+localStorage.removeItem(STORAGE); adminKey = "";
 document.getElementById("adminKeyInput").value = "";
 showLogin();
 };
+document.getElementById("refreshBtn").onclick = () => reloadProjects();
 
-async function loadQuotes() {
-const list = document.getElementById("quotesList");
-list.innerHTML = `<div class="empty-state">Cargando…</div>`;
-const {data, error} = await supabaseClient.rpc("admin_list_quotes", {p_admin_key: adminKey});
-if (error) { showLogin("Tu sesión venció o la clave ya no es válida.", true); return; }
-renderQuotes(data);
+async function reloadProjects(){
+const {data, error} = await sb.rpc("cq_admin_list",{p_admin_key:adminKey});
+if(error){ showLogin("La sesión venció o la clave ya no es válida.", true); return; }
+PROJECTS = data || [];
+Object.keys(detailCache).forEach(k => delete detailCache[k]);
+renderProjects();
 }
 
-function renderQuotes(data) {
-const list = document.getElementById("quotesList");
-document.getElementById("quotesCount").textContent = `${data.length} cotización(es)`;
-if (!data.length) {
-list.innerHTML = `<div class="empty-state">Todavía no hay cotizaciones registradas. Aparecerán aquí en cuanto un cliente abra su link y haga el primer cambio.</div>`;
+function portalLink(code){
+return new URL(`portal.html?p=${encodeURIComponent(code)}`, window.location.href).href;
+}
+
+function renderProjects(){
+const list = document.getElementById("projectsList");
+document.getElementById("projectsCount").textContent = `${PROJECTS.length} proyecto(s)`;
+if(!PROJECTS.length){
+list.innerHTML = `<div class="empty">Todavía no hay proyectos. Crea el primero con “+ Nuevo proyecto”.</div>`;
 return;
 }
-
-list.innerHTML = data.map(quote => {
-const client = quote.client || {};
-const name = client.name || "(sin nombre todavía)";
-const company = client.company ? ` — ${escapeHtml(client.company)}` : "";
-const includedCount = quote.quote_state?.placements
-? Object.values(quote.quote_state.placements).filter(p => p?.type === "module").length
-: null;
+list.innerHTML = PROJECTS.map(p => {
+const pct = p.items_total ? Math.round(p.items_done / p.items_total * 100) : 0;
 return `
-<article class="quote-card" data-quote-id="${quote.id}">
-<div class="quote-top">
+<article class="card" data-project="${esc(p.id)}">
+<div class="proj-top">
 <div>
-<div class="quote-name">${escapeHtml(name)}<span class="muted">${company}</span></div>
-<div class="quote-meta">
-<span>Creada: ${fmtDateTime(quote.created_at)}</span>
-<span>Último cambio: ${fmtDateTime(quote.updated_at)}</span>
-${client.email ? `<span>${escapeHtml(client.email)}</span>` : ""}
-${client.phone ? `<span>${escapeHtml(client.phone)}</span>` : ""}
-${includedCount !== null ? `<span>${includedCount} característica(s) incluidas</span>` : ""}
+<div class="proj-name">${esc(p.project_name)}${p.client_name ? ` <span class="muted">— ${esc(p.client_name)}</span>` : ""}</div>
+<div class="proj-meta">
+<span class="badge ${esc(p.status)}">${esc(label(p.status))}</span>
+<span>Código: <strong>${esc(p.code)}</strong></span>
+<span>${money(p.total)}</span>
+<span>${p.phases_done}/${p.phases_total} fases · ${p.items_done}/${p.items_total} entregables (${pct}%)</span>
+<span>${p.documents_total} documento(s)</span>
+${p.last_activity ? `<span>Última actividad: ${fmtDT(p.last_activity)}</span>` : ""}
 </div>
 </div>
-<div class="quote-actions">
-<a class="btn" href="index.html?q=${quote.id}" target="_blank" rel="noopener">Abrir cotización ↗</a>
-<button class="btn primary toggle-history" data-quote-id="${quote.id}">Ver historial</button>
+<div class="proj-actions">
+<button class="btn small copy-link" data-code="${esc(p.code)}">Copiar link</button>
+<a class="btn small" href="${esc(portalLink(p.code))}" target="_blank" rel="noopener">Abrir portal ↗</a>
+<button class="btn small edit-project" data-id="${esc(p.id)}">Editar</button>
+<button class="btn small primary toggle-detail" data-id="${esc(p.id)}">Ver detalle</button>
 </div>
 </div>
-<div class="history" id="history-${quote.id}"></div>
+${p.client_state && p.client_state.notes ? `<div class="notes-box"><strong>Notas del cliente:</strong> ${esc(p.client_state.notes)}</div>` : ""}
+<div class="detail" id="detail-${esc(p.id)}"></div>
 </article>`;
 }).join("");
 
-document.querySelectorAll(".toggle-history").forEach(btn => {
-btn.onclick = () => toggleHistory(btn.dataset.quoteId);
+list.querySelectorAll(".toggle-detail").forEach(b => b.onclick = () => toggleDetail(b.dataset.id));
+list.querySelectorAll(".edit-project").forEach(b => b.onclick = () => openProjectDialog(b.dataset.id));
+list.querySelectorAll(".copy-link").forEach(b => b.onclick = async () => {
+try { await navigator.clipboard.writeText(portalLink(b.dataset.code)); toast("Link del portal copiado."); }
+catch { toast(portalLink(b.dataset.code)); }
 });
 }
 
-async function toggleHistory(quoteId) {
-const el = document.getElementById("history-" + quoteId);
-const isOpen = el.classList.contains("open");
-if (isOpen) { el.classList.remove("open"); return; }
-
+async function toggleDetail(id){
+const el = document.getElementById("detail-" + id);
+if(el.classList.contains("open")){ el.classList.remove("open"); return; }
 el.classList.add("open");
-if (!historyCache[quoteId]) {
-el.innerHTML = `<div class="event"><span class="empty">Cargando historial…</span></div>`;
-const {data, error} = await supabaseClient.rpc("admin_list_events", {p_admin_key: adminKey, p_quote_id: quoteId});
-if (error) {
-el.innerHTML = `<div class="event"><span class="empty">No se pudo cargar el historial (${escapeHtml(error.message)}).</span></div>`;
-return;
-}
-historyCache[quoteId] = data;
+el.innerHTML = `<div class="empty">Cargando…</div>`;
+
+const [detail, events] = await Promise.all([
+sb.rpc("cq_admin_get", {p_admin_key: adminKey, p_project_id: id}),
+sb.rpc("cq_admin_events", {p_admin_key: adminKey, p_project_id: id})
+]);
+if(detail.error){ el.innerHTML = `<div class="empty">No se pudo cargar (${esc(detail.error.message)}).</div>`; return; }
+detailCache[id] = detail.data;
+renderDetail(id, detail.data, events.data || []);
 }
 
-const events = historyCache[quoteId];
-el.innerHTML = events.length
-? events.map(ev => `<div class="event"><time>${fmtDateTime(ev.created_at)}</time><span>${escapeHtml(ev.summary)}</span></div>`).join("")
-: `<div class="event"><span class="empty">Todavía no hay movimientos registrados para esta cotización.</span></div>`;
+function renderDetail(id, d, events){
+const el = document.getElementById("detail-" + id);
+const phases = d.phases || [], docs = d.documents || [];
+
+el.innerHTML = `
+<h3>Fases y entregables</h3>
+${phases.map((ph,i) => `
+<div class="phase-row">
+<div class="phase-row-top">
+<div class="phase-row-name">${i+1}. ${esc(ph.name)} <span class="badge ${esc(ph.status)}">${esc(label(ph.status))}</span></div>
+<div style="display:flex;gap:8px;align-items:center">
+<strong>${money(ph.phase_total)}</strong>
+<select class="status-select" data-kind="phase" data-target="${esc(ph.id)}">
+${["pendiente","en_curso","completada"].map(s => `<option value="${s}"${ph.status===s?" selected":""}>${label(s)}</option>`).join("")}
+</select>
+</div>
+</div>
+<div style="margin-top:8px">
+${(ph.items||[]).map(it => `
+<div class="sub-item">
+<span>${esc(it.title)} ${it.mandatory!=="required"?'<span class="badge">Opcional</span>':""}</span>
+<span style="display:flex;gap:8px;align-items:center">
+<strong>${money(it.cost)}</strong>
+<select class="status-select" data-kind="item" data-target="${esc(it.id)}">
+${["pendiente","en_curso","completado"].map(s => `<option value="${s}"${it.status===s?" selected":""}>${label(s)}</option>`).join("")}
+</select>
+</span>
+</div>`).join("")}
+</div>
+</div>`).join("")}
+
+<h3>Documentos (${docs.length})</h3>
+${docs.length ? docs.map(doc => `
+<div class="sub-item">
+<span>${esc(doc.name)}</span>
+<a href="${esc(doc.url)}" target="_blank" rel="noopener">Abrir ↗</a>
+</div>`).join("") : `<div class="hint">Sin documentos publicados todavía.</div>`}
+
+<h3>Historial (${events.length})</h3>
+${events.length ? events.map(ev => `
+<div class="event">
+<time>${fmtDT(ev.created_at)}</time>
+<span class="who">${esc(ev.actor)}</span>
+<span>${esc(ev.summary)}</span>
+</div>`).join("") : `<div class="hint">Sin actividad registrada.</div>`}
+`;
+
+el.querySelectorAll(".status-select").forEach(sel => {
+sel.onchange = async () => {
+const {error} = await sb.rpc("cq_admin_set_status", {
+p_admin_key: adminKey, p_kind: sel.dataset.kind,
+p_target_id: sel.dataset.target, p_status: sel.value
+});
+if(error){ toast("No se pudo actualizar: " + error.message); return; }
+toast("Estado actualizado.");
+await reloadProjects();
+toggleDetail(id);
+};
+});
 }
 
-const storedKey = localStorage.getItem(ADMIN_KEY_STORAGE);
-if (storedKey) {
-tryLogin(storedKey, true);
+/* ---------- Crear / editar proyecto ---------- */
+const PLANTILLA = {
+code: "CODIGO-CORTO",
+access_key: "CLAVE-DEL-CLIENTE",
+client_name: "Nombre del cliente",
+project_name: "Nombre del proyecto",
+summary: "Explicación breve del proyecto, en lenguaje cercano.",
+currency: "USD",
+status: "propuesta",
+hero_note: "Entrega estimada: X semanas.",
+phases: [{
+name: "Fase 1 — Nombre",
+objective: "Qué se logra en esta fase.",
+scope_limit: "Lo que no entra en esta fase.",
+status: "pendiente",
+timeline: "Días 1 a 5",
+items: [{
+title: "Entregable",
+description: "Qué incluye.",
+cost: 100,
+mandatory: "required",
+time_estimate: "4 a 6 horas",
+status: "pendiente"
+}]
+}],
+documents: [{
+name: "Propuesta en PDF",
+description: "Documento con el desglose completo.",
+url: "https://…",
+kind: "pdf"
+}]
+};
+
+let editingId = null;
+
+function openProjectDialog(id){
+editingId = id || null;
+const dlg = document.getElementById("projectDialog");
+document.getElementById("projectStatus").textContent = "";
+document.getElementById("projectDialogTitle").textContent = id ? "Editar proyecto" : "Nuevo proyecto";
+
+if(id && detailCache[id]){
+const d = detailCache[id];
+const payload = {
+id: d.project.id,
+code: d.project.code,
+access_key: "",
+client_name: d.project.client_name,
+project_name: d.project.project_name,
+summary: d.project.summary,
+currency: d.project.currency,
+status: d.project.status,
+hero_note: d.project.hero_note,
+phases: (d.phases||[]).map(ph => ({
+name: ph.name, objective: ph.objective, scope_limit: ph.scope_limit,
+status: ph.status, timeline: ph.timeline,
+items: (ph.items||[]).map(it => ({
+title: it.title, description: it.description, cost: Number(it.cost),
+mandatory: it.mandatory, time_estimate: it.time_estimate, status: it.status
+}))
+})),
+documents: (d.documents||[]).map(doc => ({
+name: doc.name, description: doc.description, url: doc.url, kind: doc.kind
+}))
+};
+document.getElementById("projectJson").value = JSON.stringify(payload, null, 2);
+} else if(id){
+document.getElementById("projectJson").value = JSON.stringify({id, status: "en_desarrollo"}, null, 2);
 } else {
-showLogin();
+document.getElementById("projectJson").value = JSON.stringify(PLANTILLA, null, 2);
 }
+dlg.showModal();
+}
+
+document.getElementById("newProjectBtn").onclick = () => openProjectDialog(null);
+document.getElementById("closeProjectDialog").onclick = () => document.getElementById("projectDialog").close();
+document.getElementById("cancelProjectBtn").onclick = () => document.getElementById("projectDialog").close();
+document.getElementById("fillTemplateBtn").onclick = () => {
+document.getElementById("projectJson").value = JSON.stringify(PLANTILLA, null, 2);
+};
+
+document.getElementById("saveProjectBtn").onclick = async () => {
+const st = document.getElementById("projectStatus");
+let payload;
+try { payload = JSON.parse(document.getElementById("projectJson").value); }
+catch(e){ st.textContent = "El JSON tiene un error de formato: " + e.message; st.className = "status error"; return; }
+
+if(editingId && !payload.id) payload.id = editingId;
+if(payload.access_key === "") delete payload.access_key;
+
+st.textContent = "Guardando…"; st.className = "status";
+const {error} = await sb.rpc("cq_admin_save_project", {p_admin_key: adminKey, p_payload: payload});
+if(error){ st.textContent = "No se pudo guardar: " + error.message; st.className = "status error"; return; }
+
+st.textContent = "Proyecto guardado."; st.className = "status ok";
+toast("Proyecto guardado.");
+document.getElementById("projectDialog").close();
+await reloadProjects();
+};
+
+/* ---------- Cotizaciones interactivas (sistema anterior) ---------- */
+async function loadQuotes(){
+const list = document.getElementById("quotesList");
+const {data, error} = await sb.rpc("admin_list_quotes", {p_admin_key: adminKey});
+if(error){ list.innerHTML = `<div class="empty">No se pudieron cargar las cotizaciones.</div>`; return; }
+document.getElementById("quotesCount").textContent = `${data.length} cotización(es)`;
+if(!data.length){ list.innerHTML = `<div class="empty">Sin cotizaciones interactivas registradas.</div>`; return; }
+
+list.innerHTML = data.map(q => {
+const c = q.client || {};
+const included = q.quote_state?.placements
+? Object.values(q.quote_state.placements).filter(p => p?.type === "module").length : null;
+return `
+<article class="card">
+<div class="proj-top">
+<div>
+<div class="proj-name">${esc(c.name || "(sin nombre todavía)")}${c.company ? ` <span class="muted">— ${esc(c.company)}</span>` : ""}</div>
+<div class="proj-meta">
+<span>Creada: ${fmtDT(q.created_at)}</span>
+<span>Último cambio: ${fmtDT(q.updated_at)}</span>
+${c.email ? `<span>${esc(c.email)}</span>` : ""}
+${included !== null ? `<span>${included} característica(s) incluidas</span>` : ""}
+</div>
+</div>
+<div class="proj-actions">
+<a class="btn small" href="index.html?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir cotización ↗</a>
+<button class="btn small primary quote-history" data-id="${esc(q.id)}">Ver historial</button>
+</div>
+</div>
+<div class="detail" id="qdetail-${esc(q.id)}"></div>
+</article>`;
+}).join("");
+
+list.querySelectorAll(".quote-history").forEach(b => b.onclick = async () => {
+const el = document.getElementById("qdetail-" + b.dataset.id);
+if(el.classList.contains("open")){ el.classList.remove("open"); return; }
+el.classList.add("open");
+el.innerHTML = `<div class="empty">Cargando…</div>`;
+const {data, error} = await sb.rpc("admin_list_events", {p_admin_key: adminKey, p_quote_id: b.dataset.id});
+if(error){ el.innerHTML = `<div class="empty">No se pudo cargar el historial.</div>`; return; }
+el.innerHTML = data.length
+? data.map(ev => `<div class="event"><time>${fmtDT(ev.created_at)}</time><span>${esc(ev.summary)}</span></div>`).join("")
+: `<div class="hint">Sin movimientos registrados.</div>`;
+});
+}
+
+const stored = localStorage.getItem(STORAGE);
+if(stored) tryLogin(stored, true); else showLogin();
 </script>
 </body>
 </html>

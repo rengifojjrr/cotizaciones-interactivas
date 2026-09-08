@@ -1,61 +1,100 @@
-# Cotizador interactivo — Ecosistema web integral
+# Portal de proyectos y cotizaciones
 
-Herramienta de una sola página (`index.html`, sin build) para que el cliente construya su propia cotización a partir de los 13 módulos y ~130 características levantadas en el documento de requerimientos. Cada cotización se guarda en Supabase con un link único por cliente.
+Plataforma de una sola página (sin build) para presentar proyectos a clientes: cada cliente entra
+con el **código y la clave de su proyecto** y ve su cotización desglosada, las fases con su avance,
+los documentos descargables y un espacio para dejar notas. Desde el panel de administración se ven
+todos los proyectos, su historial y se actualiza el avance.
 
 **Sitio publicado:** https://rengifojjrr.github.io/cotizaciones-interactivas/
 
-## Cómo compartir una cotización con un cliente
+| Página | Para quién | Qué hace |
+|---|---|---|
+| `portal.html` | Clientes | Entra con código + clave: cotización, fases, avance, documentos y notas. |
+| `admin.html` | Equipo interno | Todos los proyectos, historial, avance y alta de proyectos nuevos. |
+| `index.html` | Clientes (cotizador) | Cotizador interactivo de alcance por módulos (proyecto "Ecosistema web integral"). |
 
-1. Abre el sitio publicado (sin parámetros en la URL). La app genera automáticamente un ID único y lo agrega a la barra de direcciones (`?q=...`).
-2. Clic en "🔗 Copiar enlace de esta cotización" y envía ese link al cliente.
-3. Ese link es *de ese cliente*: cualquiera que lo abra ve y puede modificar exactamente esa cotización (no hay login, funciona como un link de Google Docs — trátalo como semi-privado). Cada cliente nuevo necesita su propio link: vuelve a abrir el sitio sin `?q=` para generar uno nuevo.
-4. Los cambios se guardan automáticamente en Supabase (ver el indicador "☁️ Guardado en la nube" junto al logo). Si el cliente recarga la página, cierra el navegador o vuelve otro día con el mismo link, su cotización sigue ahí.
+## Cómo compartir un proyecto con un cliente
 
-## Funciones dentro de la app
+1. Entra a `admin.html` con la clave de administrador.
+2. **+ Nuevo proyecto** y pega el JSON del proyecto (hay una plantilla cargada por defecto).
+   `code` y `access_key` son obligatorios en un proyecto nuevo.
+3. Clic en **Copiar link** y envíale al cliente ese enlace junto con su clave.
+   El link ya lleva el código puesto (`portal.html?p=CODIGO`), el cliente solo escribe la clave.
 
-- **Explorar**: clic en cualquier ficha para ver descripción, precio, prioridad, tiempo estimado y dependencias.
-- **Ajustar el alcance**: arrastra fichas separables entre módulos, o al panel lateral "Para después" / "No me interesa". También puedes moverlas desde el detalle de la ficha (selector "Mover esta característica").
-- **Módulos personalizados**: botón "+ Nuevo módulo" para agrupar necesidades propias del cliente, con sus propias características.
-- **Vista previa: solo lo obligatorio**: casilla debajo del buscador que, sin mover ni cambiar nada de la cotización real, marca visualmente las características no obligatorias como excluidas y muestra el total y las horas estimadas de desarrollo de quedarse solo con lo obligatorio. Es una simulación de solo lectura (no se guarda ni afecta la cotización real).
-- **Cotización para el cliente**: genera un documento formal (HTML imprimible / descargable como PDF vía "Imprimir → Guardar como PDF") con los datos del cliente, el desglose por módulo y el total, listo para enviar.
-- **Descargar resumen**: exporta un `.txt` con el resumen de la configuración actual.
-- **Exportar datos**: exporta un `.json` con el estado completo de la cotización.
-- **Restablecer**: vuelve la configuración a su estado original (los 13 módulos completos, USD 13,000).
+Cada proyecto tiene su propia clave: una clave no abre el proyecto de otro cliente.
 
-## Cómo correrlo en local
+## Cómo actualizar el avance
 
-Abre `index.html` directamente en el navegador (doble clic o `open index.html`). No requiere servidor propio: el backend es Supabase, ya está conectado desde el HTML.
+En **Ver detalle** de cada proyecto hay un selector de estado por fase y por entregable:
 
-## Panel de administración (historial de cambios)
+- Marcar una fase como **completada** completa automáticamente sus entregables.
+- Marcar entregables sueltos mueve la fase sola a *en curso* o *completada* según corresponda.
+- Todo queda registrado en el historial del proyecto, junto con lo que hace el cliente en su portal.
 
-`admin.html` es una página aparte, sin link desde la app del cliente, donde el equipo puede ver **todas** las cotizaciones creadas y el historial completo de movimientos de cada una (qué característica se movió, de dónde a dónde, cuándo, quién creó un módulo personalizado, cuándo se restableció, cuándo el cliente descargó su cotización formal, etc.). Así queda registro aunque el cliente cambie algo y después lo vuelva a poner como estaba.
+## Formato del JSON de un proyecto
 
-**Acceso:** https://rengifojjrr.github.io/cotizaciones-interactivas/admin.html — entras con una clave de administrador (te la compartimos aparte, nunca está en este repositorio ni en el código). No requiere ninguna configuración adicional en Supabase: funciona de inmediato. El navegador la recuerda (`localStorage`) para no tener que escribirla cada vez; "Cerrar sesión" la olvida.
+```json
+{
+  "code": "TIENDA-F1",
+  "access_key": "CLAVE-DEL-CLIENTE",
+  "client_name": "Nombre del cliente",
+  "project_name": "Nombre del proyecto",
+  "summary": "Explicación breve, en lenguaje cercano.",
+  "status": "propuesta",
+  "hero_note": "Entrega estimada: 2 semanas.",
+  "phases": [
+    {
+      "name": "Fase 1 — Nombre",
+      "objective": "Qué se logra.",
+      "scope_limit": "Lo que no entra.",
+      "status": "pendiente",
+      "timeline": "Días 1 a 5",
+      "items": [
+        {"title": "Entregable", "description": "Qué incluye", "cost": 100,
+         "mandatory": "required", "time_estimate": "4 a 6 horas", "status": "pendiente"}
+      ]
+    }
+  ],
+  "documents": [
+    {"name": "Propuesta en PDF", "description": "Desglose completo", "url": "https://…", "kind": "pdf"}
+  ]
+}
+```
+
+- `status` del proyecto: `propuesta`, `aprobado`, `en_desarrollo`, `entregado`, `pausado`.
+- `status` de fase: `pendiente`, `en_curso`, `completada`. De entregable: `pendiente`, `en_curso`, `completado`.
+- `mandatory`: `required` (entra en el alcance base) u `optional` (complemento que el cliente decide).
+- Al editar un proyecto existente, si dejas `access_key` vacío la clave del cliente **no cambia**.
+- Si mandas `phases` o `documents`, se reemplazan por completo; si los omites, se quedan como están.
 
 ## Backend (Supabase)
 
-- Proyecto: `cotizaciones-interactivas` (organización de Supabase del equipo).
-- Tabla `public.quotes`: `id uuid` (uno por cotización/cliente), `client jsonb`, `quote_state jsonb`, timestamps.
-- Tabla `public.quote_events`: historial append-only de acciones (`quote_id`, `event_type`, `summary`, `detail jsonb`, `created_at`).
-- RLS está activo y **sin políticas públicas** sobre ninguna de las dos tablas: nadie puede leer ni listar filas directamente vía la API con la clave pública. Todo el acceso pasa por funciones `SECURITY DEFINER` expuestas como RPC:
-  - `get_quote(p_id uuid)` — devuelve una cotización por su ID exacto (lo usa el cliente).
-  - `upsert_quote(p_id uuid, p_client jsonb, p_state jsonb)` — crea o actualiza una cotización por ID (lo usa el cliente).
-  - `log_quote_event(p_quote_id uuid, p_type text, p_summary text, p_detail jsonb)` — agrega una entrada al historial; solo inserta, nunca permite leer (lo usa el cliente).
-  - `admin_list_quotes(p_admin_key text)` / `admin_list_events(p_admin_key text, p_quote_id uuid)` — devuelven todas las cotizaciones o el historial de una, pero solo si `p_admin_key` coincide con el hash (SHA-256) guardado en la función. Sin la clave correcta, lanzan un error y no devuelven nada (lo usa `admin.html`).
-- Esto evita que alguien con la clave pública (anon key, embebida en el HTML — es normal que sea pública) pueda enumerar o listar las cotizaciones o el historial de otros clientes; solo puede operar sobre un ID que ya conoce (el que viene en su link), o sobre todo el listado si además conoce la clave de administrador.
-- El guardado hacia Supabase tiene un debounce de ~700ms tras cada cambio. Si no hay conexión, el indicador cambia a "⚠️ Sin conexión" y el cambio queda respaldado en `localStorage` del navegador hasta que vuelva la conexión y se edite algo de nuevo. El historial (`quote_events`) se registra al momento de cada acción, no con debounce.
+Proyecto `cotizaciones-interactivas`. Tablas del portal: `cq_projects`, `cq_phases`, `cq_items`,
+`cq_documents`, `cq_events`.
 
-## Estructura
+Las cinco tablas tienen RLS activo y **sin políticas públicas**: con la clave pública no se puede
+leer ni listar nada directamente. Todo pasa por funciones `SECURITY DEFINER`:
 
-```
-index.html   → aplicación completa (HTML + CSS + JS, con supabase-js vía CDN)
-admin.html   → panel privado con el listado de cotizaciones y su historial de cambios
-docs/        → documento original de levantamiento de requerimientos y planificación modular
-```
+| Función | Quién la usa | Qué exige |
+|---|---|---|
+| `cq_portal_open(code, key)` | Cliente | Código + clave correctos de ese proyecto |
+| `cq_portal_save_state(code, key, state)` | Cliente | Lo mismo; solo guarda sus notas |
+| `cq_portal_log(code, key, …)` | Cliente | Lo mismo; solo inserta en el historial |
+| `cq_admin_list / get / events` | Equipo | Clave de administrador |
+| `cq_admin_save_project(key, payload)` | Equipo | Clave de administrador |
+| `cq_admin_set_status(key, …)` | Equipo | Clave de administrador |
+| `cq_admin_delete_project(key, id)` | Equipo | Clave de administrador |
+
+La clave del cliente y la de administrador se guardan **hasheadas** (SHA-256), nunca en texto plano,
+y no están en este repositorio.
+
+## Cotizador interactivo (`index.html`)
+
+Se mantiene el cotizador de alcance por módulos del proyecto "Ecosistema web integral" (13 módulos,
+USD 13,000), con drag & drop entre módulos, vista previa de "solo lo obligatorio", generación de
+cotización formal e historial. Sus cotizaciones siguen visibles en la parte baja de `admin.html`.
 
 ## Notas
 
-- Precio total del alcance completo: USD 13,000 (13 módulos × USD 1,000).
-- Los valores no incluyen hosting, dominio, pasarelas de pago y sus comisiones, consumo de IA, licencias, almacenamiento ni soporte posterior.
-- La "cotización para el cliente" es un documento comercial (no un sistema de facturación fiscal ni de cobro).
-- Los precios y el desglose de módulos son visibles para cualquiera con el link de una cotización (es una app del lado del cliente); no incluyas ahí información que no quieras que el cliente vea.
+- Los valores no incluyen hosting, dominio, comisiones de pasarelas de pago, licencias ni servicios de terceros.
+- El portal es de solo lectura para el cliente: puede ver y dejar notas, no puede cambiar montos ni estados.
