@@ -9,9 +9,22 @@ todos los proyectos, su historial y se actualiza el avance.
 
 | Página | Para quién | Qué hace |
 |---|---|---|
-| `portal.html` | Clientes | Entra con código + clave: cotización, fases, avance, documentos y notas. |
+| `portal.html` | Clientes | Entra con código + clave y navega por botones: cotizaciones, fases, documentos y notas. |
 | `admin.html` | Equipo interno | CRM de clientes con sus claves de acceso, proyectos, avance e historial. |
 | `index.html` | Clientes (cotizador) | Cotizador interactivo de alcance por módulos (proyecto "Ecosistema web integral"). |
+
+## Cómo entra el cliente
+
+El portal abre en un menú de botones grandes — **Cotizaciones**, **Fases y avance**, **Documentos**
+y **Notas y preguntas** — cada uno con su contador en vivo. Los botones sin contenido no aparecen.
+
+Hay dos formas de acceso, y ambas funcionan:
+
+- **Por cliente (recomendado):** el cliente entra con su propio código y clave, y ve *todo lo suyo*
+  en un mismo espacio: todas sus cotizaciones (las de proyectos y las interactivas), el avance de
+  cada proyecto, los documentos y sus notas. Se crea desde la ficha del cliente en el CRM.
+- **Por proyecto:** la clave de un proyecto abre solo ese proyecto. Sirve para compartir una sola
+  cosa, y mantiene vivos los links entregados antes de que existiera el acceso por cliente.
 
 ## Cómo compartir un proyecto con un cliente
 
@@ -34,6 +47,13 @@ Cada proyecto tiene su propia clave: una clave no abre el proyecto de otro clien
   completo listo para pegarle al cliente por WhatsApp o correo.
 - **Cambiar** la clave cuando haga falta: la anterior deja de servir al instante.
 - Sus cotizaciones interactivas y todo su historial de actividad.
+- **Acceso del cliente a su portal**: su código y clave propios (los que abren todo lo suyo), con
+  los mismos botones de ver, copiar, cambiar y "copiar todo para enviar".
+
+En la pestaña *Cotizaciones interactivas* cada cotización tiene dos selectores: a qué cliente
+pertenece y si el cliente la ve o queda oculta. Con el botón *Cambiar cómo lo ve el cliente* se le
+pone el nombre con el que aparece en su portal (por ejemplo, "Cotización — Ecosistema web integral"),
+porque el nombre interno suele quedar vacío.
 
 Un cliente puede tener varios proyectos y varias cotizaciones. Desde la pestaña *Cotizaciones
 interactivas* se asigna cada cotización a un cliente con el selector de la derecha.

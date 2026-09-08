@@ -7,202 +7,151 @@
 <title>Portal del proyecto</title>
 <style>
 :root {
---bg: #f5f7fb;
---surface: #ffffff;
---surface-soft: #f8fafc;
---ink: #162033;
---muted: #667085;
---line: #e3e8f0;
---primary: #5b4ce1;
---primary-soft: #eeebff;
---green: #067647;
---green-soft: #ecfdf3;
---amber: #b54708;
---amber-soft: #fffaeb;
---red: #b42318;
---red-soft: #fef3f2;
---blue: #175cd3;
---blue-soft: #eff8ff;
---radius: 14px;
+--bg:#f5f7fb; --surface:#fff; --surface-soft:#f8fafc;
+--ink:#162033; --muted:#667085; --line:#e3e8f0;
+--primary:#5b4ce1; --primary-soft:#eeebff;
+--green:#067647; --green-soft:#ecfdf3;
+--amber:#b54708; --amber-soft:#fffaeb;
+--red:#b42318; --red-soft:#fef3f2;
+--blue:#175cd3; --blue-soft:#eff8ff;
+--radius:14px;
 }
-* { box-sizing: border-box; }
-body {
-margin: 0;
-font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-color: var(--ink);
-background: var(--bg);
-}
-button, input, textarea, select { font: inherit; }
-button { cursor: pointer; }
-a { color: var(--primary); }
+* { box-sizing:border-box; }
+body { margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color:var(--ink); background:var(--bg); }
+button, input, textarea, select { font:inherit; }
+button { cursor:pointer; }
+a { color:var(--primary); }
 
-.topbar { border-bottom: 1px solid var(--line); background: rgba(245,247,251,.94); }
-.topbar-inner {
-max-width: 1080px; margin: 0 auto; padding: 14px 22px;
-display: flex; align-items: center; justify-content: space-between; gap: 12px;
-}
-.brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
-.brand-mark {
-width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center;
-color: white; font-weight: 800; flex: 0 0 auto;
-background: linear-gradient(135deg, #6557e8, #8f6cff);
-}
-.brand strong { display: block; font-size: 14px; }
-.brand span { display: block; font-size: 11px; color: var(--muted); }
+.topbar { border-bottom:1px solid var(--line); background:rgba(245,247,251,.94); }
+.topbar-inner { max-width:1000px; margin:0 auto; padding:14px 22px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.brand { display:flex; align-items:center; gap:11px; min-width:0; }
+.brand-mark { width:38px; height:38px; border-radius:12px; display:grid; place-items:center; color:#fff; font-weight:800; flex:0 0 auto; background:linear-gradient(135deg,#6557e8,#8f6cff); }
+.brand strong { display:block; font-size:14px; }
+.brand span { display:block; font-size:11px; color:var(--muted); }
 
-.btn {
-border: 1px solid var(--line); background: var(--surface); color: var(--ink);
-border-radius: 11px; padding: 9px 13px; font-weight: 700; font-size: 13px;
-}
-.btn.primary { background: var(--primary); color: white; border-color: var(--primary); }
-.btn:disabled { opacity: .55; cursor: default; }
+.btn { border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:11px; padding:9px 13px; font-weight:700; font-size:13px; }
+.btn.primary { background:var(--primary); color:#fff; border-color:var(--primary); }
+.btn.small { padding:7px 11px; font-size:12px; }
+.btn:disabled { opacity:.55; cursor:default; }
 
-.shell { max-width: 1080px; margin: 0 auto; padding: 26px 22px 60px; }
+.shell { max-width:1000px; margin:0 auto; padding:26px 22px 70px; }
 
 /* Login */
-.login-card {
-max-width: 430px; margin: 8vh auto; background: var(--surface);
-border: 1px solid var(--line); border-radius: 18px; padding: 30px;
-}
-.login-card h1 { font-size: 20px; margin: 0 0 6px; }
-.login-card p { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 0 0 20px; }
-.field { display: grid; gap: 6px; margin-bottom: 13px; }
-.field label { font-size: 12px; font-weight: 800; }
-.field input, .field textarea {
-width: 100%; border: 1px solid var(--line); border-radius: 11px;
-padding: 11px 12px; outline: none; background: white;
-}
-.field input:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
-.status { font-size: 12.5px; margin-top: 12px; line-height: 1.5; }
-.status.error { color: var(--red); }
-.status.ok { color: var(--green); }
+.login-card { max-width:430px; margin:8vh auto; background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:30px; }
+.login-card h1 { font-size:20px; margin:0 0 6px; }
+.login-card p { color:var(--muted); font-size:13px; line-height:1.55; margin:0 0 20px; }
+.field { display:grid; gap:6px; margin-bottom:13px; }
+.field label { font-size:12px; font-weight:800; }
+.field input, .field textarea { width:100%; border:1px solid var(--line); border-radius:11px; padding:11px 12px; outline:none; background:#fff; }
+.field input:focus, .field textarea:focus { border-color:var(--primary); box-shadow:0 0 0 4px var(--primary-soft); }
+.status { font-size:12.5px; margin-top:12px; line-height:1.5; }
+.status.error { color:var(--red); }
+.status.ok { color:var(--green); }
 
-/* Hero */
-.hero { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
-.hero .eyebrow {
-display: inline-flex; gap: 8px; align-items: center; padding: 6px 10px; border-radius: 999px;
-background: var(--primary-soft); color: var(--primary); font-size: 11px; font-weight: 800;
-letter-spacing: .04em; text-transform: uppercase;
-}
-.hero h1 { margin: 14px 0 10px; font-size: clamp(22px, 3.4vw, 33px); line-height: 1.12; letter-spacing: -.03em; }
-.hero p.summary { color: var(--muted); line-height: 1.65; margin: 0; font-size: 14px; }
-.hero-note {
-margin-top: 16px; padding: 12px 14px; border-radius: 12px;
-background: var(--green-soft); border: 1px solid #abefc6; color: #05603a;
-font-size: 13px; line-height: 1.55; font-weight: 600;
-}
+/* Cabecera del espacio */
+.hero { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:24px; margin-bottom:20px; }
+.hero .eyebrow { display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; background:var(--primary-soft); color:var(--primary); font-size:11px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+.hero h1 { margin:14px 0 10px; font-size:clamp(22px,3.4vw,31px); line-height:1.14; letter-spacing:-.03em; }
+.hero p { color:var(--muted); line-height:1.65; margin:0; font-size:14px; }
+.hero-note { margin-top:16px; padding:12px 14px; border-radius:12px; background:var(--green-soft); border:1px solid #abefc6; color:#05603a; font-size:13px; line-height:1.55; font-weight:600; }
 
-.badge {
-display: inline-flex; align-items: center; gap: 5px; border-radius: 999px;
-padding: 5px 10px; font-size: 11px; font-weight: 800; background: #eef1f5; color: #465467;
+/* Menú de botones grandes */
+.menu { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+.menu-card {
+text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:18px;
+padding:22px; display:flex; flex-direction:column; gap:8px; transition:.16s ease; min-height:150px;
 }
-.badge.propuesta { background: var(--primary-soft); color: var(--primary); }
-.badge.aprobado { background: var(--blue-soft); color: var(--blue); }
-.badge.en_desarrollo { background: var(--amber-soft); color: var(--amber); }
-.badge.entregado { background: var(--green-soft); color: var(--green); }
-.badge.pendiente { background: #eef1f5; color: #465467; }
-.badge.en_curso { background: var(--amber-soft); color: var(--amber); }
-.badge.completada, .badge.completado { background: var(--green-soft); color: var(--green); }
-.badge.optional { background: var(--green-soft); color: var(--green); }
+.menu-card:hover { transform:translateY(-2px); border-color:#cbd3df; box-shadow:0 10px 26px rgba(16,24,40,.07); }
+.menu-icon { width:46px; height:46px; border-radius:14px; display:grid; place-items:center; font-size:22px; background:var(--primary-soft); }
+.menu-card h2 { margin:6px 0 0; font-size:17px; letter-spacing:-.02em; }
+.menu-card p { margin:0; font-size:12.5px; color:var(--muted); line-height:1.5; }
+.menu-count { margin-top:auto; font-size:12px; font-weight:800; color:var(--primary); }
 
-.summary-cards { display: grid; grid-template-columns: repeat(4, minmax(140px,1fr)); gap: 12px; margin: 18px 0; }
-.summary-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
-.summary-card .label { color: var(--muted); font-size: 12px; font-weight: 700; margin-bottom: 6px; }
-.summary-card .value { font-size: 23px; font-weight: 850; letter-spacing: -.025em; }
-.summary-card .sub { margin-top: 4px; color: var(--muted); font-size: 11px; }
-.summary-card.total .value { color: var(--ink); }
-.summary-card.opt .value { color: var(--green); }
-.summary-card.progress .value { color: var(--primary); }
+.back-link { display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--muted); background:none; border:0; padding:0; margin-bottom:16px; }
+.page-title { font-size:23px; margin:0 0 4px; letter-spacing:-.02em; }
+.page-sub { color:var(--muted); font-size:13.5px; margin:0 0 18px; line-height:1.55; }
 
-/* Tabs */
-.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 22px 0 16px; }
-.tab {
-border: 1px solid var(--line); background: var(--surface); color: var(--muted);
-border-radius: 11px; padding: 9px 14px; font-weight: 700; font-size: 13px;
-}
-.tab.active { background: var(--ink); color: white; border-color: var(--ink); }
+/* Listas */
+.item-card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:17px; margin-bottom:11px; display:flex; gap:14px; justify-content:space-between; align-items:center; flex-wrap:wrap; }
+.item-card.click { cursor:pointer; }
+.item-card.click:hover { border-color:#cbd3df; }
+.item-name { font-size:15.5px; font-weight:800; }
+.item-desc { font-size:12.5px; color:var(--muted); line-height:1.5; margin-top:4px; max-width:640px; }
+.item-meta { display:flex; gap:10px; flex-wrap:wrap; margin-top:7px; font-size:12px; color:var(--muted); align-items:center; }
 
-.panel { display: none; }
-.panel.active { display: block; }
+.badge { display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:4px 9px; font-size:11px; font-weight:800; background:#eef1f5; color:#465467; }
+.badge.propuesta { background:var(--primary-soft); color:var(--primary); }
+.badge.aprobado { background:var(--blue-soft); color:var(--blue); }
+.badge.en_desarrollo { background:var(--amber-soft); color:var(--amber); }
+.badge.entregado, .badge.completada, .badge.completado { background:var(--green-soft); color:var(--green); }
+.badge.pendiente { background:#eef1f5; color:#465467; }
+.badge.en_curso { background:var(--amber-soft); color:var(--amber); }
+.badge.optional { background:var(--green-soft); color:var(--green); }
+
+.summary-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:18px; }
+.summary-card { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; }
+.summary-card .label { color:var(--muted); font-size:12px; font-weight:700; margin-bottom:6px; }
+.summary-card .value { font-size:23px; font-weight:850; letter-spacing:-.025em; }
+.summary-card .sub { margin-top:4px; color:var(--muted); font-size:11px; }
+.summary-card.opt .value { color:var(--green); }
+.summary-card.progress .value { color:var(--primary); }
 
 /* Fases */
-.phase {
-background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-margin-bottom: 12px; overflow: hidden;
-}
-.phase.completada { border-color: #abefc6; }
-.phase.en_curso { border-color: #fedf89; }
-.phase-head { padding: 16px; cursor: pointer; display: flex; gap: 14px; align-items: flex-start; justify-content: space-between; }
-.phase-head:hover { background: var(--surface-soft); }
-.phase-main { display: flex; gap: 12px; min-width: 0; }
-.phase-index {
-width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; flex: 0 0 auto;
-background: var(--primary-soft); color: var(--primary); font-weight: 800; font-size: 13px;
-}
-.phase.completada .phase-index { background: var(--green-soft); color: var(--green); }
-.phase.en_curso .phase-index { background: var(--amber-soft); color: var(--amber); }
-.phase-title { font-size: 16px; font-weight: 800; letter-spacing: -.015em; margin-bottom: 5px; }
-.phase-meta { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
-.phase-side { text-align: right; flex: 0 0 auto; }
-.phase-side strong { display: block; font-size: 17px; }
-.phase-side span { font-size: 11px; color: var(--muted); }
-.progress-track { height: 6px; background: #edf0f4; border-radius: 999px; overflow: hidden; margin-top: 12px; }
-.progress-track > div { height: 100%; background: linear-gradient(90deg,#6658e8,#8c6fff); border-radius: inherit; transition: width .3s ease; }
-.phase.completada .progress-track > div { background: linear-gradient(90deg,#067647,#12b76a); }
-.phase-body { padding: 0 16px 16px; border-top: 1px solid var(--line); display: none; }
-.phase.open .phase-body { display: block; }
-.phase-text { font-size: 13px; line-height: 1.6; color: #344054; margin: 14px 0 0; }
-.scope-label { font-size: 10.5px; font-weight: 800; color: var(--red); text-transform: uppercase; letter-spacing: .05em; margin: 14px 0 4px; }
-.scope-text { font-size: 12px; line-height: 1.55; color: var(--muted); }
+.phase { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); margin-bottom:12px; overflow:hidden; }
+.phase.completada { border-color:#abefc6; }
+.phase.en_curso { border-color:#fedf89; }
+.phase-head { padding:16px; cursor:pointer; display:flex; gap:14px; align-items:flex-start; justify-content:space-between; }
+.phase-head:hover { background:var(--surface-soft); }
+.phase-main { display:flex; gap:12px; min-width:0; }
+.phase-index { width:34px; height:34px; border-radius:10px; display:grid; place-items:center; flex:0 0 auto; background:var(--primary-soft); color:var(--primary); font-weight:800; font-size:13px; }
+.phase.completada .phase-index { background:var(--green-soft); color:var(--green); }
+.phase.en_curso .phase-index { background:var(--amber-soft); color:var(--amber); }
+.phase-title { font-size:16px; font-weight:800; letter-spacing:-.015em; margin-bottom:5px; }
+.phase-meta { display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+.phase-side { text-align:right; flex:0 0 auto; }
+.phase-side strong { display:block; font-size:17px; }
+.phase-side span { font-size:11px; color:var(--muted); }
+.progress-track { height:6px; background:#edf0f4; border-radius:999px; overflow:hidden; margin:0 16px 14px; }
+.progress-track > div { height:100%; background:linear-gradient(90deg,#6658e8,#8c6fff); border-radius:inherit; transition:width .3s ease; }
+.phase.completada .progress-track > div { background:linear-gradient(90deg,#067647,#12b76a); }
+.phase-body { padding:0 16px 16px; border-top:1px solid var(--line); display:none; }
+.phase.open .phase-body { display:block; }
+.phase-text { font-size:13px; line-height:1.6; color:#344054; margin:14px 0 0; }
+.scope-label { font-size:10.5px; font-weight:800; color:var(--red); text-transform:uppercase; letter-spacing:.05em; margin:14px 0 4px; }
+.scope-text { font-size:12px; line-height:1.55; color:var(--muted); }
+.entregable { border:1px solid var(--line); background:var(--surface-soft); border-radius:12px; padding:11px 13px; margin-top:8px; display:flex; gap:12px; justify-content:space-between; align-items:flex-start; }
+.entregable.completado { background:var(--green-soft); border-color:#abefc6; }
+.entregable-title { font-size:13.5px; font-weight:750; line-height:1.4; }
+.entregable-desc { font-size:12px; color:var(--muted); line-height:1.5; margin-top:4px; }
+.entregable-badges { display:flex; gap:6px; flex-wrap:wrap; margin-top:7px; }
+.entregable-cost { font-size:13px; font-weight:850; color:var(--green); flex:0 0 auto; }
 
-.item {
-border: 1px solid var(--line); background: var(--surface-soft); border-radius: 12px;
-padding: 11px 13px; margin-top: 8px; display: flex; gap: 12px; justify-content: space-between; align-items: flex-start;
-}
-.item.completado { background: var(--green-soft); border-color: #abefc6; }
-.item-main { min-width: 0; }
-.item-title { font-size: 13.5px; font-weight: 750; line-height: 1.4; }
-.item-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 4px; }
-.item-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 7px; }
-.item-cost { font-size: 13px; font-weight: 850; color: var(--green); flex: 0 0 auto; }
+/* Tabla de inversión */
+.money-table { width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+.money-table th { background:var(--ink); color:#fff; text-align:left; font-size:12px; padding:10px 12px; }
+.money-table th:last-child, .money-table td:last-child { text-align:right; }
+.money-table td { padding:9px 12px; font-size:13px; border-bottom:1px solid var(--line); vertical-align:top; }
+.money-table tr.phase-row td { background:var(--surface-soft); font-weight:800; }
+.money-table tr.total-row td { background:#171d2e; color:#fff; font-weight:800; font-size:15px; border-bottom:0; }
+.money-table .muted-cell { color:var(--muted); font-size:12px; }
 
-/* Inversión */
-.money-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-.money-table th { background: var(--ink); color: white; text-align: left; font-size: 12px; padding: 10px 12px; }
-.money-table th:last-child, .money-table td:last-child { text-align: right; }
-.money-table td { padding: 9px 12px; font-size: 13px; border-bottom: 1px solid var(--line); vertical-align: top; }
-.money-table tr.phase-row td { background: var(--surface-soft); font-weight: 800; }
-.money-table tr.total-row td { background: #171d2e; color: white; font-weight: 800; font-size: 15px; border-bottom: 0; }
-.money-table .muted-cell { color: var(--muted); font-size: 12px; }
+.empty { text-align:center; padding:46px 20px; color:var(--muted); font-size:13.5px; }
+.notice { border:1px solid #fedf89; background:var(--amber-soft); color:#7a2e0e; border-radius:13px; padding:12px 14px; font-size:12px; line-height:1.55; margin-top:16px; }
+.hidden { display:none !important; }
 
-/* Documentos */
-.doc {
-background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-padding: 16px; margin-bottom: 10px; display: flex; gap: 14px; justify-content: space-between; align-items: center; flex-wrap: wrap;
-}
-.doc-name { font-size: 14.5px; font-weight: 800; }
-.doc-desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-top: 4px; max-width: 620px; }
+.toast { position:fixed; left:50%; bottom:24px; z-index:100; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#101828; color:#fff; border-radius:12px; padding:11px 14px; font-size:12.5px; font-weight:700; transition:.22s ease; max-width:90vw; }
+.toast.show { opacity:1; transform:translate(-50%,0); }
 
-.empty { text-align: center; padding: 46px 20px; color: var(--muted); font-size: 13.5px; }
-.notice { border: 1px solid #fedf89; background: var(--amber-soft); color: #7a2e0e; border-radius: 13px; padding: 12px 14px; font-size: 12px; line-height: 1.55; margin-top: 16px; }
-.hidden { display: none !important; }
-
-.toast {
-position: fixed; left: 50%; bottom: 24px; z-index: 100; transform: translate(-50%, 20px);
-opacity: 0; pointer-events: none; background: #101828; color: white; border-radius: 12px;
-padding: 11px 14px; font-size: 12.5px; font-weight: 700; transition: .22s ease; max-width: 90vw;
-}
-.toast.show { opacity: 1; transform: translate(-50%,0); }
-
-@media (max-width: 780px) {
-.topbar-inner { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 16px; }
-.topbar-inner .btn { width: 100%; }
-.shell { padding: 18px 13px 45px; }
-.summary-cards { grid-template-columns: repeat(2,1fr); }
-.hero { padding: 20px; }
-.phase-head { flex-direction: column; }
-.phase-side { text-align: left; }
-.money-table { display: block; overflow-x: auto; }
+@media (max-width:780px) {
+.topbar-inner { flex-direction:column; align-items:stretch; gap:10px; padding:12px 16px; }
+.topbar-inner .btn { width:100%; }
+.shell { padding:18px 13px 50px; }
+.hero { padding:20px; }
+.menu { grid-template-columns:1fr; }
+.menu-card { min-height:0; }
+.phase-head { flex-direction:column; }
+.phase-side { text-align:left; }
+.money-table { display:block; overflow-x:auto; }
 }
 </style>
 </head>
@@ -224,11 +173,11 @@ padding: 11px 14px; font-size: 12.5px; font-weight: 700; transition: .22s ease; 
 <main class="shell">
 
 <section id="loginView" class="login-card">
-<h1>Entra a tu proyecto</h1>
-<p>Escribe el código y la clave de acceso que te compartimos. Ahí vas a ver la cotización, las fases, el avance y los documentos de tu proyecto.</p>
+<h1>Entra a tu espacio</h1>
+<p>Escribe el código y la clave que te compartimos. Ahí vas a ver tus cotizaciones, el avance del proyecto y los documentos.</p>
 <div class="field">
-<label for="codeInput">Código del proyecto</label>
-<input id="codeInput" placeholder="Ej. TIENDA-F1" autocomplete="off" spellcheck="false">
+<label for="codeInput">Código</label>
+<input id="codeInput" placeholder="Ej. CCR" autocomplete="off" spellcheck="false">
 </div>
 <div class="field">
 <label for="keyInput">Clave de acceso</label>
@@ -238,64 +187,8 @@ padding: 11px 14px; font-size: 12.5px; font-weight: 700; transition: .22s ease; 
 <div class="status" id="loginStatus"></div>
 </section>
 
-<div id="portalView" class="hidden">
+<div id="spaceView" class="hidden"></div>
 
-<section class="hero">
-<span class="eyebrow" id="heroStatus">Propuesta</span>
-<h1 id="heroTitle"></h1>
-<p class="summary" id="heroSummary"></p>
-<div class="hero-note hidden" id="heroNote"></div>
-</section>
-
-<section class="summary-cards">
-<article class="summary-card total">
-<div class="label">Inversión total</div>
-<div class="value" id="cardTotal">$0</div>
-<div class="sub" id="cardTotalSub">—</div>
-</article>
-<article class="summary-card">
-<div class="label">Alcance base</div>
-<div class="value" id="cardRequired">$0</div>
-<div class="sub">Lo obligatorio del proyecto</div>
-</article>
-<article class="summary-card opt">
-<div class="label">Opcional</div>
-<div class="value" id="cardOptional">$0</div>
-<div class="sub">Complementos que puedes decidir</div>
-</article>
-<article class="summary-card progress">
-<div class="label">Avance</div>
-<div class="value" id="cardProgress">0%</div>
-<div class="sub" id="cardProgressSub">Sin entregables completados</div>
-</article>
-</section>
-
-<nav class="tabs">
-<button class="tab active" data-panel="roadmap">Fases y avance</button>
-<button class="tab" data-panel="inversion">Inversión</button>
-<button class="tab" data-panel="documentos">Documentos</button>
-<button class="tab" data-panel="notas">Mis notas</button>
-</nav>
-
-<section class="panel active" id="panel-roadmap"></section>
-<section class="panel" id="panel-inversion"></section>
-<section class="panel" id="panel-documentos"></section>
-
-<section class="panel" id="panel-notas">
-<div class="hero" style="padding:20px">
-<h2 style="margin:0 0 6px;font-size:17px">Notas y preguntas</h2>
-<p style="color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 14px">
-Escribe aquí cualquier duda, ajuste o comentario sobre el proyecto. Lo vemos de este lado y te respondemos.
-</p>
-<div class="field">
-<textarea id="notesInput" rows="7" placeholder="Ej. ¿Podemos agregar pago con transferencia además de tarjeta?"></textarea>
-</div>
-<button class="btn primary" id="saveNotesBtn">Guardar notas</button>
-<div class="status" id="notesStatus"></div>
-</div>
-</section>
-
-</div>
 </main>
 
 <div class="toast" id="toast"></div>
@@ -307,57 +200,54 @@ const SUPABASE_ANON_KEY = "sb_publishable_Xljd7Ep1GxBXSPp5F4A1hg_Qg-iESzl";
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const STORAGE = "cq-portal-access";
 
-const money = v => new Intl.NumberFormat("en-US", {style:"currency", currency:"USD", maximumFractionDigits:0}).format(Number(v) || 0);
+const money = v => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(Number(v)||0);
 const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"})[c]);
-const fmtDate = iso => iso ? new Date(iso).toLocaleDateString("es-ES", {dateStyle:"medium"}) : "—";
+const fmtD = iso => iso ? new Date(iso).toLocaleDateString("es-ES",{dateStyle:"medium"}) : "—";
 
-const STATUS_LABEL = {
-propuesta: "Propuesta", aprobado: "Aprobado", en_desarrollo: "En desarrollo",
-entregado: "Entregado", pausado: "En pausa",
-pendiente: "Pendiente", en_curso: "En curso", completada: "Completada", completado: "Completado"
+const LABEL = {
+propuesta:"Propuesta", aprobado:"Aprobado", en_desarrollo:"En desarrollo", entregado:"Entregado", pausado:"En pausa",
+pendiente:"Pendiente", en_curso:"En curso", completada:"Completada", completado:"Completado"
 };
-const label = s => STATUS_LABEL[s] || s || "—";
+const label = s => LABEL[s] || s || "—";
 
 let DATA = null;
-let ACCESS = {code: "", key: ""};
+let ACCESS = {code:"", key:""};
+let nav = {view:"home", projectId:null};
 
 let toastTimer;
-function toast(msg) {
+function toast(msg){
 const el = document.getElementById("toast");
-el.textContent = msg;
-el.classList.add("show");
-clearTimeout(toastTimer);
-toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
+el.textContent = msg; el.classList.add("show");
+clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove("show"),2800);
 }
 
-function showLogin(message, isError) {
+function showLogin(msg,isError){
 document.getElementById("loginView").classList.remove("hidden");
-document.getElementById("portalView").classList.add("hidden");
+document.getElementById("spaceView").classList.add("hidden");
 document.getElementById("logoutBtn").classList.add("hidden");
+document.getElementById("brandTitle").textContent = "Portal del proyecto";
+document.getElementById("brandSub").textContent = "Acceso para clientes";
 const st = document.getElementById("loginStatus");
-st.textContent = message || "";
-st.className = "status" + (isError ? " error" : "");
+st.textContent = msg || ""; st.className = "status" + (isError?" error":"");
 }
 
-async function tryOpen(code, key, silent) {
+async function enter(code, key, silent){
 document.getElementById("loginBtn").disabled = true;
-if (!silent) {
+if(!silent){
 const st = document.getElementById("loginStatus");
-st.textContent = "Entrando…";
-st.className = "status";
+st.textContent = "Entrando…"; st.className = "status";
 }
-const {data, error} = await sb.rpc("cq_portal_open", {p_code: code, p_key: key});
+const {data, error} = await sb.rpc("cq_portal_enter",{p_code:code, p_key:key});
 document.getElementById("loginBtn").disabled = false;
-
-if (error) {
+if(error){
 localStorage.removeItem(STORAGE);
 showLogin(silent ? "" : "El código o la clave no coinciden. Revísalos e intenta de nuevo.", !silent);
 return false;
 }
-
 ACCESS = {code, key};
 localStorage.setItem(STORAGE, JSON.stringify(ACCESS));
 DATA = data;
+nav = {view:"home", projectId:null};
 render();
 return true;
 }
@@ -365,90 +255,206 @@ return true;
 document.getElementById("loginBtn").onclick = () => {
 const code = document.getElementById("codeInput").value.trim();
 const key = document.getElementById("keyInput").value.trim();
-if (!code || !key) { showLogin("Escribe el código y la clave.", true); return; }
-tryOpen(code, key, false);
+if(!code || !key){ showLogin("Escribe el código y la clave.", true); return; }
+enter(code, key, false);
 };
-["codeInput","keyInput"].forEach(id => {
-document.getElementById(id).addEventListener("keydown", e => {
-if (e.key === "Enter") document.getElementById("loginBtn").click();
-});
-});
+["codeInput","keyInput"].forEach(id => document.getElementById(id).addEventListener("keydown", e => {
+if(e.key === "Enter") document.getElementById("loginBtn").click();
+}));
 
 document.getElementById("logoutBtn").onclick = () => {
 localStorage.removeItem(STORAGE);
-ACCESS = {code: "", key: ""};
-DATA = null;
+ACCESS = {code:"", key:""}; DATA = null;
 document.getElementById("keyInput").value = "";
 showLogin();
 };
 
-document.querySelectorAll(".tab").forEach(tab => {
-tab.onclick = () => {
-document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-tab.classList.add("active");
-document.getElementById("panel-" + tab.dataset.panel).classList.add("active");
-};
-});
-
-function render() {
-const p = DATA.project, phases = DATA.phases || [], docs = DATA.documents || [], t = DATA.totals || {};
-
-document.getElementById("loginView").classList.add("hidden");
-document.getElementById("portalView").classList.remove("hidden");
-document.getElementById("logoutBtn").classList.remove("hidden");
-
-document.getElementById("brandTitle").textContent = p.project_name;
-document.getElementById("brandSub").textContent = p.client_name ? p.client_name : ("Código " + p.code);
-
-const st = document.getElementById("heroStatus");
-st.textContent = label(p.status);
-st.className = "eyebrow";
-document.getElementById("heroTitle").textContent = p.project_name;
-document.getElementById("heroSummary").textContent = p.summary || "";
-const note = document.getElementById("heroNote");
-if (p.hero_note) { note.textContent = p.hero_note; note.classList.remove("hidden"); }
-else note.classList.add("hidden");
-
-document.getElementById("cardTotal").textContent = money(t.total);
-document.getElementById("cardTotalSub").textContent = `${t.items_total || 0} entregables en ${t.phases_total || 0} fases`;
-document.getElementById("cardRequired").textContent = money(t.required);
-document.getElementById("cardOptional").textContent = money(t.optional);
-
-const pct = t.items_total ? Math.round((t.items_done / t.items_total) * 100) : 0;
-document.getElementById("cardProgress").textContent = pct + "%";
-document.getElementById("cardProgressSub").textContent =
-t.items_done ? `${t.items_done} de ${t.items_total} entregables listos` : "Sin entregables completados";
-
-renderRoadmap(phases);
-renderInversion(phases, t);
-renderDocs(docs);
-
-document.getElementById("notesInput").value = (p.client_state && p.client_state.notes) || "";
+function go(view, projectId){
+nav = {view, projectId: projectId || null};
+window.scrollTo(0,0);
+render();
 }
 
-function renderRoadmap(phases) {
-const root = document.getElementById("panel-roadmap");
-if (!phases.length) { root.innerHTML = `<div class="empty">Todavía no hay fases cargadas en este proyecto.</div>`; return; }
+/* ---------------- Render ---------------- */
+function render(){
+document.getElementById("loginView").classList.add("hidden");
+document.getElementById("spaceView").classList.remove("hidden");
+document.getElementById("logoutBtn").classList.remove("hidden");
 
-root.innerHTML = phases.map((ph, i) => {
-const items = ph.items || [];
-const done = items.filter(it => it.status === "completado").length;
-const pct = items.length ? Math.round(done / items.length * 100) : (ph.status === "completada" ? 100 : 0);
-const optional = items.length && items.every(it => it.mandatory !== "required");
+const titulo = DATA.client ? DATA.client.name : (DATA.projects[0]?.project?.project_name || "Tu proyecto");
+document.getElementById("brandTitle").textContent = titulo;
+document.getElementById("brandSub").textContent = DATA.client ? "Tu espacio de proyectos" : "Portal del proyecto";
+
+const root = document.getElementById("spaceView");
+if(nav.view === "home") root.innerHTML = renderHome();
+else if(nav.view === "cotizaciones") root.innerHTML = renderCotizaciones();
+else if(nav.view === "avance") root.innerHTML = renderAvanceLista();
+else if(nav.view === "proyecto") root.innerHTML = renderProyecto(nav.projectId);
+else if(nav.view === "desglose") root.innerHTML = renderDesglose(nav.projectId);
+else if(nav.view === "documentos") root.innerHTML = renderDocumentos();
+else if(nav.view === "notas") root.innerHTML = renderNotas();
+
+wire();
+}
+
+function totalsGlobal(){
+let total = 0, itemsDone = 0, itemsTotal = 0, docs = 0, phases = 0;
+DATA.projects.forEach(p => {
+total += Number(p.totals.total||0);
+itemsDone += Number(p.totals.items_done||0);
+itemsTotal += Number(p.totals.items_total||0);
+phases += Number(p.totals.phases_total||0);
+docs += (p.documents||[]).length;
+});
+return {total, itemsDone, itemsTotal, docs, phases};
+}
+
+function renderHome(){
+const t = totalsGlobal();
+const nCot = DATA.projects.length + DATA.quotes.length;
+const proyectoPrincipal = DATA.projects[0];
+const pct = t.itemsTotal ? Math.round(t.itemsDone/t.itemsTotal*100) : 0;
 
 return `
-<article class="phase ${esc(ph.status)}" data-phase="${esc(ph.id)}">
+<section class="hero">
+<span class="eyebrow">${DATA.client ? "Tu espacio" : "Tu proyecto"}</span>
+<h1>${esc(DATA.client ? `Hola, ${DATA.client.name}` : (proyectoPrincipal?.project?.project_name || "Tu proyecto"))}</h1>
+<p>${esc(proyectoPrincipal?.project?.summary || "Acá tienes todo lo de tu proyecto en un solo lugar.")}</p>
+${proyectoPrincipal?.project?.hero_note ? `<div class="hero-note">${esc(proyectoPrincipal.project.hero_note)}</div>` : ""}
+</section>
+
+<div class="menu">
+${nCot ? `
+<button class="menu-card" data-go="cotizaciones">
+<div class="menu-icon">📄</div>
+<h2>Cotizaciones</h2>
+<p>El desglose de lo que cuesta cada cosa, parte por parte.</p>
+<div class="menu-count">${nCot} cotización(es)</div>
+</button>` : ""}
+
+${t.phases ? `
+<button class="menu-card" data-go="avance">
+<div class="menu-icon">🗺️</div>
+<h2>Fases y avance</h2>
+<p>En qué punto va el proyecto y qué falta por hacer.</p>
+<div class="menu-count">${pct}% · ${t.itemsDone} de ${t.itemsTotal} listos</div>
+</button>` : ""}
+
+${t.docs ? `
+<button class="menu-card" data-go="documentos">
+<div class="menu-icon">📁</div>
+<h2>Documentos</h2>
+<p>Propuestas y archivos del proyecto, listos para descargar.</p>
+<div class="menu-count">${t.docs} documento(s)</div>
+</button>` : ""}
+
+<button class="menu-card" data-go="notas">
+<div class="menu-icon">💬</div>
+<h2>Notas y preguntas</h2>
+<p>Escríbenos cualquier duda o ajuste. Lo vemos de este lado.</p>
+<div class="menu-count">${(DATA.client?.notes || "").trim() ? "Tienes notas guardadas" : "Escribir algo"}</div>
+</button>
+</div>`;
+}
+
+function renderCotizaciones(){
+const items = [];
+DATA.projects.forEach(p => {
+items.push(`
+<article class="item-card click" data-go="desglose" data-project="${esc(p.project.id)}">
+<div>
+<div class="item-name">Cotización — ${esc(p.project.project_name)}</div>
+<div class="item-desc">${esc((p.project.summary||"").slice(0,150))}${(p.project.summary||"").length>150?"…":""}</div>
+<div class="item-meta">
+<span class="badge ${esc(p.project.status)}">${esc(label(p.project.status))}</span>
+<span>${p.totals.items_total} entregables en ${p.totals.phases_total} fases</span>
+</div>
+</div>
+<div style="text-align:right">
+<div style="font-size:19px;font-weight:850">${money(p.totals.total)}</div>
+<button class="btn small primary" data-go="desglose" data-project="${esc(p.project.id)}">Ver desglose →</button>
+</div>
+</article>`);
+});
+
+DATA.quotes.forEach(q => {
+items.push(`
+<article class="item-card">
+<div>
+<div class="item-name">${esc(q.title)}</div>
+<div class="item-desc">Cotización interactiva: puedes activar o quitar funciones y ver cómo cambia el total.</div>
+<div class="item-meta">
+<span>${q.features} característica(s)</span>
+<span>Actualizada: ${fmtD(q.updated_at)}</span>
+</div>
+</div>
+<a class="btn primary" href="index.html?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir cotización ↗</a>
+</article>`);
+});
+
+return `
+<button class="back-link" data-go="home">← Volver al inicio</button>
+<h1 class="page-title">Cotizaciones</h1>
+<p class="page-sub">Estas son tus cotizaciones. Entra a cualquiera para ver en qué se va cada dólar.</p>
+${items.length ? items.join("") : `<div class="empty">Todavía no hay cotizaciones publicadas.</div>`}`;
+}
+
+function renderAvanceLista(){
+if(DATA.projects.length === 1) return renderProyecto(DATA.projects[0].project.id);
+return `
+<button class="back-link" data-go="home">← Volver al inicio</button>
+<h1 class="page-title">Fases y avance</h1>
+<p class="page-sub">Elige un proyecto para ver su avance en detalle.</p>
+${DATA.projects.map(p => {
+const pct = p.totals.items_total ? Math.round(p.totals.items_done/p.totals.items_total*100) : 0;
+return `
+<article class="item-card click" data-go="proyecto" data-project="${esc(p.project.id)}">
+<div>
+<div class="item-name">${esc(p.project.project_name)}</div>
+<div class="item-meta">
+<span class="badge ${esc(p.project.status)}">${esc(label(p.project.status))}</span>
+<span>${p.totals.phases_done}/${p.totals.phases_total} fases · ${pct}% completado</span>
+</div>
+</div>
+<button class="btn small primary" data-go="proyecto" data-project="${esc(p.project.id)}">Ver avance →</button>
+</article>`;
+}).join("")}`;
+}
+
+function renderProyecto(pid){
+const p = DATA.projects.find(x => x.project.id === pid) || DATA.projects[0];
+if(!p) return `<button class="back-link" data-go="home">← Volver al inicio</button><div class="empty">No hay proyectos todavía.</div>`;
+const t = p.totals;
+const pct = t.items_total ? Math.round(t.items_done/t.items_total*100) : 0;
+
+return `
+<button class="back-link" data-go="${DATA.projects.length>1 ? "avance" : "home"}">← Volver</button>
+<h1 class="page-title">${esc(p.project.project_name)}</h1>
+<p class="page-sub">Cómo va el proyecto, fase por fase. Toca una fase para ver qué incluye.</p>
+
+<div class="summary-cards">
+<div class="summary-card progress"><div class="label">Avance</div><div class="value">${pct}%</div><div class="sub">${t.items_done} de ${t.items_total} entregables</div></div>
+<div class="summary-card"><div class="label">Fases</div><div class="value">${t.phases_done}/${t.phases_total}</div><div class="sub">completadas</div></div>
+<div class="summary-card"><div class="label">Inversión</div><div class="value">${money(t.total)}</div><div class="sub">total del proyecto</div></div>
+</div>
+
+${(p.phases||[]).map((ph,i) => {
+const items = ph.items||[];
+const done = items.filter(it => it.status==="completado").length;
+const fp = items.length ? Math.round(done/items.length*100) : (ph.status==="completada"?100:0);
+const opcional = items.length && items.every(it => it.mandatory!=="required");
+return `
+<article class="phase ${esc(ph.status)}">
 <div class="phase-head">
 <div class="phase-main">
-<div class="phase-index">${i + 1}</div>
+<div class="phase-index">${i+1}</div>
 <div>
 <div class="phase-title">${esc(ph.name)}</div>
 <div class="phase-meta">
 <span class="badge ${esc(ph.status)}">${esc(label(ph.status))}</span>
 ${ph.timeline ? `<span class="badge">${esc(ph.timeline)}</span>` : ""}
 <span class="badge">${items.length} entregable(s)</span>
-${optional ? `<span class="badge optional">Opcional</span>` : ""}
+${opcional ? `<span class="badge optional">Opcional</span>` : ""}
 </div>
 </div>
 </div>
@@ -457,122 +463,131 @@ ${optional ? `<span class="badge optional">Opcional</span>` : ""}
 <span>${done} de ${items.length} listos</span>
 </div>
 </div>
-<div style="padding:0 16px 14px">
-<div class="progress-track"><div style="width:${pct}%"></div></div>
-</div>
+<div class="progress-track"><div style="width:${fp}%"></div></div>
 <div class="phase-body">
 ${ph.objective ? `<p class="phase-text">${esc(ph.objective)}</p>` : ""}
 ${ph.scope_limit ? `<div class="scope-label">Lo que no entra en esta fase</div><div class="scope-text">${esc(ph.scope_limit)}</div>` : ""}
 ${items.map(it => `
-<div class="item ${esc(it.status)}">
-<div class="item-main">
-<div class="item-title">${esc(it.title)}</div>
-${it.description ? `<div class="item-desc">${esc(it.description)}</div>` : ""}
-<div class="item-badges">
+<div class="entregable ${esc(it.status)}">
+<div>
+<div class="entregable-title">${esc(it.title)}</div>
+${it.description ? `<div class="entregable-desc">${esc(it.description)}</div>` : ""}
+<div class="entregable-badges">
 <span class="badge ${esc(it.status)}">${esc(label(it.status))}</span>
-${it.mandatory !== "required" ? `<span class="badge optional">Opcional</span>` : ""}
-${it.time_estimate ? `<span class="badge">${esc(it.time_estimate)}</span>` : ""}
+${it.mandatory!=="required" ? `<span class="badge optional">Opcional</span>` : ""}
 </div>
 </div>
-<div class="item-cost">${money(it.cost)}</div>
+<div class="entregable-cost">${money(it.cost)}</div>
 </div>`).join("")}
 </div>
 </article>`;
-}).join("");
-
-root.querySelectorAll(".phase-head").forEach(head => {
-head.onclick = () => head.closest(".phase").classList.toggle("open");
-});
+}).join("")}`;
 }
 
-function renderInversion(phases, t) {
-const root = document.getElementById("panel-inversion");
-if (!phases.length) { root.innerHTML = `<div class="empty">Todavía no hay desglose de inversión cargado.</div>`; return; }
+function renderDesglose(pid){
+const p = DATA.projects.find(x => x.project.id === pid) || DATA.projects[0];
+if(!p) return `<button class="back-link" data-go="cotizaciones">← Volver</button><div class="empty">Sin datos.</div>`;
 
 let rows = "";
-phases.forEach((ph, i) => {
-rows += `<tr class="phase-row"><td colspan="2">${i + 1}. ${esc(ph.name)}</td><td>${money(ph.phase_total)}</td></tr>`;
-(ph.items || []).forEach(it => {
+(p.phases||[]).forEach((ph,i) => {
+rows += `<tr class="phase-row"><td colspan="2">${i+1}. ${esc(ph.name)}</td><td>${money(ph.phase_total)}</td></tr>`;
+(ph.items||[]).forEach(it => {
 rows += `<tr>
-<td>${esc(it.title)}${it.mandatory !== "required" ? ' <span class="badge optional">Opcional</span>' : ""}</td>
-<td class="muted-cell">${esc(it.description || "")}</td>
-<td>${money(it.cost)}</td>
-</tr>`;
+<td>${esc(it.title)}${it.mandatory!=="required"?' <span class="badge optional">Opcional</span>':""}</td>
+<td class="muted-cell">${esc(it.description||"")}</td>
+<td>${money(it.cost)}</td></tr>`;
 });
 });
+rows += `<tr class="total-row"><td colspan="2">TOTAL</td><td>${money(p.totals.total)}</td></tr>`;
 
-rows += `<tr class="total-row"><td colspan="2">TOTAL DEL PROYECTO</td><td>${money(t.total)}</td></tr>`;
+return `
+<button class="back-link" data-go="cotizaciones">← Volver a cotizaciones</button>
+<h1 class="page-title">${esc(p.project.project_name)}</h1>
+<p class="page-sub">En qué se va cada dólar, parte por parte.</p>
 
-root.innerHTML = `
+<div class="summary-cards">
+<div class="summary-card"><div class="label">Total</div><div class="value">${money(p.totals.total)}</div></div>
+<div class="summary-card"><div class="label">Alcance base</div><div class="value">${money(p.totals.required)}</div><div class="sub">lo obligatorio</div></div>
+<div class="summary-card opt"><div class="label">Opcional</div><div class="value">${money(p.totals.optional)}</div><div class="sub">complementos</div></div>
+</div>
+
 <table class="money-table">
 <thead><tr><th>Entregable</th><th>Qué incluye</th><th>Inversión</th></tr></thead>
 <tbody>${rows}</tbody>
 </table>
 <div class="notice">
 Los valores no incluyen hosting, dominio, comisiones de la pasarela de pago, licencias ni suscripciones de terceros:
-esos se pagan directamente a cada proveedor. El alcance de cada fase está detallado en la pestaña "Fases y avance".
+esos se pagan directamente a cada proveedor.
+</div>
+<div style="margin-top:16px"><button class="btn primary" data-go="proyecto" data-project="${esc(p.project.id)}">Ver fases y avance →</button></div>`;
+}
+
+function renderDocumentos(){
+const docs = [];
+DATA.projects.forEach(p => (p.documents||[]).forEach(d => docs.push({...d, proyecto:p.project.project_name})));
+return `
+<button class="back-link" data-go="home">← Volver al inicio</button>
+<h1 class="page-title">Documentos</h1>
+<p class="page-sub">Los archivos de tu proyecto, listos para abrir o descargar.</p>
+${docs.length ? docs.map(d => `
+<article class="item-card">
+<div>
+<div class="item-name">${esc(d.name)}</div>
+${d.description ? `<div class="item-desc">${esc(d.description)}</div>` : ""}
+<div class="item-meta"><span>${esc(d.proyecto)}</span><span>Publicado el ${fmtD(d.created_at)}</span></div>
+</div>
+<a class="btn primary" href="${esc(d.url)}" target="_blank" rel="noopener" data-doc="${esc(d.name)}">Abrir / descargar ↗</a>
+</article>`).join("") : `<div class="empty">Todavía no hay documentos publicados.</div>`}`;
+}
+
+function renderNotas(){
+const notas = DATA.client ? (DATA.client.notes||"") : (DATA.projects[0]?.project?.client_state?.notes || "");
+return `
+<button class="back-link" data-go="home">← Volver al inicio</button>
+<h1 class="page-title">Notas y preguntas</h1>
+<p class="page-sub">Escribe cualquier duda, ajuste o comentario. Lo vemos de este lado y te respondemos.</p>
+<div class="item-card" style="display:block">
+<div class="field">
+<textarea id="notesInput" rows="8" placeholder="Ej. ¿Podemos agregar pago con transferencia además de tarjeta?">${esc(notas)}</textarea>
+</div>
+<button class="btn primary" id="saveNotesBtn">Guardar</button>
+<div class="status" id="notesStatus"></div>
 </div>`;
 }
 
-function renderDocs(docs) {
-const root = document.getElementById("panel-documentos");
-if (!docs.length) {
-root.innerHTML = `<div class="empty">Todavía no hay documentos publicados. Aparecerán aquí en cuanto los subamos.</div>`;
-return;
-}
-root.innerHTML = docs.map(d => `
-<article class="doc">
-<div>
-<div class="doc-name">${esc(d.name)}</div>
-${d.description ? `<div class="doc-desc">${esc(d.description)}</div>` : ""}
-<div class="doc-desc" style="margin-top:6px">Publicado el ${fmtDate(d.created_at)}</div>
-</div>
-<a class="btn primary" href="${esc(d.url)}" target="_blank" rel="noopener" data-doc="${esc(d.name)}">Abrir / descargar ↗</a>
-</article>`).join("");
-
-root.querySelectorAll("[data-doc]").forEach(a => {
-a.addEventListener("click", () => {
-sb.rpc("cq_portal_log", {
-p_code: ACCESS.code, p_key: ACCESS.key,
-p_type: "documento_abierto",
-p_summary: `El cliente abrió el documento "${a.dataset.doc}"`,
-p_detail: {}
+function wire(){
+document.querySelectorAll("[data-go]").forEach(el => {
+el.onclick = e => { e.stopPropagation(); go(el.dataset.go, el.dataset.project); };
 });
+document.querySelectorAll(".phase-head").forEach(h => {
+h.onclick = () => h.closest(".phase").classList.toggle("open");
 });
-});
-}
-
-document.getElementById("saveNotesBtn").onclick = async () => {
-const notes = document.getElementById("notesInput").value;
+document.querySelectorAll("[data-doc]").forEach(a => a.addEventListener("click", () => {
+sb.rpc("cq_portal_log",{p_code:ACCESS.code, p_key:ACCESS.key, p_type:"documento_abierto",
+p_summary:`El cliente abrió el documento "${a.dataset.doc}"`, p_detail:{}}).then(()=>{}, ()=>{});
+}));
+const saveBtn = document.getElementById("saveNotesBtn");
+if(saveBtn) saveBtn.onclick = async () => {
 const st = document.getElementById("notesStatus");
-st.textContent = "Guardando…";
-st.className = "status";
-const state = Object.assign({}, DATA.project.client_state || {}, {notes, updated_at: new Date().toISOString()});
-const {data, error} = await sb.rpc("cq_portal_save_state", {p_code: ACCESS.code, p_key: ACCESS.key, p_state: state});
-if (error) { st.textContent = "No se pudieron guardar las notas: " + error.message; st.className = "status error"; return; }
+st.textContent = "Guardando…"; st.className = "status";
+const {data, error} = await sb.rpc("cq_portal_notes",{
+p_code:ACCESS.code, p_key:ACCESS.key, p_notes:document.getElementById("notesInput").value});
+if(error){ st.textContent = "No se pudo guardar: " + error.message; st.className="status error"; return; }
 DATA = data;
-st.textContent = "Notas guardadas. Las vemos de este lado.";
-st.className = "status ok";
+st.textContent = "Guardado. Lo vemos de este lado."; st.className = "status ok";
 toast("Notas guardadas.");
-sb.rpc("cq_portal_log", {
-p_code: ACCESS.code, p_key: ACCESS.key,
-p_type: "notas_guardadas", p_summary: "El cliente guardó notas o preguntas en el portal", p_detail: {}
-});
 };
+}
 
-// Arranque: código por URL (?p=CODIGO) o sesión guardada
-(function start() {
+(function start(){
 const url = new URL(window.location.href);
 const codeParam = url.searchParams.get("p");
-if (codeParam) document.getElementById("codeInput").value = codeParam;
-
+if(codeParam) document.getElementById("codeInput").value = codeParam;
 let saved = null;
 try { saved = JSON.parse(localStorage.getItem(STORAGE)); } catch {}
-if (saved && saved.code && saved.key && (!codeParam || codeParam.toLowerCase() === saved.code.toLowerCase())) {
-tryOpen(saved.code, saved.key, true).then(ok => { if (!ok) showLogin(); });
-} else {
-showLogin();
-}
+if(saved?.code && saved?.key && (!codeParam || codeParam.toLowerCase() === saved.code.toLowerCase())){
+enter(saved.code, saved.key, true).then(ok => { if(!ok) showLogin(); });
+} else showLogin();
 })();
 </script>
 </body>

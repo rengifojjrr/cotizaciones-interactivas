@@ -276,6 +276,29 @@ dialog::backdrop { background:rgba(15,23,42,.62); }
 </div>
 </dialog>
 
+<dialog id="clientKeyDialog">
+<div class="modal-head">
+<div>
+<span style="font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.05em">Acceso del cliente</span>
+<h2>Código y clave del portal</h2>
+</div>
+<button class="close" data-close="clientKeyDialog">×</button>
+</div>
+<div class="modal-body">
+<p class="hint">Con este código y clave el cliente entra a su portal y ve <strong>todo lo suyo</strong>: sus cotizaciones, fases, documentos y notas. Si ya tenía clave, la anterior deja de servir.</p>
+<div class="grid-2">
+<div class="field"><label for="ckCode">Código</label><input id="ckCode" placeholder="Ej. CCR" spellcheck="false"></div>
+<div class="field"><label for="ckKey">Clave</label><input id="ckKey" placeholder="Ej. ABCD-1234-EFGH"></div>
+</div>
+<div class="modal-actions">
+<button class="btn" data-close="clientKeyDialog">Cancelar</button>
+<button class="btn" id="genClientKeyBtn">Generar clave</button>
+<button class="btn primary" id="saveClientKeyBtn">Guardar acceso</button>
+</div>
+<div class="status" id="ckStatus"></div>
+</div>
+</dialog>
+
 <dialog id="projectDialog">
 <div class="modal-head">
 <div>
@@ -407,6 +430,9 @@ renderClients(); renderProjects(); renderQuotes();
 if(currentClient) openClient(currentClient, true);
 }
 
+function clientLink(code){
+return new URL(`portal.html?p=${encodeURIComponent(code||"")}`, window.location.href).href;
+}
 function portalLink(code){
 return new URL(`portal.html?p=${encodeURIComponent(code)}`, window.location.href).href;
 }
@@ -477,6 +503,32 @@ root.innerHTML = `
 <div class="contact-item"><span>Cliente desde</span><strong>${fmtD(c.created_at)}</strong></div>
 </div>
 ${c.notes ? `<div class="notes-box"><strong>Notas internas:</strong> ${esc(c.notes)}</div>` : ""}
+
+<div class="access-box">
+<div class="access-title">Acceso del cliente a su portal (abre todo lo suyo)</div>
+${c.code ? `
+<div class="access-line">
+<span class="access-label">Código</span>
+<span class="access-value">${esc(c.code)}</span>
+<button class="btn small" data-copy="${esc(c.code)}">Copiar</button>
+</div>
+<div class="access-line">
+<span class="access-label">Clave</span>
+<span class="access-value hidden-key" id="ckey-${esc(c.id)}" data-key="${esc(c.access_key || "")}">••••••••••</span>
+<button class="btn small" data-toggle-ckey="${esc(c.id)}">Ver</button>
+<button class="btn small" data-copy="${esc(c.access_key || "")}">Copiar</button>
+<button class="btn small" data-client-key="${esc(c.id)}" data-code="${esc(c.code)}">Cambiar</button>
+</div>
+<div class="access-line">
+<span class="access-label">Link</span>
+<button class="btn small" data-copy="${esc(clientLink(c.code))}">Copiar link</button>
+<button class="btn small primary" data-copy="${esc(`Hola, aquí tienes el acceso a tu espacio:\n\nLink: ${clientLink(c.code)}\nCódigo: ${c.code}\nClave: ${c.access_key || ""}\n`)}">Copiar todo para enviar</button>
+</div>` : `
+<div class="access-line">
+<span style="font-size:12.5px;color:var(--muted)">Este cliente todavía no tiene acceso propio a su portal.</span>
+<button class="btn small primary" data-client-key="${esc(c.id)}" data-code="">Crear acceso</button>
+</div>`}
+</div>
 </div>
 
 <div class="stat-row">
@@ -575,6 +627,20 @@ const txt = `Hola, aquí tienes el acceso a tu proyecto:\n\n${p.project_name}\nL
 try { await navigator.clipboard.writeText(txt); toast("Mensaje copiado, listo para enviar."); } catch { toast(txt); }
 });
 root.querySelectorAll("[data-change-key]").forEach(b => b.onclick = () => openKeyDialog(b.dataset.changeKey));
+root.querySelectorAll("[data-toggle-ckey]").forEach(b => b.onclick = () => {
+const el = document.getElementById("ckey-" + b.dataset.toggleCkey);
+const showing = !el.classList.contains("hidden-key");
+if(showing){ el.textContent = "••••••••••"; el.classList.add("hidden-key"); b.textContent = "Ver"; }
+else { el.textContent = el.dataset.key || "(sin clave)"; el.classList.remove("hidden-key"); b.textContent = "Ocultar"; }
+});
+root.querySelectorAll("[data-client-key]").forEach(b => b.onclick = () => openClientKeyDialog(b.dataset.clientKey, b.dataset.code));
+root.querySelectorAll("[data-vis]").forEach(sel => sel.onchange = async () => {
+const {error} = await sb.rpc("cq_admin_set_visibility",{p_admin_key:adminKey,
+p_kind:sel.dataset.vis, p_target_id:sel.dataset.target, p_visible: sel.value === "1"});
+if(error){ toast("No se pudo cambiar: "+error.message); return; }
+toast(sel.value === "1" ? "Ahora el cliente lo ve." : "Oculto para el cliente.");
+await loadAll();
+});
 root.querySelectorAll("[data-edit-project]").forEach(b => b.onclick = () => openProjectDialog(b.dataset.editProject));
 document.getElementById("editClientBtn").onclick = () => openClientDialog(c);
 }
@@ -642,6 +708,37 @@ const {error} = await sb.rpc("cq_admin_set_key",{p_admin_key:adminKey, p_project
 if(error){ st.textContent = "No se pudo cambiar: " + error.message; st.className="status error"; return; }
 document.getElementById("keyDialog").close();
 toast("Clave actualizada. Recuerda enviársela al cliente.");
+await loadAll();
+};
+
+/* ---------------- Acceso del cliente ---------------- */
+let clientKeyId = null;
+function openClientKeyDialog(cid, code){
+clientKeyId = cid;
+document.getElementById("ckCode").value = code || "";
+document.getElementById("ckKey").value = "";
+document.getElementById("ckStatus").textContent = "";
+document.getElementById("clientKeyDialog").showModal();
+}
+function randomKey(){
+const alfa = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const part = () => Array.from({length:4},()=>alfa[Math.floor(Math.random()*alfa.length)]).join("");
+return `${part()}-${part()}-${part()}`;
+}
+document.getElementById("genClientKeyBtn").onclick = () => {
+document.getElementById("ckKey").value = randomKey();
+};
+document.getElementById("saveClientKeyBtn").onclick = async () => {
+const st = document.getElementById("ckStatus");
+const code = document.getElementById("ckCode").value.trim();
+const key = document.getElementById("ckKey").value.trim();
+if(!code || !key){ st.textContent = "Escribe el código y la clave (o genera una)."; st.className="status error"; return; }
+st.textContent = "Guardando…"; st.className = "status";
+const {error} = await sb.rpc("cq_admin_set_client_key",{
+p_admin_key:adminKey, p_client_id:clientKeyId, p_code:code, p_new_key:key});
+if(error){ st.textContent = "No se pudo guardar: " + error.message; st.className="status error"; return; }
+document.getElementById("clientKeyDialog").close();
+toast("Acceso del cliente actualizado.");
 await loadAll();
 };
 
@@ -834,7 +931,10 @@ return `
 <article class="card">
 <div class="row-top">
 <div>
-<div class="row-name">${esc(c.name || "(sin nombre todavía)")}${c.company?` <span class="muted">— ${esc(c.company)}</span>`:""}</div>
+<div class="row-name">${esc(q.portal_title || c.name || "(sin nombre todavía)")}</div>
+<div class="item-desc" style="font-size:12px;color:var(--muted);margin-top:3px">
+<button class="btn small" data-title-quote="${esc(q.id)}" data-current="${esc(q.portal_title||"")}">Cambiar cómo lo ve el cliente</button>
+</div>
 <div class="row-meta">
 <span>Creada: ${fmtDT(q.created_at)}</span>
 <span>Último cambio: ${fmtDT(q.updated_at)}</span>
@@ -843,6 +943,10 @@ ${included!==null?`<span>${included} característica(s)</span>`:""}
 </div>
 </div>
 <div class="row-actions">
+<select class="status-select" data-vis="quote" data-target="${esc(q.id)}">
+<option value="1"${q.visible_to_client!==false?" selected":""}>Visible al cliente</option>
+<option value="0"${q.visible_to_client===false?" selected":""}>Oculta</option>
+</select>
 <select class="status-select" data-link-quote="${esc(q.id)}">
 <option value="">— asignar a cliente —</option>
 ${CLIENTS.map(c2 => `<option value="${esc(c2.id)}"${q.client_id===c2.id?" selected":""}>${esc(c2.name)}</option>`).join("")}
@@ -855,6 +959,14 @@ ${CLIENTS.map(c2 => `<option value="${esc(c2.id)}"${q.client_id===c2.id?" select
 </article>`;
 }).join("");
 
+list.querySelectorAll("[data-vis]").forEach(sel => sel.onchange = async () => {
+const {error} = await sb.rpc("cq_admin_set_visibility",{p_admin_key:adminKey,
+p_kind:sel.dataset.vis, p_target_id:sel.dataset.target, p_visible: sel.value === "1"});
+if(error){ toast("No se pudo cambiar: "+error.message); return; }
+toast(sel.value === "1" ? "Ahora el cliente la ve." : "Oculta para el cliente.");
+await loadAll();
+});
+
 list.querySelectorAll("[data-link-quote]").forEach(sel => sel.onchange = async () => {
 const {error} = await sb.rpc("cq_admin_link_quote",{
 p_admin_key:adminKey, p_quote_id:sel.dataset.linkQuote, p_client_id: sel.value || null
@@ -862,6 +974,14 @@ p_admin_key:adminKey, p_quote_id:sel.dataset.linkQuote, p_client_id: sel.value |
 if(error){ toast("No se pudo asignar: "+error.message); return; }
 toast(sel.value ? "Cotización asignada al cliente." : "Cotización desasignada.");
 await loadAll();
+});
+
+list.querySelectorAll("[data-title-quote]").forEach(b => b.onclick = async () => {
+const t = prompt("¿Con qué nombre ve el cliente esta cotización?", b.dataset.current || "Cotización interactiva");
+if(t === null) return;
+const {error} = await sb.rpc("cq_admin_set_quote_title",{p_admin_key:adminKey, p_quote_id:b.dataset.titleQuote, p_title:t});
+if(error){ toast("No se pudo guardar: "+error.message); return; }
+toast("Nombre actualizado."); await loadAll();
 });
 
 list.querySelectorAll("[data-quote-history]").forEach(b => b.onclick = async () => {
