@@ -12,6 +12,7 @@ todos los proyectos, su historial y se actualiza el avance.
 | `portal.html` | Clientes | Entra con código + clave y navega por botones: cotizaciones, fases, documentos y notas. |
 | `admin.html` | Equipo interno | CRM de clientes con sus claves de acceso, proyectos, avance e historial. |
 | `index.html` | Clientes (cotizador) | Cotizador interactivo de alcance por módulos (proyecto "Ecosistema web integral"). |
+| `monpica.html` | Clientes (cotizador) | Cotizador interactivo por fases del proyecto MONPICA-SGP. Sin horas: el precio es cerrado. |
 
 ## Tema claro y oscuro
 
@@ -150,6 +151,18 @@ leer ni listar nada directamente. Todo pasa por funciones `SECURITY DEFINER`:
 La clave de administrador se guarda **hasheada** (SHA-256). La de cada cliente se guarda hasheada
 para validar el acceso y además cifrada, para poder reenviársela desde el CRM. Ninguna clave está
 en este repositorio ni en texto plano en la base de datos.
+
+## Cotizadores interactivos
+
+Hay dos, con el mismo motor y datos distintos. El cliente arrastra entregables entre el bloque al
+que pertenecen, **Para después** y **No me interesa**, y ve el total moverse en vivo. La casilla de
+*solo lo obligatorio* muestra qué queda si se deja únicamente lo esencial, sin mover nada.
+
+`monpica.html` cotiza MONPICA-SGP en dos bloques separados a propósito: el **comprometido**
+(levantamiento y fases 0 a 3, precio firme con fecha) y las **fases referenciales** (4 a 7, precio
+estimado y sin fecha). Ese archivo **no muestra horas en ninguna parte**: el precio es cerrado, y
+mostrar horas al lado invita a dividir horas entre tarifa, que no significa nada. Si se agregan
+entregables nuevos, hay que mantener esa regla.
 
 ## Cotizador interactivo (`index.html`)
 

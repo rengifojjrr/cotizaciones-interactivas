@@ -1,0 +1,2192 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Cotizador interactivo — Sistema de gestión MONPICA</title>
+<style>
+:root {
+--bg:#f5f7fb; --surface:#ffffff; --surface-soft:#f8fafc;
+--ink:#162033; --muted:#667085; --line:#e3e8f0;
+--primary:#5b4ce1; --primary-soft:#eeebff;
+--green:#067647; --green-soft:#ecfdf3; --green-line:#abefc6;
+--amber:#b54708; --amber-soft:#fffaeb; --amber-line:#fedf89; --amber-ink:#7a2e0e;
+--red:#b42318; --red-soft:#fef3f2;
+--blue:#175cd3; --blue-soft:#eff8ff;
+--topbar:rgba(245,247,251,.94);
+--panel:#171d2e; --panel-ink:#ffffff; --panel-muted:#c7cad6;
+--badge-bg:#eef1f5; --badge-ink:#465467;
+--track:#edf0f4; --body-text:#344054;
+--input-bg:#ffffff; --border-strong:#cbd3df;
+--shadow:rgba(16,24,40,.07); --shadow-strong:rgba(16,24,40,.28);
+--overlay:rgba(15,23,42,.62); --chip:#f0f2f5;
+--radius:14px;
+color-scheme: light;
+}
+:root[data-theme="dark"] {
+--bg:#0f1320; --surface:#161c2b; --surface-soft:#1c2434;
+--ink:#e9edf6; --muted:#98a3b8; --line:#2a3446;
+--primary:#9b8cff; --primary-soft:#251f4f;
+--green:#5ad598; --green-soft:#102a20; --green-line:#1f5940;
+--amber:#f5b544; --amber-soft:#2c2211; --amber-line:#5c4718; --amber-ink:#f3c98a;
+--red:#f78a80; --red-soft:#2d1917;
+--blue:#7ab6ff; --blue-soft:#12253c;
+--topbar:rgba(15,19,32,.94);
+--panel:#0a0e18; --panel-ink:#e9edf6; --panel-muted:#8f9ab0;
+--badge-bg:#232c3d; --badge-ink:#b6c0d4;
+--track:#232c3d; --body-text:#c3cbdb;
+--input-bg:#111726; --border-strong:#3a4559;
+--shadow:rgba(0,0,0,.45); --shadow-strong:rgba(0,0,0,.6);
+--overlay:rgba(2,6,16,.72); --chip:#232c3d;
+color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme="light"]) {
+--bg:#0f1320; --surface:#161c2b; --surface-soft:#1c2434;
+--ink:#e9edf6; --muted:#98a3b8; --line:#2a3446;
+--primary:#9b8cff; --primary-soft:#251f4f;
+--green:#5ad598; --green-soft:#102a20; --green-line:#1f5940;
+--amber:#f5b544; --amber-soft:#2c2211; --amber-line:#5c4718; --amber-ink:#f3c98a;
+--red:#f78a80; --red-soft:#2d1917;
+--blue:#7ab6ff; --blue-soft:#12253c;
+--topbar:rgba(15,19,32,.94);
+--panel:#0a0e18; --panel-ink:#e9edf6; --panel-muted:#8f9ab0;
+--badge-bg:#232c3d; --badge-ink:#b6c0d4;
+--track:#232c3d; --body-text:#c3cbdb;
+--input-bg:#111726; --border-strong:#3a4559;
+--shadow:rgba(0,0,0,.45); --shadow-strong:rgba(0,0,0,.6);
+--overlay:rgba(2,6,16,.72); --chip:#232c3d;
+color-scheme: dark;
+}
+}
+.theme-btn {
+border:1px solid var(--line); background:var(--surface); color:var(--ink);
+border-radius:11px; padding:8px 11px; font-size:15px; line-height:1; cursor:pointer;
+}
+.theme-btn:hover { border-color:var(--border-strong); }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+margin: 0;
+font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+color: var(--ink);
+background: var(--bg);
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; }
+
+.topbar {
+position: sticky;
+top: 0;
+z-index: 40;
+backdrop-filter: blur(18px);
+background: var(--topbar);
+border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+max-width: 1560px;
+margin: 0 auto;
+padding: 12px 22px;
+display: flex;
+gap: 14px;
+align-items: center;
+justify-content: space-between;
+}
+.brand {
+display: flex;
+align-items: center;
+gap: 11px;
+min-width: 220px;
+}
+.brand-mark {
+width: 38px;
+height: 38px;
+display: grid;
+place-items: center;
+border-radius: 12px;
+color: #fff;
+font-weight: 800;
+background: linear-gradient(135deg, #6557e8, #8f6cff);
+box-shadow: 0 8px 20px rgba(91,76,225,.25);
+}
+.brand strong { display: block; font-size: 14px; }
+.brand span { display: block; font-size: 11px; color: var(--muted); }
+
+.toolbar {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+justify-content: flex-end;
+}
+.btn {
+border: 1px solid var(--line);
+background: var(--surface);
+color: var(--ink);
+border-radius: 11px;
+padding: 9px 12px;
+font-weight: 700;
+font-size: 13px;
+transition: .18s ease;
+}
+.btn:hover { transform: translateY(-1px); border-color: var(--border-strong); }
+.btn.primary { background: var(--primary); color: var(--surface); border-color: var(--primary); }
+.btn.ghost { background: transparent; }
+.btn.danger { color: var(--red); }
+.btn.small { padding: 7px 9px; font-size: 12px; }
+
+.shell {
+max-width: 1560px;
+margin: 0 auto;
+padding: 28px 22px 60px;
+}
+
+.hero {
+border-radius: 18px;
+padding: 26px;
+background: var(--surface);
+color: var(--ink);
+border: 1px solid var(--line);
+}
+.hero-grid {
+display: grid;
+grid-template-columns: minmax(0, 1.55fr) minmax(310px, .75fr);
+gap: 26px;
+align-items: center;
+}
+.eyebrow {
+display: inline-flex;
+gap: 8px;
+align-items: center;
+padding: 6px 10px;
+border-radius: 999px;
+background: var(--primary-soft);
+color: var(--primary);
+font-size: 12px;
+font-weight: 800;
+letter-spacing: .04em;
+text-transform: uppercase;
+}
+.hero h1 {
+margin: 16px 0 12px;
+max-width: 850px;
+font-size: clamp(31px, 4vw, 53px);
+line-height: 1.02;
+letter-spacing: -.045em;
+}
+.hero p {
+color: var(--muted);
+max-width: 850px;
+line-height: 1.65;
+margin: 0;
+}
+.hero-steps {
+display: grid;
+gap: 10px;
+}
+.hero-step {
+display: grid;
+grid-template-columns: 34px 1fr;
+gap: 11px;
+padding: 12px;
+border-bottom: 1px solid var(--line);
+background: transparent;
+border-radius: 0;
+}
+.hero-step b {
+width: 34px;
+height: 34px;
+display: grid;
+place-items: center;
+border-radius: 10px;
+background: var(--primary-soft);
+color: var(--primary);
+}
+.hero-step strong { display: block; font-size: 13px; margin: 1px 0 3px; }
+.hero-step span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.hero-step:last-child { border-bottom: 0; }
+
+.summary {
+display: grid;
+grid-template-columns: repeat(5, minmax(150px,1fr));
+gap: 12px;
+margin: 18px 0;
+}
+.summary-card {
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: 16px;
+padding: 16px;
+box-shadow: 0 5px 18px var(--shadow);
+}
+.summary-card .label {
+color: var(--muted);
+font-size: 12px;
+font-weight: 700;
+margin-bottom: 7px;
+}
+.summary-card .value {
+font-size: 24px;
+font-weight: 850;
+letter-spacing: -.025em;
+}
+.summary-card .sub {
+margin-top: 4px;
+color: var(--muted);
+font-size: 11px;
+}
+.summary-card.current .value { color: var(--green); }
+.summary-card.later .value { color: var(--amber); }
+.summary-card.no .value { color: var(--red); }
+
+.controls {
+display: grid;
+grid-template-columns: minmax(280px,1fr) auto auto;
+gap: 10px;
+margin: 18px 0;
+align-items: center;
+}
+.search {
+width: 100%;
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: 13px;
+padding: 12px 14px;
+outline: none;
+}
+.search:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+
+.preview-bar {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 14px;
+margin: 0 0 18px;
+padding: 12px 15px;
+border-radius: 13px;
+border: 1px solid var(--line);
+background: var(--surface);
+}
+.preview-toggle {
+display: flex;
+align-items: center;
+gap: 9px;
+font-size: 13px;
+font-weight: 700;
+cursor: pointer;
+}
+.preview-toggle input { width: 17px; height: 17px; accent-color: var(--primary); cursor: pointer; }
+.preview-toggle em { color: var(--muted); font-weight: 500; font-style: normal; }
+.preview-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.preview-flag { color: var(--primary); font-weight: 800; }
+body.mandatory-preview .preview-bar { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+body.mandatory-preview .summary-card.current { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+
+body.mandatory-preview .feature[data-mandatory]:not([data-mandatory="required"]) {
+opacity: .38;
+filter: grayscale(.55);
+}
+body.mandatory-preview .feature[data-mandatory]:not([data-mandatory="required"])::after {
+content: "Excluida en la vista previa";
+position: absolute;
+inset: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 8px;
+font-size: 11px;
+font-weight: 800;
+color: var(--ink);
+background: rgba(255,255,255,.82);
+border-radius: inherit;
+}
+
+.board {
+display: grid;
+grid-template-columns: minmax(0, 1fr) 360px;
+gap: 18px;
+align-items: start;
+height: calc(100vh - 210px);
+min-height: 580px;
+}
+.main-column {
+min-width: 0;
+height: 100%;
+overflow-y: auto;
+padding-right: 6px;
+scrollbar-width: thin;
+scrollbar-color: var(--border-strong) transparent;
+}
+.sidebar {
+position: static;
+display: grid;
+gap: 14px;
+height: 100%;
+overflow-y: auto;
+padding-right: 5px;
+scrollbar-width: thin;
+scrollbar-color: var(--border-strong) transparent;
+}
+.main-column::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar { width: 8px; }
+.main-column::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+background: var(--border-strong);
+border-radius: 999px;
+}
+
+.stage {
+margin-bottom: 12px;
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: var(--radius);
+overflow: hidden;
+}
+.stage-toggle {
+width: 100%;
+border: 0;
+background: var(--surface);
+padding: 16px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 14px;
+text-align: left;
+}
+.stage-toggle:hover { background: var(--surface-soft); }
+.stage-toggle-main { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.stage-index {
+width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+flex: 0 0 auto; background: var(--primary-soft); color: var(--primary);
+font-weight: 800; font-size: 12px;
+}
+.stage-toggle h2 { margin: 0 0 3px; font-size: 17px; letter-spacing: -.02em; }
+.stage-toggle p { margin: 0; color: var(--muted); font-size: 12px; }
+.stage-toggle-side { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+.stage-chevron { color: var(--muted); font-size: 18px; transition: transform .18s ease; }
+.stage.collapsed .stage-chevron { transform: rotate(-90deg); }
+.stage-body { padding: 0 12px 12px; border-top: 1px solid var(--line); }
+.stage.collapsed .stage-body { display: none; }
+.stage-header {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+gap: 14px;
+margin: 0 0 10px;
+}
+.stage-header h2 {
+margin: 0;
+font-size: 21px;
+letter-spacing: -.025em;
+}
+.stage-header span {
+color: var(--muted);
+font-size: 12px;
+}
+
+.module-grid {
+display: grid;
+grid-template-columns: 1fr;
+gap: 14px;
+}
+.module-card {
+min-width: 0;
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: var(--radius);
+overflow: hidden;
+box-shadow: 0 7px 23px var(--shadow);
+transition: .18s ease;
+}
+.module-card.drag-over {
+border-color: var(--primary);
+box-shadow: 0 0 0 4px var(--primary-soft);
+}
+.module-card.incomplete {
+border-color: var(--red);
+}
+.module-head {
+padding: 14px 15px;
+border-bottom: 0;
+cursor: pointer;
+}
+.module-card.open .module-head { border-bottom: 1px solid var(--line); }
+.module-title-row {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+gap: 12px;
+}
+.module-kicker {
+color: var(--primary);
+font-size: 11px;
+font-weight: 850;
+text-transform: uppercase;
+letter-spacing: .06em;
+}
+.module-head h3 {
+margin: 4px 0 7px;
+font-size: 17px;
+letter-spacing: -.018em;
+}
+.module-meta {
+display: flex;
+flex-wrap: wrap;
+gap: 6px;
+}
+.module-price {
+min-width: 92px;
+text-align: right;
+}
+.module-price strong { display:block; font-size: 19px; }
+.module-price span { color: var(--muted); font-size: 10px; }
+
+.progress {
+height: 7px;
+margin-top: 13px;
+overflow: hidden;
+border-radius: 999px;
+background: var(--track);
+}
+.progress > div {
+height: 100%;
+background: linear-gradient(90deg, #6658e8, #8c6fff);
+border-radius: inherit;
+transition: width .25s ease;
+}
+.module-warning {
+margin-top: 9px;
+padding: 8px 10px;
+border-radius: 10px;
+background: var(--red-soft);
+color: var(--red);
+font-size: 11px;
+line-height: 1.4;
+font-weight: 650;
+}
+
+.feature-list {
+padding: 10px;
+display: grid;
+gap: 8px;
+min-height: 64px;
+}
+.module-card:not(.open) .feature-list,
+.module-card:not(.open) .module-actions { display: none; }
+.feature {
+position: relative;
+border: 1px solid var(--line);
+background: var(--surface-soft);
+border-radius: 13px;
+padding: 11px 12px;
+cursor: pointer;
+transition: .16s ease;
+}
+.feature:hover {
+transform: translateY(-1px);
+border-color: var(--border-strong);
+background: var(--surface);
+box-shadow: 0 7px 16px var(--shadow);
+}
+.feature.dragging { opacity: .42; }
+.feature-top {
+display: flex;
+gap: 8px;
+align-items: flex-start;
+justify-content: space-between;
+}
+.feature-title {
+min-width: 0;
+font-size: 13px;
+font-weight: 780;
+line-height: 1.35;
+}
+.feature-price {
+flex: 0 0 auto;
+font-size: 12px;
+font-weight: 850;
+color: var(--green);
+}
+.feature-badges {
+display: flex;
+flex-wrap: wrap;
+gap: 5px;
+margin-top: 8px;
+}
+.badge {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+border-radius: 999px;
+padding: 4px 7px;
+font-size: 10px;
+font-weight: 780;
+line-height: 1;
+background: var(--badge-bg);
+color: var(--badge-ink);
+}
+.badge.required { color: var(--red); background: var(--red-soft); }
+.badge.optional { color: var(--green); background: var(--green-soft); }
+.badge.conditional { color: var(--amber); background: var(--amber-soft); }
+.badge.priority-critical { color: var(--red); background: var(--red-soft); }
+.badge.priority-high { color: var(--blue); background: var(--blue-soft); }
+.badge.separable { color: var(--primary); background: var(--primary-soft); }
+.badge.locked { color: var(--badge-ink); background: var(--badge-bg); }
+
+.empty-module {
+margin: 4px;
+border: 1px dashed var(--border-strong);
+border-radius: 12px;
+padding: 18px;
+text-align: center;
+color: var(--muted);
+font-size: 12px;
+}
+.module-actions {
+display: flex;
+gap: 7px;
+padding: 0 10px 11px;
+}
+
+.drop-zone {
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: var(--radius);
+box-shadow: 0 7px 23px var(--shadow);
+overflow: hidden;
+}
+.drop-zone.drag-over {
+border-color: var(--primary);
+box-shadow: 0 0 0 4px var(--primary-soft);
+}
+.zone-head {
+padding: 15px 16px;
+border-bottom: 1px solid var(--line);
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+}
+.zone-head h3 { margin: 0; font-size: 15px; }
+.zone-head span { color: var(--muted); font-size: 11px; }
+.zone-list {
+padding: 10px;
+display: grid;
+gap: 7px;
+max-height: 340px;
+overflow: auto;
+min-height: 74px;
+}
+.zone-empty {
+min-height: 62px;
+border: 1px dashed var(--border-strong);
+border-radius: 12px;
+display: grid;
+place-items: center;
+padding: 14px;
+color: var(--muted);
+text-align: center;
+font-size: 12px;
+line-height: 1.45;
+}
+.zone-later .zone-head { background: var(--amber-soft); }
+.zone-no .zone-head { background: var(--red-soft); }
+
+.quote-box {
+background: var(--panel);
+color: var(--panel-ink);
+border-radius: var(--radius);
+padding: 18px;
+box-shadow: var(--shadow);
+}
+.quote-box h3 { margin: 0 0 12px; font-size: 16px; }
+.quote-line {
+display: flex;
+justify-content: space-between;
+gap: 10px;
+padding: 9px 0;
+border-bottom: 1px solid var(--line);
+font-size: 12px;
+color: var(--muted);
+}
+.quote-line:last-of-type { border-bottom: 0; }
+.quote-line strong { color: var(--panel-ink); }
+.quote-total {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+margin-top: 14px;
+gap: 14px;
+}
+.quote-total span { font-size: 12px; color: var(--panel-muted); }
+.quote-total strong { font-size: 28px; letter-spacing: -.03em; }
+
+.notice {
+border: 1px solid var(--amber-line);
+background: var(--amber-soft);
+color: var(--amber-ink);
+border-radius: 13px;
+padding: 12px 13px;
+font-size: 11px;
+line-height: 1.5;
+}
+
+dialog {
+width: min(700px, calc(100vw - 30px));
+max-height: calc(100vh - 40px);
+border: 0;
+border-radius: 22px;
+padding: 0;
+box-shadow: 0 30px 80px var(--shadow-strong);
+color: var(--ink);
+}
+dialog::backdrop { background: var(--overlay); backdrop-filter: blur(4px); }
+.modal-head {
+padding: 20px 22px 16px;
+border-bottom: 1px solid var(--line);
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+gap: 14px;
+}
+.modal-head h2 { margin: 5px 0 0; font-size: 22px; letter-spacing: -.025em; }
+.close {
+width: 36px;
+height: 36px;
+border: 0;
+border-radius: 11px;
+background: var(--chip);
+font-size: 19px;
+}
+.modal-body {
+padding: 20px 22px 24px;
+overflow: auto;
+max-height: calc(100vh - 160px);
+}
+.description {
+line-height: 1.65;
+color: var(--body-text);
+background: var(--surface-soft);
+border: 1px solid var(--line);
+border-radius: 14px;
+padding: 14px;
+}
+.detail-grid {
+display: grid;
+grid-template-columns: repeat(2,minmax(0,1fr));
+gap: 10px;
+margin: 14px 0;
+}
+.detail-card {
+border: 1px solid var(--line);
+border-radius: 13px;
+padding: 12px;
+}
+.detail-card span {
+display: block;
+color: var(--muted);
+font-size: 10px;
+font-weight: 800;
+text-transform: uppercase;
+letter-spacing: .055em;
+margin-bottom: 5px;
+}
+.detail-card strong { font-size: 13px; line-height: 1.4; }
+.dependency {
+font-size: 12px;
+line-height: 1.55;
+padding: 12px;
+border-radius: 12px;
+background: var(--blue-soft);
+color: var(--blue);
+margin-bottom: 14px;
+}
+.field { display: grid; gap: 6px; margin-top: 12px; }
+.field label { font-size: 12px; font-weight: 800; }
+.field input, .field textarea, .field select {
+width: 100%;
+border: 1px solid var(--line);
+border-radius: 11px;
+padding: 10px 11px;
+background: var(--surface);
+outline: none;
+}
+.field textarea { min-height: 100px; resize: vertical; }
+.modal-actions {
+display: flex;
+justify-content: flex-end;
+flex-wrap: wrap;
+gap: 8px;
+margin-top: 18px;
+}
+
+.toast {
+position: fixed;
+left: 50%;
+bottom: 24px;
+z-index: 100;
+transform: translate(-50%, 20px);
+opacity: 0;
+pointer-events: none;
+background: var(--panel);
+color: var(--panel-ink);
+border-radius: 12px;
+padding: 11px 14px;
+font-size: 12px;
+font-weight: 700;
+box-shadow: var(--shadow);
+transition: .22s ease;
+}
+.toast.show { opacity: 1; transform: translate(-50%,0); }
+
+.hidden { display: none !important; }
+
+.load-overlay {
+position: fixed;
+inset: 0;
+z-index: 200;
+display: grid;
+place-items: center;
+background: var(--bg);
+transition: opacity .25s ease;
+}
+.load-overlay.hidden { opacity: 0; pointer-events: none; display: grid !important; }
+.load-box { display: grid; justify-items: center; gap: 10px; text-align: center; }
+.load-box strong { font-size: 15px; }
+.load-box span { color: var(--muted); font-size: 12px; }
+.spinner {
+width: 34px;
+height: 34px;
+border-radius: 50%;
+border: 3px solid var(--primary-soft);
+border-top-color: var(--primary);
+animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.sync-status {
+display: inline-flex !important;
+width: fit-content;
+margin-top: 3px;
+font-size: 11px;
+font-weight: 700;
+color: var(--muted);
+padding: 5px 9px;
+border-radius: 999px;
+background: var(--surface-soft);
+border: 1px solid var(--line);
+var(--surface)-space: nowrap;
+}
+.sync-status[data-status="offline"] { color: var(--amber); background: var(--amber-soft); border-color: var(--amber-line); }
+.sync-status[data-status="saved"] { color: var(--green); background: var(--green-soft); border-color: var(--green-line); }
+
+@media (max-width: 1160px) {
+.summary { grid-template-columns: repeat(3,1fr); }
+.board { grid-template-columns: 1fr; height: auto; min-height: 0; }
+.main-column, .sidebar { height: auto; overflow: visible; padding-right: 0; }
+.sidebar { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.quote-box { grid-column: 1 / -1; }
+}
+@media (max-width: 780px) {
+.topbar { position: static; }
+.topbar-inner { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 16px; }
+.brand { min-width: 0; }
+.toolbar { justify-content: stretch; }
+.toolbar .btn { flex: 1 1 100%; text-align: center; }
+.toolbar .optional-mobile { display: none; }
+.shell { padding: 18px 12px 45px; }
+.hero { padding: 22px; }
+.hero-grid { grid-template-columns: 1fr; }
+.summary { grid-template-columns: repeat(2,1fr); }
+.controls { grid-template-columns: 1fr; }
+.module-grid { grid-template-columns: 1fr; }
+.sidebar { grid-template-columns: 1fr; }
+.detail-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+.topbar, .controls, .sidebar, .module-actions, .hero-steps { display: none !important; }
+body { background: var(--surface); }
+.shell { max-width: none; padding: 0; }
+.hero { background: var(--surface); color: black; box-shadow: none; padding: 0 0 20px; }
+.hero p { color: var(--body-text); }
+.summary { grid-template-columns: repeat(5,1fr); }
+.module-grid { grid-template-columns: 1fr 1fr; }
+.module-card, .summary-card { break-inside: avoid; box-shadow: none; }
+.feature { box-shadow: none !important; }
+}
+
+/* Áreas táctiles cómodas en teléfono */
+@media (max-width: 780px) {
+.topbar-inner { position: relative; }
+.theme-btn { position: absolute; top: 12px; right: 16px; }
+.btn.small, select.status-select, .theme-btn {
+min-height: 40px; padding-top: 9px; padding-bottom: 9px; font-size: 13px;
+}
+.back-link { min-height: 44px; padding: 10px 2px; font-size: 14px; }
+.preview-toggle input[type="checkbox"] { width: 22px; height: 22px; }
+.field input, .field textarea, .field select, .search { font-size: 16px; }
+.tab, .nav button { min-height: 42px; }
+.menu-card { padding: 20px; }
+}
+</style>
+<script>
+(function(){
+try {
+var t = localStorage.getItem("cq-theme") || "auto";
+if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+} catch (e) {}
+})();
+</script>
+</head>
+<body>
+<header class="topbar">
+<div class="topbar-inner">
+<div class="brand">
+<div class="brand-mark">CQ</div>
+<div>
+<strong>Cotizador del proyecto</strong>
+<span id="syncStatus" class="sync-status" data-status="saved">☁️ Guardado en la nube</span>
+</div>
+</div>
+<div class="toolbar">
+<button class="btn" id="copyLinkBtn">🔗 Copiar enlace de esta cotización</button>
+<button class="theme-btn" id="themeBtn" title="Cambiar tema">🌗</button>
+<button class="btn primary" id="clientQuoteBtn">🧾 Cotización para el cliente</button>
+<button class="btn" id="addModuleBtn">+ Nuevo módulo</button>
+<button class="btn optional-mobile" id="downloadBtn">Descargar resumen</button>
+<button class="btn optional-mobile" id="exportBtn">Exportar datos</button>
+<button class="btn" onclick="window.print()">Imprimir / PDF</button>
+<button class="btn danger" id="resetBtn">Restablecer</button>
+</div>
+</div>
+</header>
+
+<main class="shell">
+<section class="hero">
+<div class="hero-grid">
+<div>
+<span class="eyebrow">Configurador de alcance y presupuesto</span>
+<h1>Construye la cotización según lo que el proyecto realmente necesita.</h1>
+<p id="projectSummary"></p>
+</div>
+<div class="hero-steps">
+<div class="hero-step"><b>1</b><div><strong>Explora las características</strong><span>Haz clic en cualquier ficha para consultar su descripción, costo, prioridad y dependencias.</span></div></div>
+<div class="hero-step"><b>2</b><div><strong>Organiza el alcance</strong><span>Mueve las funciones separables a módulos personalizados o envía cualquier función a “Para después”.</span></div></div>
+<div class="hero-step"><b>3</b><div><strong>Obtén la cotización</strong><span>Los totales y cuotas por módulo se recalculan inmediatamente según tus decisiones.</span></div></div>
+</div>
+</div>
+</section>
+
+<section class="summary" aria-label="Resumen de cotización">
+<article class="summary-card current" id="currentTotalCard">
+<div class="label">Cotización actual<span class="preview-flag hidden" id="currentTotalFlag"> · vista previa</span></div>
+<div class="value" id="currentTotal">$0</div>
+<div class="sub" id="includedCount">0 características</div>
+</article>
+<article class="summary-card later">
+<div class="label">Para desarrollar después</div>
+<div class="value" id="laterTotal">$0</div>
+<div class="sub" id="laterCount">0 características</div>
+</article>
+<article class="summary-card no">
+<div class="label">No me interesa</div>
+<div class="value" id="noTotal">$0</div>
+<div class="sub" id="noCount">0 características</div>
+</article>
+<article class="summary-card">
+<div class="label">Módulos con alcance</div>
+<div class="value" id="activeModules">0</div>
+<div class="sub">Cuotas o entregas activas</div>
+</article>
+<article class="summary-card">
+<div class="label">Alertas de alcance</div>
+<div class="value" id="warningCount">0</div>
+<div class="sub">Módulos incompletos</div>
+</article>
+</section>
+
+<section class="controls">
+<input class="search" id="searchInput" type="search" placeholder="Buscar módulo, característica, descripción o dependencia…">
+<button class="btn" id="expandBtn">Expandir todo</button>
+<button class="btn" id="collapseBtn">Contraer todo</button>
+</section>
+
+<section class="preview-bar" id="previewBar">
+<label class="preview-toggle">
+<input type="checkbox" id="mandatoryOnlyToggle">
+<span>👁️ Vista previa: solo lo obligatorio <em>(no mueve nada, solo simula — se refleja arriba y en el resumen de cuotas)</em></span>
+</label>
+<div class="preview-actions">
+<button class="btn primary small" id="applyMandatoryBtn">✅ Cotizar solo lo obligatorio</button>
+<button class="btn small" id="restoreAllBtn">↩️ Restaurar todas las características</button>
+</div>
+</section>
+
+<div class="board">
+<section class="main-column" id="modulesRoot"></section>
+
+<aside class="sidebar">
+<section class="drop-zone zone-later" data-drop-zone="later">
+<div class="zone-head">
+<div>
+<h3>⏳ Para después</h3>
+<span>No entra en la cotización actual</span>
+</div>
+<strong id="laterZoneTotal">$0</strong>
+</div>
+<div class="zone-list" id="laterZone"></div>
+</section>
+
+<section class="drop-zone zone-no" data-drop-zone="notInterested">
+<div class="zone-head">
+<div>
+<h3>— No me interesa</h3>
+<span>Se conserva como referencia</span>
+</div>
+<strong id="noZoneTotal">$0</strong>
+</div>
+<div class="zone-list" id="noZone"></div>
+</section>
+
+<section class="quote-box">
+<h3>Resumen de cuotas</h3>
+<div id="installmentList"></div>
+<div class="quote-total">
+<span>Total seleccionado</span>
+<strong id="quoteGrandTotal">$0</strong>
+</div>
+</section>
+
+<div class="notice">
+Una característica marcada como obligatoria puede enviarse a “Para después” o “No me interesa”, pero el módulo quedará señalado como incompleto. Mover una característica no elimina sus dependencias técnicas.
+</div>
+</aside>
+</div>
+</main>
+
+<dialog id="featureDialog">
+<div class="modal-head">
+<div>
+<span class="module-kicker" id="detailOrigin"></span>
+<h2 id="detailTitle"></h2>
+</div>
+<button class="close" data-close-dialog="featureDialog" aria-label="Cerrar">×</button>
+</div>
+<div class="modal-body">
+<div class="description" id="detailDescription"></div>
+<div class="detail-grid">
+<div class="detail-card"><span>Precio</span><strong id="detailPrice"></strong></div>
+<div class="detail-card"><span>Obligatoriedad</span><strong id="detailMandatory"></strong></div>
+<div class="detail-card"><span>Prioridad</span><strong id="detailPriority"></strong></div>
+<div class="detail-card"><span>Bloque</span><strong id="detailStage"></strong></div>
+<div class="detail-card"><span>¿Puede separarse?</span><strong id="detailSeparable"></strong></div>
+<div class="detail-card"><span>Ubicación actual</span><strong id="detailLocation"></strong></div>
+</div>
+<div class="dependency"><strong>Dependencias:</strong> <span id="detailDependencies"></span></div>
+<div class="field">
+<label for="moveSelect">Mover esta característica</label>
+<select id="moveSelect"></select>
+</div>
+<div class="modal-actions">
+<button class="btn" data-close-dialog="featureDialog">Cerrar</button>
+<button class="btn primary" id="applyMoveBtn">Aplicar cambio</button>
+</div>
+</div>
+</dialog>
+
+<dialog id="moduleDialog">
+<div class="modal-head">
+<div>
+<span class="module-kicker">Módulo personalizado</span>
+<h2 id="moduleDialogTitle">Crear nuevo módulo</h2>
+</div>
+<button class="close" data-close-dialog="moduleDialog" aria-label="Cerrar">×</button>
+</div>
+<div class="modal-body">
+<div class="field">
+<label for="moduleNameInput">Nombre del módulo</label>
+<input id="moduleNameInput" placeholder="Ej. Mejoras y analítica">
+</div>
+<div class="field">
+<label for="moduleTargetInput">Cuota objetivo (USD)</label>
+<input id="moduleTargetInput" type="number" min="0" step="10" value="1000">
+</div>
+<div class="modal-actions">
+<button class="btn" data-close-dialog="moduleDialog">Cancelar</button>
+<button class="btn primary" id="saveModuleBtn">Guardar módulo</button>
+</div>
+</div>
+</dialog>
+
+<dialog id="customFeatureDialog">
+<div class="modal-head">
+<div>
+<span class="module-kicker">Nueva característica</span>
+<h2>Añadir requerimiento personalizado</h2>
+</div>
+<button class="close" data-close-dialog="customFeatureDialog" aria-label="Cerrar">×</button>
+</div>
+<div class="modal-body">
+<div class="field">
+<label for="customFeatureTitle">Nombre</label>
+<input id="customFeatureTitle" placeholder="Ej. Reporte mensual personalizado">
+</div>
+<div class="field">
+<label for="customFeatureDescription">Descripción</label>
+<textarea id="customFeatureDescription" placeholder="Describe qué deberá hacer esta característica."></textarea>
+</div>
+<div class="detail-grid">
+<div class="field">
+<label for="customFeaturePrice">Precio (USD)</label>
+<input id="customFeaturePrice" type="number" min="0" step="10" value="100">
+</div>
+<div class="field">
+<label for="customFeaturePriority">Prioridad</label>
+<select id="customFeaturePriority">
+<option>Crítica</option><option>Alta</option><option selected>Media</option><option>Baja</option>
+</select>
+</div>
+<div class="field">
+<label for="customFeatureMandatory">Obligatoriedad</label>
+<select id="customFeatureMandatory">
+<option value="optional">No / Opcional</option>
+<option value="required">Sí / Obligatoria</option>
+<option value="conditional">Condicional</option>
+</select>
+</div>
+</div>
+<div class="modal-actions">
+<button class="btn" data-close-dialog="customFeatureDialog">Cancelar</button>
+<button class="btn primary" id="saveCustomFeatureBtn">Añadir característica</button>
+</div>
+</div>
+</dialog>
+
+<dialog id="clientQuoteDialog">
+<div class="modal-head">
+<div>
+<span class="module-kicker">Documento para el cliente</span>
+<h2>Generar cotización formal</h2>
+</div>
+<button class="close" data-close-dialog="clientQuoteDialog" aria-label="Cerrar">×</button>
+</div>
+<div class="modal-body">
+<div class="description">Completa los datos del cliente para generar un documento con el desglose de todo lo que está actualmente en la cotización (los módulos y características que NO estén en “Para después” o “No me interesa”).</div>
+<div class="detail-grid">
+<div class="field">
+<label for="clientNameInput">Nombre del cliente</label>
+<input id="clientNameInput" placeholder="Ej. Juan Pérez">
+</div>
+<div class="field">
+<label for="clientCompanyInput">Empresa</label>
+<input id="clientCompanyInput" placeholder="Ej. Salud Global S.A.">
+</div>
+<div class="field">
+<label for="clientEmailInput">Correo</label>
+<input id="clientEmailInput" type="email" placeholder="cliente@empresa.com">
+</div>
+<div class="field">
+<label for="clientPhoneInput">Teléfono</label>
+<input id="clientPhoneInput" placeholder="Opcional">
+</div>
+<div class="field">
+<label for="clientTaxIdInput">NIT / RUC / ID fiscal</label>
+<input id="clientTaxIdInput" placeholder="Opcional">
+</div>
+<div class="field">
+<label for="clientValidityInput">Validez de la cotización</label>
+<select id="clientValidityInput">
+<option value="15">15 días</option>
+<option value="30" selected>30 días</option>
+<option value="45">45 días</option>
+<option value="60">60 días</option>
+</select>
+</div>
+</div>
+<div class="field">
+<label for="clientNotesInput">Notas adicionales (opcional)</label>
+<textarea id="clientNotesInput" placeholder="Cualquier aclaración que quieras incluir en el documento."></textarea>
+</div>
+<div class="modal-actions">
+<button class="btn" data-close-dialog="clientQuoteDialog">Cancelar</button>
+<button class="btn optional-mobile" id="previewClientQuoteBtn">Vista previa / Imprimir</button>
+<button class="btn primary" id="downloadClientQuoteBtn">Descargar documento</button>
+</div>
+</div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<div class="load-overlay" id="loadOverlay">
+<div class="load-box">
+<div class="spinner"></div>
+<strong>Cargando tu cotización…</strong>
+<span>Conectando con el servidor</span>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const PROJECT = {"title": "Cotizador interactivo — Sistema de gestión MONPICA", "currency": "USD", "projectSummary": "Lo que se cotiza en este documento es la plataforma interna de MONPICA — Montilla Proyectos Integrales, C.A.: el lugar donde van a vivir los proyectos de la consultora, con sus etapas, su equipo, sus documentos, su inventario forestal y su administración de costos. La empresa opera hoy desde Guanare, en el estado Portuguesa, con trabajo en Portuguesa y en Bolívar, y toda esa operación se sostiene sobre hojas de cálculo, correo y WhatsApp. El sistema que se propone sustituye esa forma de trabajo por un solo lugar donde cada proyecto tiene su expediente y cada persona entra con su propio usuario a ver lo que le corresponde.", "baseModules": [{"id": "lev", "number": 1, "name": "Levantamiento y especificación técnica", "stage": "Bloque comprometido · precio firme y fecha de entrega", "badge": "Ya entregado", "target": 4000, "time": "", "objective": "Usted ya tiene el sistema definido por escrito y puede recorrerlo en pantalla antes de que se escriba una sola línea de la versión de producción. Esta partida corresponde a trabajo que ya está hecho y entregado. Se hicieron dos reuniones de levantamiento con el Ing. Luis Montilla, se respondió un cuestionario estructurado por escrito y de ahí salió la especificación funcional del sistema, la matriz de los ocho roles con lo que cada uno puede ver y hacer, el esqueleto del modelo de datos a partir del proceso de diez etapas que su empresa describió por escrito, y el plan por fases con lo que entra y lo que no entra en cada una. Sobre esa especificación se construyó un prototipo navegable de diecisiete pantallas, con cinco roles cuyos permisos ya bloquean de verdad, la ficha de proyecto con sus siete pestañas y el proceso de diez etapas de su empresa cargado como plantilla, incluida la compuerta de aprobación. Usted lo abre, entra con un usuario, mueve una etapa, aprueba una compuerta y saca un reporte. El propósito de todo esto es que el desarrollo no arranque en una hoja en blanco: lo que se corrige sobre una pantalla de demostración se corrige antes de construirlo, y lo que se descubre a mitad de la construcción obliga a deshacer trabajo ya hecho. Lo que sigue está escrito, ordenado y con precio, y usted decide qué fase autoriza y cuándo.", "scopeLimit": "Esta partida no construye el sistema. El prototipo es una demostración: los datos viven en el navegador de cada persona, no se comparten con el equipo y se pierden si alguien limpia su navegador; el ingreso parece un inicio de sesión pero no lo es, y los permisos se aplican del lado del navegador. Llevarlo a producción —servidor, base de datos, autenticación real, permisos verificados en el servidor y almacenamiento de archivos— es la Fase 1 y no está hecho. Tampoco entra aquí el inventario forestal, la cubicación, los gastos ni la nómina, que tienen su propia fase. La cartografía se acuerda y se cotiza por separado. No incluye la carga de sus proyectos en curso ni la capacitación del equipo. Si durante el desarrollo aparecen funcionalidades que no están en esta especificación, se cotizan aparte: por eso se escribió con este detalle.", "gana": ["Recorrer en pantalla las diecisiete pantallas del núcleo del sistema y opinar sobre ellas antes de pagar su construcción, en lugar de aprobar una descripción en un documento", "Mostrarles el sistema a los inversionistas y al equipo desde cualquier dispositivo con un enlace, sin instalar nada y sin cuenta", "Ver por escrito qué ve y qué no ve cada uno de los ocho roles, incluido que el Técnico forestal de campo no ve ningún monto y que el Profesional ve su honorario y nunca el de otro", "Saber qué falta, en qué orden conviene hacerlo y qué queda fuera de cada fase, con el alcance escrito antes de comprometer presupuesto", "Tener identificados los datos que su empresa debe aportar —factores de forma por especie, rangos diamétricos, tarifas de kilometraje— y por qué sin ellos el sistema no estima volúmenes ni calcula movilización", "Contar con la nota técnica de una página que se les entregó sin cargo y fuera del alcance de esta partida, sobre la información financiera de otro de sus paneles que hoy está abierta en internet, con los pasos para cerrarla"], "cuando": "Ya entregado", "features": [{"id": "lev-f1", "originModuleId": "lev", "order": 1, "title": "Levantamiento y especificación técnica", "description": "Dos reuniones de levantamiento con la contraparte técnica y un cuestionario estructurado respondido por escrito por su empresa. De ahí salieron la especificación funcional del sistema, la matriz de los ocho roles con sus permisos, el esqueleto del modelo de datos tomado del proceso de diez etapas, y el plan por fases con el alcance y las exclusiones de cada una. Incluye el prototipo navegable de diecisiete pantallas ya publicado, con cinco roles aplicados, la ficha de proyecto de siete pestañas y su proceso de diez etapas cargado como plantilla, para que usted valide el diseño antes de que se construya. Todo esto está entregado.", "price": 4000, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es el trabajo de convertir dos reuniones y un cuestionario en un sistema definido y ya recorrible, de modo que la construcción parta de un alcance escrito que usted revisa antes de autorizarlo, y no de suposiciones."}]}, {"id": "f0", "number": 2, "name": "Fase 0 · Página institucional", "stage": "Bloque comprometido · precio firme y fecha de entrega", "badge": "Precio firme", "target": 2250, "time": "", "objective": "Usted queda con una página pública en su propio dominio, donde están explicadas las siete líneas de servicio de MONPICA y por donde lo pueden contactar. Hoy MONPICA no tiene una dirección en internet a la que enviar a alguien que pregunte a qué se dedica la empresa. Esta fase entrega esa página: una portada, la navegación entre secciones y las siete líneas de servicio presentadas con sus tres modalidades, funcionando igual en la computadora y en el teléfono. Va también la sección de tecnología aplicada, que es donde queda dicho con qué se trabaja en campo: drones con planimetría, altimetría y batimetría, equipos de medición y sistemas de información geográfica. Se cierra con un formulario por donde el interesado deja su mensaje, los datos de la empresa y la publicación en el dominio de MONPICA. Se hace en paralelo al arranque de la Fase 1, de modo que usted tenga algo publicado mientras el sistema interno se está construyendo. La página es pública y no toca el sistema de gestión: no muestra proyectos, ni contratantes, ni montos.", "scopeLimit": "No incluye redacción de contenidos, fotografía ni material gráfico: los textos de cada servicio, las fotos de campo y el logo los aporta usted, y la página se arma con ese material. No se conecta con el sistema de gestión ni muestra ningún dato interno: ni proyectos, ni contratantes, ni montos. No lleva tienda, cotizador ni área privada con usuarios. El dominio, el alojamiento y el correo van a nombre de MONPICA y su costo mensual se factura aparte, porque son servicios recurrentes y no parte del desarrollo.", "gana": ["Enviar un enlace cuando le pregunten a qué se dedica la empresa, en lugar de reenviar el brochure por WhatsApp o explicarlo por escrito cada vez.", "Mostrar las siete líneas —forestal, agrícola, minería, obras civiles, hidrocarburos y gas, manejo de cuencas y certificaciones internacionales— con sus modalidades de asesoramiento, formulación y diseño, y administración, para que quien consulte sepa si lo que necesita entra o no antes de llamar.", "Recibir solicitudes por un formulario que llega al correo de la empresa.", "Presentar la tecnología con la que se levanta la información en campo: drones, equipos de medición y sistemas de información geográfica.", "Abrir la página desde el teléfono en medio de una reunión y que se lea igual que en la computadora.", "Tener la dirección de internet publicada bajo cuentas a nombre de MONPICA, sin depender del desarrollador para conservarla."], "cuando": "En paralelo al arranque de la Fase 1", "features": [{"id": "f0-f1", "originModuleId": "f0", "order": 1, "title": "Estructura y diseño del sitio, adaptado a teléfono", "description": "Se define la estructura de la página: la portada, el orden de las secciones y la navegación entre ellas. El diseño se arma con la identidad de MONPICA —el logo, el emblema y los colores de su material— aplicada de la misma forma en todas las secciones. Queda construido para que se vea y se use igual en el teléfono que en la computadora.", "price": 800, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es la base sobre la que se montan las demás secciones, y dejarla resuelta desde el principio en el teléfono y en la computadora es lo que evita rehacer la página después."}, {"id": "f0-f2", "originModuleId": "f0", "order": 2, "title": "Siete líneas de servicio con sus modalidades", "description": "Cada línea —forestal, agrícola, minería, obras civiles, hidrocarburos y gas, manejo de cuencas y certificaciones internacionales— tiene su propio espacio dentro del sitio. En cada una se presentan las tres modalidades con las que trabaja la empresa: asesoramiento, formulación y diseño, y administración. La estructura es la misma en las siete, de manera que quien entre encuentre la información en el mismo lugar sin importar cuál consulte. El contenido lo aporta usted; aquí se ordena, se monta y se publica.", "price": 650, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Son siete líneas con tres modalidades cada una, y montarlas con la misma estructura en las siete, con el contenido que usted aporta, es el trabajo que hay detrás."}, {"id": "f0-f3", "originModuleId": "f0", "order": 3, "title": "Sección de tecnología aplicada: drones, equipos de medición y SIG", "description": "Una sección aparte dedicada a con qué trabaja MONPICA en campo. Incluye los drones con sus tres aplicaciones —planimetría, altimetría y batimetría—, los equipos de medición y los sistemas de información geográfica. Es la parte de la página donde queda dicho, en concreto, cómo se levanta la información que después sustenta los informes.", "price": 400, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es una sección con contenido técnico que usted aporta y que hay que montar sin alterar lo que dice."}, {"id": "f0-f4", "originModuleId": "f0", "order": 4, "title": "Formulario de contacto y publicación en dominio propio", "description": "Un formulario donde el interesado deja su nombre, su forma de contacto y lo que necesita, y ese mensaje llega al correo de la empresa. Junto a él van los datos de MONPICA: dónde está, teléfono y correo. La página se publica en el dominio de la empresa, bajo cuentas abiertas a su nombre, de manera que el sitio y sus archivos queden con su empresa.", "price": 400, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Publicar no es subir un archivo: hay que dejar el formulario entregando los mensajes y la dirección respondiendo de forma estable antes de darla por entregada."}]}, {"id": "f1", "number": 3, "name": "Fase 1 · Núcleo del sistema en producción", "stage": "Bloque comprometido · precio firme y fecha de entrega", "badge": "Precio firme", "target": 28000, "time": "", "objective": "Usted deja de tener una demostración y pasa a tener el sistema donde su equipo trabaja todos los días, con cada persona entrando con su propia clave y con la información guardada en un solo lugar. El prototipo entregado sirvió para validar el diseño antes de construir: las diecisiete pantallas, los roles y el proceso de diez etapas están ahí y se pueden recorrer. Lo que ese prototipo no tiene es servidor. Hoy los datos viven en el navegador de cada persona, así que lo que carga uno no lo ve el otro y se pierde si alguien limpia su navegador; la pantalla de entrada parece un inicio de sesión pero no lo es, porque la clave es la misma para todas las cuentas y la comprobación ocurre en el propio navegador; los permisos se revisan también del lado del navegador; y de los documentos y las fotos se guarda el nombre del archivo, no el archivo. Esta fase corrige esas cuatro cosas y deja el núcleo terminado: servidor, base de datos, autenticación real, permisos revisados en el servidor, archivos almacenados de verdad y respaldo diario. Al cerrar la fase, sus proyectos en curso están cargados dentro del sistema, con sus etapas, su equipo y sus documentos, y, si se toma la capacitación por rol, que es opcional, su gente ya recibió la sesión de su perfil. Ninguna de las fases siguientes sustituye a esta: se pueden agregar módulos encima, pero sin este piso el sistema no se puede usar en producción.", "scopeLimit": "En esta fase no entra el inventario de árboles, ni la cubicación, ni el mapa, ni el registro de gastos, ni la nómina, ni el acceso de los contratantes: eso son las fases siguientes. El sistema registra montos, no mueve dinero: no procesa pagos, no emite facturación electrónica y no sustituye la contabilidad. Tampoco entra aplicación descargable para el teléfono ni firma electrónica. El trabajo sin señal con sincronización posterior es un entregable opcional de la Fase 2 y no de esta, ni firma electrónica. El hosting, el dominio, el servidor, la base de datos y el correo del sistema son un costo mensual que se contrata bajo cuentas de MONPICA y se paga aparte de este desarrollo; el trabajo de dejarlos configurados y funcionando sí está incluido aquí.", "gana": ["Entrar con su propio usuario y su propia contraseña, con recuperación por correo y cambio de clave, en lugar de la clave única impresa en pantalla que tiene hoy el prototipo.", "Que lo que carga una persona lo vea el resto del equipo en ese momento, desde cualquier computador o teléfono, sin depender del navegador de nadie.", "Abrir un documento del proyecto y descargarlo, con sus versiones anteriores disponibles, en lugar de tener registrado solamente el nombre del archivo.", "Ver en una sola pantalla en qué etapa va cada proyecto, cuál está detenido y quién tiene la siguiente acción.", "Aprobar o devolver la etapa de compuerta y que la siguiente no se habilite hasta que se apruebe; y que la revisión legal quede marcada con quién la hizo y en qué fecha.", "Sacar el reporte de cierre de mes y la vista de Dirección sin pedirle el dato a nadie, y trabajar sobre sus proyectos abiertos ya cargados en el sistema."], "cuando": "Primera fase de desarrollo", "features": [{"id": "f1-f1", "originModuleId": "f1", "order": 1, "title": "Infraestructura de producción: servidor, base de datos y autenticación real", "description": "Lo que hoy se guarda en el navegador de cada persona pasa a una base de datos compartida, con su modelo de datos y su despliegue, montado sobre cuentas a nombre de MONPICA para que el sistema y su código queden con su empresa. La autenticación deja de ser la clave única impresa en pantalla: contraseñas cifradas, sesión por persona, recuperación por correo y cambio de contraseña. Se deja configurado el respaldo diario, con su período de retención y su prueba de restauración.", "price": 6000, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Crítica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es el trabajo del que dependen todos los demás entregables, y quien lo hace responde por que la información de sus proyectos no se pierda ni quede expuesta."}, {"id": "f1-f2", "originModuleId": "f1", "order": 2, "title": "Migración del prototipo y completado del núcleo", "description": "Las diecisiete pantallas del prototipo entregado se trasladan a la infraestructura real, conservando el diseño que ya tienen. Se completan las cuatro cosas que quedaron pendientes en la demostración: el calendario sin contenido, los reportes sin salida, la bitácora de proyecto desconectada y la pestaña de finanzas de la ficha, que hoy no registra nada; son los montos del proyecto, no el registro de gastos, que entra en una fase posterior. Se retira todo lo que existe solo para demostrar: la barra de demostración, el ingreso de prueba, el botón de reiniciar datos, la marca de versión beta, los datos de ejemplo y los avisos que explican las limitaciones.", "price": 4500, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Crítica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Cada pantalla hay que revisarla una por una contra el sistema nuevo, y la lista de lo que se retira se verifica completa antes de entregar, porque un resto de la demostración en producción es un dato falso dentro de su operación."}, {"id": "f1-f3", "originModuleId": "f1", "order": 3, "title": "Usuarios, ocho roles y matriz de permisos aplicada en servidor", "description": "Alta y baja de accesos, un usuario por persona, sin borrado físico de cuentas. Los ocho roles quedan cargados con sus permisos: Administrador del sistema, Coordinador general, Gerente de proyecto, Profesional de estudios, Técnico forestal de campo, Asesor legal, Administración y contabilidad, y Dirección. Cada permiso se revisa en el servidor y no solo escondiendo botones: quien manipule su navegador no se salta la restricción. Se respetan las reglas que ustedes fijaron, entre ellas que el Profesional vea su propio honorario y nunca el de otro, que Dirección vea el total sin el desglose, y que el Técnico forestal no vea ningún monto.", "price": 3500, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Crítica", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Cada operación del sistema tiene que quedar autorizada para el rol correcto y verificada en el servidor, y una sola omisión deja información a la vista de quien no debe verla."}, {"id": "f1-f4", "originModuleId": "f1", "order": 4, "title": "Proyectos, plantillas de etapas, compuerta de aprobación y revisión legal", "description": "Registro de proyectos con su ficha, su equipo y su información asociada. Las plantillas de etapas quedan configurables y cargadas con el proceso de diez etapas que su empresa describió por escrito. La compuerta de aprobación queda en manos del Coordinador: devolver o aprobar, y hasta que no se apruebe la etapa siguiente no se habilita. La revisión legal la marca el Asesor legal, queda registrada con su nombre y su fecha, y mientras no esté marcada la ficha del proyecto la muestra como pendiente.", "price": 4500, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es el modelo sobre el que se apoyan las demás líneas de negocio más adelante, y cambiarlo después de tener proyectos cargados cuesta mucho más que definirlo bien ahora."}, {"id": "f1-f5", "originModuleId": "f1", "order": 5, "title": "Documentos con versiones, catálogos, bitácora y reportes de cierre", "description": "Los documentos se suben y se descargan de verdad, organizados por etapa y con control de versiones, en lugar de quedar registrados solo por el nombre del archivo. Los catálogos quedan administrables por su equipo, y ningún campo de clasificación acepta texto libre. La bitácora pasa a guardarse del lado del servidor: no se edita, no se borra y deja de poder alterarse desde el navegador. Se entrega el reporte de cierre de mes y la vista de Dirección.", "price": 2500, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Guardar archivos con sus versiones y sostener una bitácora que nadie pueda alterar es lo que le permite después demostrar quién hizo qué y con qué documento."}, {"id": "f1-f6", "originModuleId": "f1", "order": 6, "title": "Migración de proyectos y planillas actuales", "description": "Se cargan al sistema los proyectos que su empresa tiene abiertos hoy: sus etapas, su equipo, sus responsables y sus documentos. Se toman de las hojas de cálculo y planillas con las que trabajan actualmente, y se revisa el resultado con ustedes antes de dar la carga por cerrada. Para arrancar hace falta que MONPICA entregue la lista de proyectos activos y esas planillas en un formato que se pueda leer.", "price": 3000, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Los datos de una hoja de cálculo nunca vienen parejos, y ordenarlos y verificarlos uno por uno es lo que evita que el sistema arranque con información equivocada."}, {"id": "f1-f7", "originModuleId": "f1", "order": 7, "title": "Capacitación por rol, manual y acompañamiento el primer mes", "description": "Una sesión de capacitación por perfil, agrupadas por la forma en que trabajan: coordinación, campo, administración y dirección. Un manual corto por rol, hecho con las pantallas reales del sistema entregado. Durante el primer mes de uso, acompañamiento para corregir defectos y ajustar lo que aparezca al usarlo con proyectos reales. Es un período acotado, no soporte indefinido.", "price": 4000, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "El sistema solo sirve si su gente lo usa, y el primer mes es cuando aparecen las dudas y los ajustes que ninguna prueba anticipa."}]}, {"id": "f2", "number": 4, "name": "Fase 2 · Inventario forestal y cubicación", "stage": "Bloque comprometido · precio firme y fecha de entrega", "badge": "Precio firme", "target": 13500, "time": "", "objective": "El trabajo de campo entra al sistema: cada árbol medido, cada troza cubicada y los volúmenes por especie y por rango diamétrico, con constancia de quién registró qué. Esta fase lleva al sistema lo que hoy vive en hojas de cálculo y cuadernos de campo. Su equipo registra cada árbol con su número, su especie, su medida y sus coordenadas, dentro de la zona de trabajo y del predio al que pertenece; cubica las trozas; y obtiene los volúmenes por especie y por rango diamétrico sin rehacer cuentas aparte. La medida que se captura es el CAP, porque es la que se toma con la cinta en campo: el DAP se deriva de ella y se muestra siempre como valor calculado, nunca se escribe a mano. El volumen del árbol en pie se estima únicamente cuando la especie tiene cargado su factor de forma; si no lo tiene, el sistema lo indica y explica por qué, en lugar de completar el número por su cuenta. Esta fase se apoya en la infraestructura, los usuarios y los permisos que quedan instalados en la Fase 1, y corresponde a la prioridad que usted colocó de primera.", "scopeLimit": "No entra ningún mapa. Las coordenadas se capturan y se guardan desde el primer árbol, pero se muestran como dato, no dibujadas sobre un plano: el dibujo de predios, zonas de trabajo, áreas de régimen especial y árboles es la Fase 4 y se acuerda por separado. No se estima volumen en pie de una especie que no tenga factor de forma cargado. No hay conexión con GPS de campo, drones ni estaciones totales, ni cálculo de carbono. Los factores de forma por especie, con su respaldo, y los rangos diamétricos los aporta MONPICA: el sistema no los inventa ni los asume.", "gana": ["Ver el inventario de un proyecto filtrado por predio, zona de trabajo, especie y estado, sin abrir una hoja de cálculo.", "Saber quién registró cada árbol y cuándo, y consultar el historial de cambios de cada ejemplar.", "Obtener el volumen cubicado de las trozas por la ecuación de Smalian, con la fórmula usada a la vista.", "Distinguir en pantalla qué volumen está cubicado, cuál está estimado y con qué factor de forma, y cuál quedó sin estimar y por qué.", "Sacar el volumen por especie y la distribución por rango diamétrico cuando los necesite, en formato para anexar a un informe.", "Tener las fotografías de cada árbol clasificadas por parte y asociadas al ejemplar correcto, en lugar de repartidas entre teléfonos y mensajes."], "cuando": "Después de la Fase 1", "features": [{"id": "f2-f1", "originModuleId": "f2", "order": 1, "title": "Predios, zonas de trabajo y áreas de régimen especial", "description": "Usted registra el predio con su superficie y su coordenada de referencia, las zonas de trabajo que están dentro de ese predio, y las áreas de régimen especial, que pueden atravesar más de un predio. La navegación es filtro dentro de filtro: del predio a la zona, y de la zona a los árboles de esa zona. Es la estructura sobre la que se apoya todo el inventario, porque cada árbol pertenece a una zona y cada zona a un predio.", "price": 1800, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es el modelo de datos que sostiene el resto de la fase: si queda mal armado, corregirlo después obliga a rehacer el inventario ya cargado."}, {"id": "f2-f2", "originModuleId": "f2", "order": 2, "title": "Registro individual de árboles con CAP, altura, coordenadas y estado", "description": "Cada árbol queda registrado con su número, especie, coordenada X e Y, CAP en centímetros, altura de fuste, ramas aprovechadas y estado. La medida que se captura es el CAP, que es lo que se mide con la cinta; el DAP se deriva de ese CAP y se muestra como valor calculado, y el área basal sale del DAP derivado. Incluye la tabla filtrable por predio, zona, especie y estado, con búsqueda y exportación, y la ficha de cada árbol con su historial.", "price": 3200, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Dejar el CAP como magnitud de captura obliga a revisar cada pantalla, cada reporte y cada exportación donde hoy aparece el diámetro, y a ordenar los datos ya existentes."}, {"id": "f2-f3", "originModuleId": "f2", "order": 3, "title": "Fotografías por árbol clasificadas por parte", "description": "Cada árbol admite varias fotografías, clasificadas por parte: base, fuste, copa, tocón y general. Cada imagen queda con el registro de quién la subió y cuándo, y se consulta desde la ficha del árbol junto con el resto de sus datos. Se apoyan en el almacenamiento de archivos que queda instalado en la Fase 1.", "price": 1400, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Son archivos que se cargan desde el teléfono en campo y tienen que quedar clasificados y asociados al ejemplar correcto, sin que nadie los tenga que ordenar después."}, {"id": "f2-f4", "originModuleId": "f2", "order": 4, "title": "Cubicación de trozas por Smalian y factores de forma por especie", "description": "Usted carga las trozas de cada árbol con diámetro de base, diámetro de punta y longitud, y el sistema calcula el volumen por la ecuación de Smalian y muestra en pantalla la fórmula que usó. Un árbol puede tener varias trozas, y hay totales por árbol, por especie y por proyecto. Aparte va el catálogo de factores de forma por especie, con su respaldo y quién lo cargó: el volumen del árbol en pie se estima solo si esa especie tiene factor cargado. Si no lo tiene, el sistema dice \"sin estimar\", explica la razón y ofrece dónde cargarlo; no asume 0,5 ni ningún otro valor por defecto.", "price": 3000, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Ese volumen termina firmado por un profesional ante un organismo oficial, de modo que el sistema tiene que mostrar de dónde salió cada número y negarse a estimar cuando no tiene con qué."}, {"id": "f2-f5", "originModuleId": "f2", "order": 5, "title": "Reportes técnicos: volumen por especie y rangos diamétricos", "description": "Volumen por especie con número de árboles, área basal, volumen estimado y volumen cubicado; distribución por rango diamétrico sobre los rangos que usted confirme; contadores por estado del árbol —aprovechables, semilleros, no aprovechables y talados—; y resumen de cubicación. Todos se exportan para anexarlos a un informe. Cada reporte separa el volumen cubicado del estimado y deja por fuera del estimado las especies sin factor de forma.", "price": 2100, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Son las cifras que salen de la oficina hacia un informe firmado, y cada una tiene que poder rastrearse hasta el árbol y la troza que la produjeron."}, {"id": "f2-f6", "originModuleId": "f2", "order": 6, "title": "Captura de campo tolerante a conexión intermitente", "description": "Formulario pensado para el teléfono en campo: campos grandes, orden natural de captura y botón para guardar y seguir con el siguiente árbol sin volver al listado. Funciona sin señal: lo capturado queda guardado en el teléfono y se sincroniza cuando el equipo recupera conexión. Si usted no contrata este entregable, el registro de árboles igual se hace desde el teléfono, pero hace falta señal en el momento de guardar.", "price": 2000, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "Puede dejarse fuera sin afectar el resto de la fase.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Guardar sin señal y sincronizar después obliga a resolver qué ocurre cuando una carga se interrumpe a medias y cuando dos personas registran en paralelo la misma zona."}]}, {"id": "f3", "number": 5, "name": "Fase 3 · Administración y costos", "stage": "Bloque comprometido · precio firme y fecha de entrega", "badge": "Precio firme", "target": 18500, "time": "", "objective": "Usted deja de calcular en hojas sueltas: cada proyecto muestra lo contratado, lo ejecutado, lo que está por liquidar y el resultado, separado por actividad y por responsable. Esta fase pone dentro del sistema la parte administrativa de cada proyecto. Cada gasto se registra con su categoría tomada de un catálogo controlado, su origen, quién lo asume y su estado, y las partidas por liquidar se muestran aparte sin sumar al total ejecutado. La movilización deja de calcularse a mano: usted indica el vehículo, el tipo de vía y los kilómetros, y el sistema aplica la tarifa y muestra el cálculo. La nómina se lleva por proyecto, mientras que la estructura fija de la empresa queda registrada fuera de los proyectos, con su inmueble asociado. Con eso, la cartera responde por proyecto qué se contrató, qué se ejecutó, qué queda por liquidar y cuál fue el resultado, segregado por actividad y por responsable.", "scopeLimit": "El sistema registra dinero, no lo mueve: no procesa pagos ni se conecta con pasarelas. No emite facturación electrónica ni sustituye la contabilidad formal ni al contador; tampoco se integra con sistemas contables. El campo de factura existe en cada gasto pero no es obligatorio, porque el comprobante fotográfico de cada gasto se decidió no exigirlo; habilitarlo después es una decisión suya, no un impedimento técnico. Los costos mensuales de hosting, dominio, servidor, base de datos y respaldos son recurrentes y se facturan aparte del desarrollo. La carga de expedientes históricos cerrados no está incluida.", "gana": ["Ver por proyecto lo contratado, lo ejecutado, lo que está por liquidar y el resultado, separado por actividad y por responsable, sin armar el cuadro a mano", "Registrar un gasto de movilización indicando vehículo, tipo de vía y kilómetros, y ver en pantalla el cálculo con la tarifa que se aplicó", "Distinguir en todo momento lo ya ejecutado de lo que está por liquidar, sin que las partidas pendientes inflen el total del proyecto", "Llevar la nómina de cada proyecto con su rol, responsabilidades, monto, periodicidad y estado de pago, con totales por proyecto y por período", "Ver los costos de estructura fija de la empresa —personal permanente, inmueble, condominio, servicios y vigilancia— sin que se mezclen con ningún proyecto"], "cuando": "Puede intercambiarse con la Fase 2 según la urgencia", "features": [{"id": "f3-f1", "originModuleId": "f3", "order": 1, "title": "Gastos por proyecto con categorías, origen y estado", "description": "Pantalla de gastos con categoría tomada de un catálogo controlado —ningún campo de clasificación acepta texto libre—, concepto, monto, responsable, origen (proyecto, estructura fija o reportado por el contratante), quién lo asume, estado ejecutado o por liquidar, campo de factura y observación. Filtros por proyecto, categoría, origen, estado y rango de fechas. Las partidas por liquidar se muestran aparte y no suman al total ejecutado, para que lo comprometido no se confunda con lo gastado.", "price": 3900, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es el registro del que después dependen la movilización, la cartera y los reportes, y cada categoría, origen y estado tiene que quedar controlado en el código para que las cifras cuadren y no haya que depurarlas a mano."}, {"id": "f3-f2", "originModuleId": "f3", "order": 2, "title": "Tabulador de kilometraje por tipo de vía y valores de vehículos", "description": "Catálogo de vehículos con su valor asignado y tarifa por kilómetro para vía pavimentada y no pavimentada, cargado con los valores que aporte su administración. Al registrar un gasto de movilización el formulario cambia y pide vehículo, tipo de vía y kilómetros; el sistema calcula el monto con la tarifa correspondiente y muestra el cálculo que usó. El monto queda editable, y si se corrige exige una observación que explique por qué.", "price": 2000, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "El cálculo tiene que quedar a la vista y cualquier corrección tiene que dejar rastro, porque es la partida que más se repite y la que más se discute al cerrar un proyecto."}, {"id": "f3-f3", "originModuleId": "f3", "order": 3, "title": "Nómina por proyecto", "description": "Pantalla de nómina por proyecto con la persona, su rol dentro del proyecto, sus responsabilidades, el monto, la periodicidad y el estado de pago, con totales por proyecto y por período. Es distinta de los honorarios profesionales, que se conservan como están. La visibilidad de los montos sigue la regla ya definida: quien no debe ver un monto no lo ve.", "price": 2700, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Además de registrar los pagos, hay que respetar quién puede ver cada monto, y esa restricción se aplica en cada consulta y en cada total, no escondiendo la pantalla."}, {"id": "f3-f4", "originModuleId": "f3", "order": 4, "title": "Estructura fija e inmuebles", "description": "Registro de los costos que no pertenecen a ningún proyecto: personal permanente, alquiler o administración propia, condominio, servicios, mantenimiento y vigilancia, con el inmueble asociado y su valor. Queda fuera de los proyectos por diseño: el sistema no permite que estos conceptos aparezcan dentro de uno ni que contaminen su resultado. Se consulta con el inmueble asociado y su valor.", "price": 2000, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Mantener esta separación obliga a tratar la estructura fija como un registro propio, con sus catálogos y sus reportes, en lugar de un gasto más dentro del proyecto."}, {"id": "f3-f5", "originModuleId": "f3", "order": 5, "title": "Cartera por proyecto y reportes financieros", "description": "Vista de cartera que responde, por proyecto, cuánto se contrató, cuánto se ha ejecutado, cuánto queda por liquidar y cuál es el resultado, segregado por actividad y por responsable. Toma los datos de gastos, movilización y nómina ya registrados, manteniendo lo por liquidar como cifra aparte. Es la pantalla donde se ve si un proyecto está dejando dinero.", "price": 4200, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es donde se juntan todos los registros anteriores: la cifra sale de los gastos, la movilización y la nómina ya cargados, y por eso cada uno tiene que quedar clasificado por actividad y por responsable desde que se captura."}, {"id": "f3-f6", "originModuleId": "f3", "order": 6, "title": "Carga del reporte de gastos del contratante", "description": "Entregable opcional. Administración registra el lote de gastos que envía el contratante, con la fecha de recepción y el identificador del reporte, marcado por origen. Al quedar marcado por origen, ese gasto se distingue de los propios en el filtro de origen de la pantalla de gastos.", "price": 1700, "mandatoryType": "optional", "mandatoryLabel": "No", "priority": "Media", "separable": true, "hasDependency": false, "separationText": "Puede dejarse fuera sin afectar el resto de la fase.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Registrar un lote completo sin que se mezcle con los gastos propios exige que cada partida quede con su marca de origen, su fecha de recepción y el identificador del reporte, y que esa marca se respete en el filtro de la pantalla de gastos."}, {"id": "f3-f7", "originModuleId": "f3", "order": 7, "title": "Entrega de código documentado y transferencia completa", "description": "Al cerrar el bloque contratado se entrega el código del sistema documentado, y se completa el traspaso: dominio, servidor, correo y repositorio quedan a nombre de MONPICA, con sus accesos en manos de la empresa. Incluye la documentación técnica necesaria para que otro desarrollador pueda retomar el trabajo.", "price": 2000, "mandatoryType": "required", "mandatoryLabel": "Sí", "priority": "Alta", "separable": false, "hasDependency": false, "separationText": "No se recomienda separar: el resto de la fase se apoya en esto.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Es el trabajo de dejar el sistema documentado y los accesos transferidos, de modo que la continuidad del sistema no dependa de quien lo construyó."}]}, {"id": "f4", "number": 6, "name": "Fase 4 · Cartografía", "stage": "Fases referenciales · precio estimado, sin fecha comprometida", "badge": "Precio estimado", "target": 27000, "time": "", "objective": "El inventario deja de ser una tabla y se ve sobre el mapa del terreno: los polígonos, los cuerpos de agua y cada árbol en su posición. Esta fase dibuja lo que las fases anteriores capturan. Sobre el mapa queda la poligonal del predio, la zona de trabajo dentro de ella, las áreas de régimen especial que la atraviesan, los ríos y cuerpos de agua, y cada árbol registrado en la coordenada con que se levantó. Se hace después de las fases 1 y 2, porque sin el sistema en producción y sin el inventario cargado no hay qué dibujar. Va aparte del resto de la propuesta porque es un desarrollo propio y no un módulo que se agrega a lo ya construido. El precio que aparece aquí es de referencia para esta fase, que se acuerda y se contrata por separado: no lleva fecha comprometida y queda fijado con una revisión de alcance al momento de contratarla, dentro de la vigencia de esta oferta. Hay una pregunta técnica que conviene dejar escrita desde ahora: si el mapa tiene que funcionar en campo sin señal, el alcance cambia y el precio se revisa.", "scopeLimit": "No incluye vuelo de drones, ni conexión con GPS de campo ni con estaciones totales: el sistema recibe las coordenadas y las geometrías, no habla con los equipos. No incluye la compra de licencias de mapas base, imágenes satelitales u ortofotos; si el fondo cartográfico que usted quiera usar es licenciado, esa licencia la contrata usted. Y queda una pregunta abierta que hay que responder antes de iniciar: si el mapa debe abrirse y usarse en campo sin señal, con el fondo cartográfico descargado por adelantado, eso es alcance adicional y modifica el precio. Esta fase no lleva fecha comprometida ni entra en el orden de trabajo hasta que usted la contrate.", "gana": ["Ver la poligonal del predio con su superficie calculada, y dentro de ella la zona de trabajo y las áreas de régimen especial que la atraviesan", "Dibujar y corregir esos polígonos desde el sistema", "Ubicar sobre el mapa cada árbol ya registrado, con su estado a la vista y su ficha a un toque", "Ver dibujados los ríos y los cuerpos de agua del terreno junto al resto de la información", "Recorrer del predio a la zona de trabajo y de la zona al árbol, con filtros combinados", "Importar y exportar las geometrías en los formatos usuales, para intercambiar con sistemas de información geográfica y con lo levantado en campo"], "cuando": "Sin fecha comprometida. Se cotiza en firme antes de iniciarla.", "features": [{"id": "f4-f1", "originModuleId": "f4", "order": 1, "title": "Cartografía", "description": "Polígonos dentro de polígonos, cuerpos de agua y árboles ubicados sobre el mapa. Motor de mapa y polígonos: Dibujo y edición de polígonos dentro de polígonos: la poligonal del predio, la zona de trabajo dentro de ella y las áreas de régimen especial que la atraviesan. Cada polígono queda con su superficie calculada y guardado junto al predio al que pertenece. Se dibujan y se corrigen desde el mismo sistema donde vive el proyecto. Árboles y cuerpos de agua sobre el mapa: Cada árbol ya registrado en el inventario se representa en la coordenada con que se levantó, con su estado a la vista y su ficha accesible desde el mapa. Se dibujan también los ríos y los cuerpos de agua del terreno junto al resto de la información. Lo que se ve sobre el mapa es el mismo inventario, no una copia aparte que haya que mantener al día. Navegación filtro dentro de filtro: Recorrido del predio a la zona de trabajo y de la zona al árbol, con los filtros combinados entre sí. Al bajar de un nivel al siguiente, el mapa y la tabla muestran lo mismo. Los filtros por zona, especie y estado se aplican sobre lo que ya está en pantalla. Importación y exportación de geometrías: Entrada y salida de las geometrías en los formatos usuales de intercambio, para trabajar con sistemas de información geográfica y con lo levantado en campo. Lo que se exporta conserva a qué predio, zona o árbol corresponde cada geometría. Lo que se importa entra asociado al predio que usted indique.", "price": 27000, "mandatoryType": "optional", "mandatoryLabel": "Fase referencial", "priority": "Referencial", "separable": true, "hasDependency": false, "separationText": "Puede dejarse fuera sin afectar el resto de la fase.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Precio estimado de la fase completa. Se revisa el alcance y se cotiza en firme antes de iniciarla; se sostiene dentro de los doce meses siguientes."}]}, {"id": "f5", "number": 7, "name": "Fase 5 · Portal del contratante", "stage": "Fases referenciales · precio estimado, sin fecha comprometida", "badge": "Precio estimado", "target": 9000, "time": "", "objective": "El dueño del terreno entra con su propia cuenta, ve el estado de su proyecto y carga su documentación, sin que nadie del equipo tenga que enviarle nada. Hoy el dueño del terreno depende de que alguien de su equipo le arme un resumen y le mande los archivos por correo o por WhatsApp. Con esta fase entra por su cuenta, ve en qué va su proyecto y carga la documentación que le corresponde para los trámites y permisos. Lo que ve es de solo lectura: el trabajo técnico lo produce su equipo y el contratante no lo modifica. Conviene decidir temprano si esta fase entra o no, porque el modelo de permisos del sistema se construye distinto según la respuesta, y agregarla más adelante obliga a revisar lo ya construido. Se ejecuta después de las fases 1 a 3 y solo cuando su equipo interno ya esté usando el sistema a diario. Es una fase referencial: no lleva fecha comprometida y el precio es estimado. Al momento de contratarla se revisa el alcance y se cotiza en firme, con su fecha de entrega. La vigencia de esta oferta es de treinta días.", "scopeLimit": "El contratante ve y aporta; no modifica nada de lo que produce la consultora: no edita etapas, ni inventario, ni cubicación, ni los documentos que carga su equipo. No incluye la vista del mapa de su terreno, que pertenece a la fase de cartografía y se acuerda con ella. No incluye la carga directa del reporte de gastos por parte del contratante: eso se acuerda aparte. Y no lleva fecha comprometida, porque es una fase referencial: el precio es estimado y el alcance se revisa al iniciarla.", "gana": ["Darle acceso al dueño del terreno con su propia cuenta, en lugar de enviarle archivos por correo o por WhatsApp cada vez que pregunta.", "Mostrarle el avance de su proyecto, el inventario de su terreno y los volúmenes obtenidos, sin preparar un resumen aparte para él.", "Recibir la documentación de trámites y permisos cargada por el propio contratante, directamente en el expediente donde va.", "Saber quién cargó cada documento del contratante y cuándo, sin buscarlo en un hilo de correo.", "Tener a cada contratante viendo únicamente sus propios proyectos, con esa separación comprobada antes de habilitarle la entrada.", "Abrir el sistema a alguien de fuera de la empresa sin que pueda tocar el trabajo técnico de la consultora."], "cuando": "Sin fecha comprometida. Se cotiza en firme antes de iniciarla.", "features": [{"id": "f5-f1", "originModuleId": "f5", "order": 1, "title": "Portal del contratante", "description": "El propietario entra, previsualiza su proyecto y carga documentación. Acceso y aislamiento de datos: Cada contratante recibe su propia cuenta para entrar al sistema. Desde ella ve únicamente los proyectos que le pertenecen, y esa separación se comprueba antes de habilitar el primer acceso. Ningún contratante alcanza el proyecto de otro ni el trabajo interno de la consultora. Previsualización de resultados: Dentro de su cuenta el contratante consulta el avance de su proyecto, el inventario levantado en su terreno y los volúmenes obtenidos. Lo consulta y nada más: no edita etapas, ni registros de árboles, ni cubicación. Es la misma información que produce su equipo, mostrada en una vista aparte de la que se usa puertas adentro. Carga de documentación: El contratante carga desde su cuenta la documentación que hace falta para los trámites y permisos de su proyecto. Cada archivo queda guardado en el expediente del proyecto al que corresponde, con el registro de quién lo subió y cuándo. Su equipo lo encuentra ahí, sin buscarlo en un hilo de correo o en un chat.", "price": 9000, "mandatoryType": "optional", "mandatoryLabel": "Fase referencial", "priority": "Referencial", "separable": true, "hasDependency": false, "separationText": "Puede dejarse fuera sin afectar el resto de la fase.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Precio estimado de la fase completa. Se revisa el alcance y se cotiza en firme antes de iniciarla; se sostiene dentro de los doce meses siguientes."}]}, {"id": "f6", "number": 8, "name": "Fase 6 · Otras líneas de negocio", "stage": "Fases referenciales · precio estimado, sin fecha comprometida", "badge": "Precio estimado", "target": 12000, "time": "", "objective": "El sistema deja de servir solo a lo forestal y pasa a llevar las demás líneas de la empresa, en el orden que usted mismo numeró. El sistema arranca por lo forestal porque esa fue su primera prioridad, pero MONPICA no hace solo eso. En esta fase entran las demás líneas en el orden que usted fijó: hidrocarburos y gas, certificaciones internacionales y minería. Plantaciones va después de esas tres y no formaba parte de esa numeración. El motor que sostiene todo eso —proyectos, etapas configurables, documentos por etapa, permisos por rol y bitácora— se construye en la Fase 1, de modo que aquí no se vuelve a construir el sistema: se configura la plantilla de etapas de cada línea y se agrega lo propio de ella, sus tipos de documento y sus requisitos. Plantaciones incluye además el inventario de plantación y el registro del trámite correspondiente. Agrícolas, obras civiles y cuencas quedan cargadas como plantillas para cuando ustedes decidan desarrollarlas. Esta es una fase referencial: el precio que aparece es estimado y no lleva fecha comprometida. Se acuerda cuando llegue su momento: va después de que la Fase 2 confirme que las plantillas configurables funcionan, y el alcance se revisa con usted antes de iniciarla.", "scopeLimit": "No entra la modalidad de ejecución de obra: usted la excluyó expresamente y queda fuera de esta fase. Tampoco entra integración con sistemas del ministerio ni de ningún tercero. Lo que se configura para cada línea son sus etapas, sus documentos y sus requisitos; los cálculos técnicos propios de cada actividad no están incluidos, con la excepción del inventario de plantación, que sí entra. Y agrícolas, obras civiles y cuencas quedan cargadas como plantillas disponibles, que es cosa distinta de tener desarrollado el módulo de cada una de esas líneas.", "gana": ["Abrir un proyecto de hidrocarburos y gas con su propia secuencia de etapas, sus tipos de documento y sus requisitos, sin forzarlo dentro del proceso forestal.", "Llevar el seguimiento de los procesos de certificación internacional con sus requisitos y sus plazos dentro del mismo sistema, y no en un archivo aparte.", "Registrar proyectos de minería con la plantilla y los requisitos de esa línea.", "Llevar el inventario de plantación y el registro del trámite que le corresponde.", "Ver todas las líneas en un mismo listado de proyectos, con los mismos permisos por rol y la misma bitácora que ya usa el equipo.", "Dejar cargadas las plantillas de agrícolas, obras civiles y cuencas para el día que decidan trabajarlas."], "cuando": "Sin fecha comprometida. Se cotiza en firme antes de iniciarla.", "features": [{"id": "f6-f1", "originModuleId": "f6", "order": 1, "title": "Otras líneas de negocio", "description": "Hidrocarburos y gas, certificaciones internacionales, minería y plantaciones. Hidrocarburos y gas: Es la segunda prioridad que usted numeró. Se configura la plantilla de etapas propia de la línea, con sus tipos de documento y los requisitos particulares que exige. Un proyecto de esta actividad se abre y se lleva con su propia secuencia, sin acomodarlo dentro del proceso forestal. Certificaciones internacionales: Es la tercera prioridad que usted numeró. Entra como seguimiento de los procesos de certificación, con sus requisitos y sus plazos registrados dentro del sistema. Cada proceso queda con su estado, sus documentos y su responsable, en el mismo lugar donde vive el resto del trabajo. Minería: Es la cuarta prioridad que usted numeró. Se configura la plantilla de etapas de la línea y sus requisitos, con los tipos de documento que le corresponden. Con eso, un proyecto de minería se registra y se sigue igual que uno forestal, pero con su propio proceso. Plantaciones: Incluye el inventario de plantación y el registro del trámite que le corresponde a esta línea. El inventario queda dentro del proyecto, con los mismos permisos por rol y la misma bitácora del resto del sistema. Es el único entregable de esta fase que agrega trabajo técnico y no solo configuración. Agrícolas, obras civiles y cuencas: Estas tres líneas quedan cargadas como plantillas disponibles, listas para el día que ustedes decidan desarrollarlas. Se deja definida la secuencia de etapas y los tipos de documento de cada una. Este entregable es opcional: si no se toma, esas líneas simplemente no quedan cargadas.", "price": 12000, "mandatoryType": "optional", "mandatoryLabel": "Fase referencial", "priority": "Referencial", "separable": true, "hasDependency": false, "separationText": "Puede dejarse fuera sin afectar el resto de la fase.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Precio estimado de la fase completa. Se revisa el alcance y se cotiza en firme antes de iniciarla; se sostiene dentro de los doce meses siguientes."}]}, {"id": "f7", "number": 9, "name": "Fase 7 · Carbono y asistencia de informes", "stage": "Fases referenciales · precio estimado, sin fecha comprometida", "badge": "Precio estimado", "target": 24000, "time": "", "objective": "Usted lleva el seguimiento de sus proyectos de carbono dentro del sistema, y el borrador del informe se compone con lo que su equipo ya cargó. Esta fase es referencial: no lleva fecha comprometida y su precio es estimado. El precio referencial se sostiene dentro de la vigencia de esta oferta, que es de treinta días, y el alcance se revisa con usted antes de iniciar la fase. Conviene abordarla cuando ya tenga al menos seis meses de proyectos cargados en las fases de inventario y de administración, porque todo lo que hace es apoyarse en esos datos. Con ella entra el seguimiento de los proyectos de carbono, y el sistema empieza a componer borradores de informe con lo que cada especialista ya registró en el proyecto. El borrador no reemplaza el criterio de nadie: le llega ordenado y en el formato que corresponde, y usted lo revisa, lo corrige y lo firma.", "scopeLimit": "El sistema arma y ordena lo que ya existe: no redacta contenido técnico, no infiere resultados que nadie midió y no sustituye la firma del profesional que responde por el informe. No incluye la comercialización de créditos de carbono ni la relación con verificadores externos. Tampoco incluye integración con sistemas de organismos oficiales o de terceros. El formato que exija el organismo oficial lo confirma y entrega la empresa antes de iniciar la fase. Al ser una fase referencial, no lleva fecha comprometida y su alcance se revisa antes de iniciarla.", "gana": ["Ver en una sola pantalla en qué va cada trámite de carbono, con su plazo y su estado, sin reconstruirlo desde correos y mensajes.", "Relacionar dentro del mismo proyecto lo que se inventarió, lo que se aprovechó y lo que se produjo en carbón vegetal.", "Consultar los indicadores de servicio ambiental por proyecto, junto a las certificaciones que ya sigue en el sistema.", "Partir de un borrador armado con los datos, las mediciones y los documentos cargados, en lugar de vaciarlos a mano en un documento nuevo.", "Trabajar sobre las plantillas de los formatos que se presentan ante los organismos oficiales, cargadas en el sistema.", "Con el entregable opcional de revisión asistida, saber qué versión del informe salió y quién revisó cada parte antes de que se firmara."], "cuando": "Sin fecha comprometida. Se cotiza en firme antes de iniciarla.", "features": [{"id": "f7-f1", "originModuleId": "f7", "order": 1, "title": "Carbono y asistencia de informes", "description": "Seguimiento de carbono y armado de borradores de informe. Seguimiento de proyectos de carbono: Seguimiento de cada proyecto de carbono dentro del sistema: sus trámites, sus plazos y su estado. Dentro del mismo proyecto queda relacionado lo que se inventarió, lo que se aprovechó y lo que se produjo en carbón vegetal. Usted consulta ese estado en el sistema y no lo reconstruye desde correos y mensajes. Indicadores de servicio ambiental: Indicadores de servicio ambiental calculados por proyecto, presentados junto a las certificaciones que ya se siguen en el sistema desde la fase anterior. Se muestran con los datos que el proyecto tiene cargados. Armado de borradores de informe: El sistema compone el borrador del informe a partir de los datos, las mediciones y los documentos ya cargados en el proyecto. Lo que no fue cargado no aparece. El borrador se entrega para que usted lo revise, lo corrija y lo firme. Formatos preestablecidos: Plantillas de los informes que se presentan ante organismos oficiales, cargadas en el sistema. Los borradores se arman sobre esas plantillas, de modo que el documento salga en la estructura que corresponde presentar. Revisión asistida y versiones del informe: Entregable opcional: no entra por defecto y se contrata aparte. Control de versiones del borrador, de modo que quede registrado qué versión salió. Registro de quién revisó qué parte del informe antes de la salida.", "price": 24000, "mandatoryType": "optional", "mandatoryLabel": "Fase referencial", "priority": "Referencial", "separable": true, "hasDependency": false, "separationText": "Puede dejarse fuera sin afectar el resto de la fase.", "dependencies": "Sin dependencias externas.", "time": "", "porQue": "Precio estimado de la fase completa. Se revisa el alcance y se cotiza en firme antes de iniciarla; se sostiene dentro de los doce meses siguientes."}]}]};
+const SUPABASE_URL = "https://vajbsfgojtunamhrzrpf.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_Xljd7Ep1GxBXSPp5F4A1hg_Qg-iESzl";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function getOrCreateQuoteId() {
+const url = new URL(window.location.href);
+let id = url.searchParams.get("q");
+if (!id || !/^[0-9a-f-]{36}$/i.test(id)) {
+id = crypto.randomUUID();
+url.searchParams.set("q", id);
+window.history.replaceState({}, "", url);
+}
+return id;
+}
+const QUOTE_ID = getOrCreateQuoteId();
+const STORAGE_KEY = "cotizador-monpica-v1:" + QUOTE_ID;
+
+const baseModules = PROJECT.baseModules;
+const featureMap = new Map();
+baseModules.forEach(module => module.features.forEach(feature => {
+feature.originModuleName = module.name;
+featureMap.set(feature.id, feature);
+}));
+
+const defaultState = () => ({
+customModules: [],
+placements: Object.fromEntries(
+[...featureMap.keys()].map(id => [id, {type: "module", moduleId: featureMap.get(id).originModuleId}])
+),
+customFeatures: {},
+collapsed: {},
+collapsedStages: Object.fromEntries(
+[...new Set(baseModules.map(m => m.stage))].map((stage, index) => [stage, index !== 0])
+),
+openModules: {},
+client: {name: "", company: "", email: "", phone: "", taxId: "", validity: "30", notes: ""},
+updatedAt: new Date().toISOString()
+});
+
+let state = loadState();
+let selectedFeatureId = null;
+let editingModuleId = null;
+let customFeatureModuleId = null;
+let searchQuery = "";
+
+function loadState() {
+try {
+const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+if (!stored) return defaultState();
+const fresh = defaultState();
+return {
+...fresh,
+...stored,
+placements: {...fresh.placements, ...(stored.placements || {})},
+customModules: stored.customModules || [],
+customFeatures: stored.customFeatures || {},
+collapsed: stored.collapsed || {},
+collapsedStages: {...fresh.collapsedStages, ...(stored.collapsedStages || {})},
+openModules: stored.openModules || {},
+client: {...fresh.client, ...(stored.client || {})}
+};
+} catch {
+return defaultState();
+}
+}
+
+function saveState() {
+state.updatedAt = new Date().toISOString();
+localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+queueRemoteSave();
+}
+
+let remoteSaveTimer = null;
+function queueRemoteSave() {
+setSyncStatus("saving");
+clearTimeout(remoteSaveTimer);
+remoteSaveTimer = setTimeout(pushRemoteState, 700);
+}
+
+async function pushRemoteState() {
+try {
+const {error} = await supabaseClient.rpc("upsert_quote", {
+p_id: QUOTE_ID,
+p_client: state.client,
+p_state: {
+customModules: state.customModules,
+placements: state.placements,
+customFeatures: state.customFeatures,
+collapsed: state.collapsed,
+collapsedStages: state.collapsedStages,
+openModules: state.openModules
+}
+});
+if (error) throw error;
+setSyncStatus("saved");
+} catch {
+setSyncStatus("offline");
+}
+}
+
+async function loadRemoteState() {
+try {
+const {data, error} = await supabaseClient.rpc("get_quote", {p_id: QUOTE_ID});
+if (error) throw error;
+if (data && data.length) {
+const row = data[0];
+const fresh = defaultState();
+state = {
+...fresh,
+...(row.quote_state || {}),
+placements: {...fresh.placements, ...((row.quote_state || {}).placements || {})},
+client: {...fresh.client, ...(row.client || {})}
+};
+localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+setSyncStatus("saved");
+} catch {
+setSyncStatus("offline");
+}
+}
+
+function setSyncStatus(status) {
+const el = document.getElementById("syncStatus");
+if (!el) return;
+const labels = {
+saving: "⏳ Guardando en la nube…",
+saved: "☁️ Guardado en la nube",
+offline: "⚠️ Sin conexión — guardado solo en este navegador"
+};
+el.textContent = labels[status] || "";
+el.dataset.status = status;
+}
+
+function logEvent(type, summary, detail) {
+supabaseClient.rpc("log_quote_event", {
+p_quote_id: QUOTE_ID,
+p_type: type,
+p_summary: summary,
+p_detail: detail || {}
+}).then(({error}) => { if (error) console.warn("No se pudo registrar el evento:", error.message); });
+}
+
+function allFeatures() {
+return [...featureMap.values(), ...Object.values(state.customFeatures)];
+}
+
+function getFeature(id) {
+return featureMap.get(id) || state.customFeatures[id];
+}
+
+function allModules() {
+const base = baseModules.map(m => ({...m, type: "base"}));
+const custom = state.customModules.map(m => ({
+...m,
+type: "custom",
+stage: "Módulos personalizados",
+
+objective: "Agrupación creada por el cliente.",
+scopeLimit: "Conserva las dependencias técnicas de las características de origen."
+}));
+return [...base, ...custom];
+}
+
+function getModule(id) {
+return allModules().find(m => m.id === id);
+}
+
+function money(value) {
+return new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", maximumFractionDigits: 0}).format(value || 0);
+}
+
+function featuresAtModule(moduleId) {
+return allFeatures()
+.filter(f => state.placements[f.id]?.type === "module" && state.placements[f.id]?.moduleId === moduleId)
+.sort((a,b) => (a.originModuleId === moduleId ? a.order || 999 : 999) - (b.originModuleId === moduleId ? b.order || 999 : 999));
+}
+
+function featuresAtStatus(type) {
+return allFeatures().filter(f => state.placements[f.id]?.type === type);
+}
+
+function moduleTotal(moduleId) {
+return featuresAtModule(moduleId).reduce((sum,f) => sum + Number(f.price || 0), 0);
+}
+
+function moduleMandatoryTotal(moduleId) {
+return featuresAtModule(moduleId).filter(f => f.mandatoryType === "required").reduce((sum,f) => sum + Number(f.price || 0), 0);
+}
+
+function missingRequired(moduleId) {
+const module = getModule(moduleId);
+if (!module || module.type !== "base") return [];
+return module.features.filter(f =>
+f.mandatoryType === "required" &&
+!(state.placements[f.id]?.type === "module" && state.placements[f.id]?.moduleId === moduleId)
+);
+}
+
+function countsAndTotals() {
+const included = allFeatures().filter(f => state.placements[f.id]?.type === "module");
+const later = featuresAtStatus("later");
+const no = featuresAtStatus("notInterested");
+const activeModules = allModules().filter(m => moduleTotal(m.id) > 0);
+const warnings = baseModules.filter(m => moduleTotal(m.id) > 0 && missingRequired(m.id).length > 0);
+return {
+includedTotal: included.reduce((s,f)=>s+Number(f.price||0),0),
+laterTotal: later.reduce((s,f)=>s+Number(f.price||0),0),
+noTotal: no.reduce((s,f)=>s+Number(f.price||0),0),
+includedCount: included.length,
+laterCount: later.length,
+noCount: no.length,
+activeModules,
+warnings
+};
+}
+
+
+function isPreviewActive() {
+return !!document.getElementById("mandatoryOnlyToggle")?.checked;
+}
+
+function mandatoryOnlyPreview() {
+const included = allFeatures().filter(f => state.placements[f.id]?.type === "module");
+const mandatory = included.filter(f => f.mandatoryType === "required");
+return {
+mandatoryTotal: mandatory.reduce((s,f) => s + Number(f.price || 0), 0),
+mandatoryCount: mandatory.length,
+excludedCount: included.length - mandatory.length
+};
+}
+
+function renderMandatoryPreview() {
+document.body.classList.toggle("mandatory-preview", isPreviewActive());
+renderSummary();
+}
+
+function matchesSearch(feature, module) {
+if (!searchQuery) return true;
+const text = [
+module?.name,
+feature.title,
+feature.description,
+feature.dependencies,
+feature.priority,
+feature.mandatoryLabel
+].join(" ").toLowerCase();
+return text.includes(searchQuery);
+}
+
+function stageOrder(stage) {
+const match = String(stage).match(/Etapa\s+(\d+)/i);
+if (match) return Number(match[1]);
+return stage === "Módulos personalizados" ? 99 : 50;
+}
+
+function mandatoryBadge(feature) {
+if (feature.mandatoryType === "required") return `<span class="badge required">Obligatoria</span>`;
+if (feature.mandatoryType === "conditional") return `<span class="badge conditional">Condicional</span>`;
+return `<span class="badge optional">Opcional</span>`;
+}
+
+function priorityClass(priority) {
+const p = (priority || "").toLowerCase();
+if (p.includes("crítica")) return "priority-critical";
+if (p.includes("alta")) return "priority-high";
+return "";
+}
+
+function featureCard(feature, compact = false) {
+const placement = state.placements[feature.id] || {};
+const module = placement.moduleId ? getModule(placement.moduleId) : getModule(feature.originModuleId);
+if (!matchesSearch(feature, module)) return "";
+const draggable = true;
+return `
+<article class="feature" draggable="${draggable}" data-feature-id="${feature.id}" data-mandatory="${feature.mandatoryType}" tabindex="0" role="button" aria-label="Ver detalle de ${escapeHtml(feature.title)}">
+<div class="feature-top">
+<div class="feature-title">${escapeHtml(feature.title)}</div>
+<div class="feature-price">${money(feature.price)}</div>
+</div>
+<div class="feature-badges">
+${mandatoryBadge(feature)}
+<span class="badge ${priorityClass(feature.priority)}">${escapeHtml(feature.priority)}</span>
+<span class="badge ${feature.separable ? "separable" : "locked"}">${feature.separable ? "Separable" : "No separable"}</span>
+</div>
+</article>`;
+}
+
+function render() {
+document.getElementById("projectSummary").textContent = PROJECT.projectSummary;
+const modules = allModules();
+const grouped = new Map();
+
+modules.sort((a,b) => stageOrder(a.stage) - stageOrder(b.stage) || (a.number || 999) - (b.number || 999));
+modules.forEach(module => {
+if (!grouped.has(module.stage)) grouped.set(module.stage, []);
+grouped.get(module.stage).push(module);
+});
+
+const root = document.getElementById("modulesRoot");
+root.innerHTML = [...grouped.entries()].map(([stage, stageModules], stageIndex) => {
+const stageTotal = stageModules.reduce((s,m)=>s+moduleTotal(m.id),0);
+const collapsedStage = !!state.collapsedStages[stage];
+return `
+<section class="stage ${collapsedStage ? "collapsed" : ""}" data-stage="${escapeHtml(stage)}">
+<button type="button" class="stage-toggle" data-stage-toggle="${escapeHtml(stage)}">
+<span class="stage-toggle-main">
+<span class="stage-index">${stageIndex + 1}</span>
+<span>
+<h2>${escapeHtml(stage)}</h2>
+<p>${stageModules.length} módulo(s) · ${stageModules.reduce((s,m)=>s+featuresAtModule(m.id).length,0)} características</p>
+</span>
+</span>
+<span class="stage-toggle-side">
+<strong>${money(stageTotal)}</strong>
+<span class="stage-chevron">⌄</span>
+</span>
+</button>
+<div class="stage-body">
+<div class="module-grid">${stageModules.map(renderModule).join("")}</div>
+</div>
+</section>`;
+}).join("");
+
+renderZones();
+document.body.classList.toggle("mandatory-preview", isPreviewActive());
+renderSummary();
+attachInteractions();
+}
+
+function renderModule(module) {
+const features = featuresAtModule(module.id);
+const visibleFeatures = features.filter(f => matchesSearch(f,module));
+const total = moduleTotal(module.id);
+const target = Number(module.target || 1000);
+const progress = Math.min(100, target ? total / target * 100 : 100);
+const missing = missingRequired(module.id);
+const collapsed = !!state.collapsed[module.id];
+const moduleOpen = !!state.openModules[module.id];
+const moduleMatches = !searchQuery || [
+module.name, module.objective, module.scopeLimit, module.stage
+].join(" ").toLowerCase().includes(searchQuery);
+const shouldHide = searchQuery && !moduleMatches && visibleFeatures.length === 0;
+
+return `
+<article class="module-card ${moduleOpen ? "open" : ""} ${missing.length && total ? "incomplete" : ""} ${shouldHide ? "hidden" : ""}" data-module-id="${module.id}">
+<div class="module-head">
+<div class="module-title-row">
+<div>
+<div class="module-kicker">${module.type === "custom" ? "Módulo personalizado" : `Módulo ${module.number}`}</div>
+<h3>${escapeHtml(module.name)}</h3>
+<div class="module-meta">
+<span class="badge">${features.length} característica(s)</span>
+<span class="badge">${escapeHtml(module.badge || "")}</span>
+</div>
+</div>
+<div class="module-price">
+<strong>${money(total)}</strong>
+<span>${moduleOpen ? "Cerrar módulo" : "Abrir módulo"}</span>
+</div>
+</div>
+<div class="progress"><div style="width:${progress}%"></div></div>
+${missing.length && total ? `<div class="module-warning">Faltan ${missing.length} característica(s) obligatoria(s). Este módulo podría no funcionar como se espera.</div>` : ""}
+</div>
+<div class="feature-list" data-module-drop="${module.id}">
+${visibleFeatures.length ? visibleFeatures.map(f=>featureCard(f)).join("") : `<div class="empty-module">${searchQuery ? "No hay coincidencias dentro de este módulo." : "Arrastra aquí características separables."}</div>`}
+</div>
+<div class="module-actions">
+<button class="btn small collapse-module" data-module-id="${module.id}">${moduleOpen ? "Cerrar módulo" : "Abrir módulo"}</button>
+${module.type === "custom" ? `
+<button class="btn small edit-module" data-module-id="${module.id}">Editar</button>
+<button class="btn small add-custom-feature" data-module-id="${module.id}">+ Característica</button>
+<button class="btn small danger delete-module" data-module-id="${module.id}">Eliminar</button>
+` : ""}
+</div>
+</article>`;
+}
+
+function renderZones() {
+const later = featuresAtStatus("later").filter(f => matchesSearch(f, getModule(f.originModuleId)));
+const no = featuresAtStatus("notInterested").filter(f => matchesSearch(f, getModule(f.originModuleId)));
+document.getElementById("laterZone").innerHTML = later.length ? later.map(f=>featureCard(f,true)).join("") : `<div class="zone-empty">Arrastra aquí lo que quieras conservar para una etapa posterior.</div>`;
+document.getElementById("noZone").innerHTML = no.length ? no.map(f=>featureCard(f,true)).join("") : `<div class="zone-empty">Arrastra aquí lo que no formará parte del proyecto, sin borrar su referencia.</div>`;
+}
+
+function renderSummary() {
+const s = countsAndTotals();
+const preview = isPreviewActive();
+const p = preview ? mandatoryOnlyPreview() : null;
+
+document.getElementById("currentTotal").textContent = money(preview ? p.mandatoryTotal : s.includedTotal);
+document.getElementById("laterTotal").textContent = money(s.laterTotal);
+document.getElementById("noTotal").textContent = money(s.noTotal);
+document.getElementById("includedCount").textContent = preview
+? `${p.mandatoryCount} incluida(s) · ${p.excludedCount} fuera`
+: `${s.includedCount} características`;
+document.getElementById("currentTotalFlag").classList.toggle("hidden", !preview);
+document.getElementById("laterCount").textContent = `${s.laterCount} características`;
+document.getElementById("noCount").textContent = `${s.noCount} características`;
+document.getElementById("activeModules").textContent = s.activeModules.length;
+document.getElementById("warningCount").textContent = s.warnings.length;
+document.getElementById("laterZoneTotal").textContent = money(s.laterTotal);
+document.getElementById("noZoneTotal").textContent = money(s.noTotal);
+
+const installmentModules = preview
+? allModules().filter(m => moduleMandatoryTotal(m.id) > 0)
+: s.activeModules;
+const installmentTotal = preview ? p.mandatoryTotal : s.includedTotal;
+const lineAmount = preview ? moduleMandatoryTotal : moduleTotal;
+
+document.getElementById("quoteGrandTotal").textContent = money(installmentTotal);
+document.getElementById("installmentList").innerHTML = installmentModules
+.map((module,index) => `
+<div class="quote-line">
+<span>Cuota ${index + 1}: ${escapeHtml(module.name)}</span>
+<strong>${money(lineAmount(module.id))}</strong>
+</div>`)
+.join("") || `<div class="quote-line"><span>No hay módulos seleccionados</span><strong>${money(0)}</strong></div>`;
+}
+
+function attachInteractions() {
+document.querySelectorAll(".feature").forEach(card => {
+card.addEventListener("click", () => openFeature(card.dataset.featureId));
+card.addEventListener("keydown", e => {
+if (e.key === "Enter" || e.key === " ") openFeature(card.dataset.featureId);
+});
+card.addEventListener("dragstart", e => {
+e.dataTransfer.setData("text/plain", card.dataset.featureId);
+e.dataTransfer.effectAllowed = "move";
+requestAnimationFrame(()=>card.classList.add("dragging"));
+});
+card.addEventListener("dragend", () => card.classList.remove("dragging"));
+});
+
+document.querySelectorAll("[data-module-drop]").forEach(zone => setupModuleDrop(zone, zone.dataset.moduleDrop));
+document.querySelectorAll("[data-drop-zone]").forEach(zone => setupStatusDrop(zone, zone.dataset.dropZone));
+
+document.querySelectorAll("[data-stage-toggle]").forEach(btn => {
+btn.addEventListener("click", () => {
+const stage = btn.dataset.stageToggle;
+state.collapsedStages[stage] = !state.collapsedStages[stage];
+saveState(); render();
+});
+});
+document.querySelectorAll(".module-head").forEach(head => {
+head.addEventListener("click", event => {
+if (event.target.closest("button")) return;
+const moduleId = head.closest(".module-card").dataset.moduleId;
+state.openModules[moduleId] = !state.openModules[moduleId];
+saveState(); render();
+});
+});
+document.querySelectorAll(".collapse-module").forEach(btn => btn.onclick = () => {
+state.openModules[btn.dataset.moduleId] = !state.openModules[btn.dataset.moduleId];
+saveState(); render();
+});
+document.querySelectorAll(".edit-module").forEach(btn => btn.onclick = () => openModuleDialog(btn.dataset.moduleId));
+document.querySelectorAll(".delete-module").forEach(btn => btn.onclick = () => deleteCustomModule(btn.dataset.moduleId));
+document.querySelectorAll(".add-custom-feature").forEach(btn => btn.onclick = () => openCustomFeatureDialog(btn.dataset.moduleId));
+}
+
+function setupModuleDrop(zone, moduleId) {
+zone.addEventListener("dragover", e => {
+e.preventDefault();
+zone.closest(".module-card")?.classList.add("drag-over");
+});
+zone.addEventListener("dragleave", () => zone.closest(".module-card")?.classList.remove("drag-over"));
+zone.addEventListener("drop", e => {
+e.preventDefault();
+zone.closest(".module-card")?.classList.remove("drag-over");
+const id = e.dataTransfer.getData("text/plain");
+moveFeature(id, {type:"module", moduleId});
+});
+}
+
+function setupStatusDrop(zone, type) {
+zone.addEventListener("dragover", e => {
+e.preventDefault();
+zone.classList.add("drag-over");
+});
+zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
+zone.addEventListener("drop", e => {
+e.preventDefault();
+zone.classList.remove("drag-over");
+const id = e.dataTransfer.getData("text/plain");
+moveFeature(id, {type});
+});
+}
+
+function moveFeature(featureId, destination, ask = true) {
+const feature = getFeature(featureId);
+if (!feature) return;
+const current = state.placements[featureId];
+
+if (destination.type === "module") {
+const target = getModule(destination.moduleId);
+if (!target) return;
+const changingModule = current?.type !== "module" || current.moduleId !== destination.moduleId;
+const returningHome = destination.moduleId === feature.originModuleId;
+
+if (changingModule && !returningHome && !feature.separable && !String(feature.id).startsWith("custom-")) {
+toast("Esta característica no puede trasladarse a otro módulo. Puedes enviarla a “Para después” o devolverla a su módulo original.");
+return;
+}
+}
+
+if (
+ask &&
+(destination.type === "later" || destination.type === "notInterested") &&
+feature.mandatoryType === "required"
+) {
+const label = destination.type === "later" ? "Para después" : "No me interesa";
+if (!confirm(`“${feature.title}” es obligatoria. Al moverla a “${label}”, el módulo original quedará incompleto. ¿Deseas continuar?`)) return;
+}
+
+const fromLabel = locationLabel(current);
+state.placements[featureId] = destination;
+saveState();
+render();
+toast("Cotización actualizada.");
+const toLabel = locationLabel(destination);
+if (fromLabel !== toLabel) {
+logEvent("feature_moved", `Movió "${feature.title}" de "${fromLabel}" a "${toLabel}"`, {featureId, featureTitle: feature.title, price: feature.price, from: current || null, to: destination});
+}
+}
+
+function openFeature(id) {
+selectedFeatureId = id;
+const feature = getFeature(id);
+const placement = state.placements[id];
+const origin = getModule(feature.originModuleId);
+const currentLocation = locationLabel(placement);
+
+document.getElementById("detailOrigin").textContent = `Origen: ${origin?.name || "Requerimiento personalizado"}`;
+document.getElementById("detailTitle").textContent = feature.title;
+document.getElementById("detailDescription").textContent = feature.description || "Sin descripción.";
+document.getElementById("detailPrice").textContent = money(feature.price);
+document.getElementById("detailMandatory").textContent = feature.mandatoryLabel || mandatoryText(feature.mandatoryType);
+document.getElementById("detailPriority").textContent = feature.priority;
+document.getElementById("detailStage").textContent = (getModule(feature.originModuleId) || {}).stage || "";
+document.getElementById("detailSeparable").textContent = feature.separationText || (feature.separable ? "Sí" : "No");
+document.getElementById("detailLocation").textContent = currentLocation;
+document.getElementById("detailDependencies").textContent = feature.dependencies || "No especificadas.";
+
+const options = [];
+const original = getModule(feature.originModuleId);
+if (original) options.push(`<option value="module:${original.id}">Módulo original: ${escapeHtml(original.name)}</option>`);
+state.customModules.forEach(module => {
+if (feature.separable || String(feature.id).startsWith("custom-") || module.id === placement?.moduleId) {
+options.push(`<option value="module:${module.id}">Módulo personalizado: ${escapeHtml(module.name)}</option>`);
+}
+});
+options.push(`<option value="later">Para después</option>`);
+options.push(`<option value="notInterested">No me interesa</option>`);
+
+const select = document.getElementById("moveSelect");
+select.innerHTML = options.join("");
+select.value = placement?.type === "module" ? `module:${placement.moduleId}` : placement?.type;
+document.getElementById("featureDialog").showModal();
+}
+
+function locationLabel(placement) {
+if (!placement) return "Sin ubicación";
+if (placement.type === "later") return "Para después";
+if (placement.type === "notInterested") return "No me interesa";
+return getModule(placement.moduleId)?.name || "Módulo no disponible";
+}
+
+function mandatoryText(type) {
+return type === "required" ? "Sí" : type === "conditional" ? "Condicional" : "No";
+}
+
+document.getElementById("applyMoveBtn").onclick = () => {
+const value = document.getElementById("moveSelect").value;
+if (value.startsWith("module:")) {
+moveFeature(selectedFeatureId, {type:"module", moduleId:value.slice(7)});
+} else {
+moveFeature(selectedFeatureId, {type:value});
+}
+document.getElementById("featureDialog").close();
+};
+
+function openModuleDialog(moduleId = null) {
+editingModuleId = moduleId;
+const module = moduleId ? getModule(moduleId) : null;
+document.getElementById("moduleDialogTitle").textContent = module ? "Editar módulo personalizado" : "Crear nuevo módulo";
+document.getElementById("moduleNameInput").value = module?.name || "";
+document.getElementById("moduleTargetInput").value = module?.target || 1000;
+document.getElementById("moduleDialog").showModal();
+}
+
+document.getElementById("saveModuleBtn").onclick = () => {
+const name = document.getElementById("moduleNameInput").value.trim();
+const target = Number(document.getElementById("moduleTargetInput").value || 1000);
+if (!name) return toast("Escribe un nombre para el módulo.");
+
+if (editingModuleId) {
+const module = state.customModules.find(m => m.id === editingModuleId);
+module.name = name;
+module.target = target;
+saveState();
+logEvent("module_renamed", `Renombró un módulo personalizado a "${name}" (meta ${money(target)})`, {moduleId: editingModuleId, name, target});
+} else {
+const newModuleId = `custom-module-${Date.now()}`;
+state.customModules.push({
+id: newModuleId,
+name,
+target,
+number: null
+});
+saveState();
+logEvent("module_created", `Creó el módulo personalizado "${name}" (meta ${money(target)})`, {moduleId: newModuleId, name, target});
+}
+document.getElementById("moduleDialog").close();
+render();
+toast("Módulo guardado.");
+};
+
+function deleteCustomModule(moduleId) {
+const module = state.customModules.find(m => m.id === moduleId);
+if (!module || !confirm(`¿Eliminar el módulo “${module.name}”? Las características originales volverán a su módulo de origen y las creadas manualmente pasarán a “Para después”.`)) return;
+
+featuresAtModule(moduleId).forEach(feature => {
+if (String(feature.id).startsWith("custom-")) {
+state.placements[feature.id] = {type:"later"};
+} else {
+state.placements[feature.id] = {type:"module", moduleId:feature.originModuleId};
+}
+});
+state.customModules = state.customModules.filter(m => m.id !== moduleId);
+delete state.collapsed[moduleId];
+saveState(); render(); toast("Módulo eliminado.");
+logEvent("module_deleted", `Eliminó el módulo personalizado "${module.name}"`, {moduleId, name: module.name});
+}
+
+function openCustomFeatureDialog(moduleId) {
+customFeatureModuleId = moduleId;
+document.getElementById("customFeatureTitle").value = "";
+document.getElementById("customFeatureDescription").value = "";
+document.getElementById("customFeaturePrice").value = 100;
+document.getElementById("customFeaturePriority").value = "Media";
+document.getElementById("customFeatureMandatory").value = "optional";
+
+document.getElementById("customFeatureDialog").showModal();
+}
+
+document.getElementById("saveCustomFeatureBtn").onclick = () => {
+const title = document.getElementById("customFeatureTitle").value.trim();
+if (!title) return toast("Escribe el nombre de la característica.");
+const id = `custom-feature-${Date.now()}`;
+const mandatoryType = document.getElementById("customFeatureMandatory").value;
+state.customFeatures[id] = {
+id,
+originModuleId: customFeatureModuleId,
+originModuleName: getModule(customFeatureModuleId)?.name || "Módulo personalizado",
+order: 999,
+title,
+description: document.getElementById("customFeatureDescription").value.trim(),
+price: Number(document.getElementById("customFeaturePrice").value || 0),
+mandatoryType,
+mandatoryLabel: mandatoryText(mandatoryType),
+priority: document.getElementById("customFeaturePriority").value,
+separable: true,
+hasDependency: false,
+separationText: "Sí. Característica personalizada.",
+dependencies: "Por definir con el equipo de desarrollo.",
+time: ""
+};
+state.placements[id] = {type:"module", moduleId:customFeatureModuleId};
+saveState();
+document.getElementById("customFeatureDialog").close();
+render();
+toast("Característica añadida.");
+logEvent("feature_created", `Agregó la característica personalizada "${title}" (${money(state.customFeatures[id].price)}) en "${getModule(customFeatureModuleId)?.name || "un módulo personalizado"}"`, {featureId: id, title, price: state.customFeatures[id].price, moduleId: customFeatureModuleId});
+};
+
+document.querySelectorAll("[data-close-dialog]").forEach(button => {
+button.onclick = () => document.getElementById(button.dataset.closeDialog).close();
+});
+
+function openClientQuoteDialog() {
+const c = state.client;
+document.getElementById("clientNameInput").value = c.name || "";
+document.getElementById("clientCompanyInput").value = c.company || "";
+document.getElementById("clientEmailInput").value = c.email || "";
+document.getElementById("clientPhoneInput").value = c.phone || "";
+document.getElementById("clientTaxIdInput").value = c.taxId || "";
+document.getElementById("clientValidityInput").value = c.validity || "30";
+document.getElementById("clientNotesInput").value = c.notes || "";
+document.getElementById("clientQuoteDialog").showModal();
+}
+
+function readClientForm() {
+return {
+name: document.getElementById("clientNameInput").value.trim(),
+company: document.getElementById("clientCompanyInput").value.trim(),
+email: document.getElementById("clientEmailInput").value.trim(),
+phone: document.getElementById("clientPhoneInput").value.trim(),
+taxId: document.getElementById("clientTaxIdInput").value.trim(),
+validity: document.getElementById("clientValidityInput").value,
+notes: document.getElementById("clientNotesInput").value.trim()
+};
+}
+
+function quoteReference() {
+const now = new Date();
+const pad = n => String(n).padStart(2,"0");
+return `COT-${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}`;
+}
+
+function buildClientQuoteHtml(client) {
+const s = countsAndTotals();
+const issueDate = new Date();
+const validityDays = Number(client.validity || 30);
+const expiryDate = new Date(issueDate.getTime() + validityDays*24*60*60*1000);
+const fmtDate = d => d.toLocaleDateString("es-ES", {year:"numeric", month:"long", day:"numeric"});
+const reference = quoteReference();
+
+const modulesHtml = s.activeModules.map((module, index) => {
+const features = featuresAtModule(module.id);
+const missing = missingRequired(module.id);
+return `
+<div class="mod">
+<div class="mod-head">
+<span>Módulo ${index+1} · ${escapeHtml(module.name)}</span>
+<strong>${money(moduleTotal(module.id))}</strong>
+</div>
+<table>
+<tbody>
+${features.map(f => `<tr><td>${escapeHtml(f.title)}${f.mandatoryType === "required" ? ' <em>(obligatoria)</em>' : ''}</td><td class="num">${money(f.price)}</td></tr>`).join("")}
+</tbody>
+</table>
+${missing.length ? `<div class="warn">Nota: este módulo no incluye ${missing.length} característica(s) obligatoria(s) de su alcance completo (${missing.map(f=>escapeHtml(f.title)).join(", ")}).</div>` : ""}
+</div>`;
+}).join("") || `<p>No hay módulos con características seleccionadas todavía.</p>`;
+
+const laterFeatures = featuresAtStatus("later");
+const laterHtml = laterFeatures.length ? `
+<div class="mod muted">
+<div class="mod-head"><span>Para una etapa posterior (no incluido en este total)</span><strong>${money(s.laterTotal)}</strong></div>
+<table><tbody>${laterFeatures.map(f => `<tr><td>${escapeHtml(f.title)} <span class="origin">— ${escapeHtml(f.originModuleName || "")}</span></td><td class="num">${money(f.price)}</td></tr>`).join("")}</tbody></table>
+</div>` : "";
+
+return `<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Cotización ${escapeHtml(reference)}${client.company ? " — " + escapeHtml(client.company) : ""}</title>
+<style>
+:root{--ink:#162033;--muted:#667085;--line:#e3e8f0;--primary:#5b4ce1;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#f5f7fb;padding:32px;}
+.sheet{max-width:820px;margin:0 auto;background:white;border:1px solid var(--line);border-radius:16px;padding:36px;}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:22px;}
+.brand{display:flex;align-items:center;gap:12px;}
+.mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#6557e8,#8f6cff);color:white;display:grid;place-items:center;font-weight:800;}
+.top h1{margin:0;font-size:19px;}
+.top .sub{color:var(--muted);font-size:12px;margin-top:2px;}
+.meta{text-align:right;font-size:12px;color:var(--muted);}
+.meta strong{display:block;color:var(--ink);font-size:14px;}
+.parties{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.party{border:1px solid var(--line);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;}
+.party span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;font-weight:800;letter-spacing:.05em;margin-bottom:6px;}
+.mod{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;}
+.mod.muted{background:#f8fafc;}
+.mod-head{display:flex;justify-content:space-between;font-weight:800;font-size:13px;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+td{padding:6px 2px;border-bottom:1px solid #eef1f5;}
+td.num{text-align:right;white-space:nowrap;font-weight:700;}
+.origin{color:var(--muted);font-weight:400;}
+.warn{margin-top:8px;font-size:11px;color:#b54708;background:#fffaeb;border-radius:8px;padding:8px 10px;}
+.total-box{display:flex;justify-content:flex-end;margin:22px 0;}
+.total-box .box{min-width:260px;border:2px solid var(--ink);border-radius:12px;padding:16px 18px;text-align:right;}
+.total-box .box span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.total-box .box strong{font-size:26px;}
+.notes{font-size:12px;line-height:1.6;color:#344054;background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:18px;}
+.terms{font-size:11px;line-height:1.7;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:22px;}
+.sign{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:46px;}
+.sign div{border-top:1px solid var(--ink);padding-top:8px;font-size:11px;color:var(--muted);text-align:center;}
+@media print{ body{background:white;padding:0;} .sheet{border:0;padding:0;max-width:none;} }
+</style>
+</head>
+<body>
+<div class="sheet">
+<div class="top">
+<div class="brand">
+<div class="mark">CQ</div>
+<div>
+<h1>Cotización de proyecto</h1>
+<div class="sub">MONPICA — Sistema de gestión de proyectos integrales</div>
+</div>
+</div>
+<div class="meta">
+<strong>${escapeHtml(reference)}</strong>
+Emitida: ${fmtDate(issueDate)}<br>
+Válida hasta: ${fmtDate(expiryDate)}
+</div>
+</div>
+
+<div class="parties">
+<div class="party">
+<span>Cliente</span>
+${escapeHtml(client.name || "Sin especificar")}<br>
+${client.company ? escapeHtml(client.company) + "<br>" : ""}
+${client.email ? escapeHtml(client.email) + "<br>" : ""}
+${client.phone ? escapeHtml(client.phone) + "<br>" : ""}
+${client.taxId ? "ID fiscal: " + escapeHtml(client.taxId) : ""}
+</div>
+<div class="party">
+<span>Resumen</span>
+${s.includedCount} característica(s) incluidas en ${s.activeModules.length} módulo(s)<br>
+Moneda: USD<br>
+Validez: ${validityDays} días desde la fecha de emisión
+</div>
+</div>
+
+<h2 style="font-size:14px;margin:0 0 12px;">Desglose por módulo</h2>
+${modulesHtml}
+${laterHtml}
+
+<div class="total-box">
+<div class="box">
+<span>Total de la cotización</span>
+<strong>${money(s.includedTotal)}</strong>
+</div>
+</div>
+
+${client.notes ? `<div class="notes"><strong>Notas:</strong> ${escapeHtml(client.notes)}</div>` : ""}
+
+<div class="terms">
+Esta cotización refleja únicamente las características seleccionadas al momento de su generación y puede ajustarse antes de iniciar el desarrollo. No incluye hosting, dominio, correos transaccionales, pasarelas de pago y sus comisiones, consumo de inteligencia artificial, licencias, almacenamiento, servicios externos, producción de contenido, soporte posterior ni cambios fuera del alcance aprobado. Los tiempos de entrega pueden variar por revisiones, integraciones de terceros, aprobaciones regulatorias, migración de datos y disponibilidad del cliente. El desarrollo se organiza por etapas y cada entrega se valida antes de continuar con la siguiente.
+</div>
+
+<div class="sign">
+<div>Firma del cliente</div>
+<div>Firma del equipo de desarrollo</div>
+</div>
+</div>
+</body>
+</html>`;
+}
+
+document.getElementById("copyLinkBtn").onclick = async () => {
+try {
+await navigator.clipboard.writeText(window.location.href);
+toast("Enlace copiado. Envíaselo al cliente para que vea y edite esta misma cotización.");
+} catch {
+toast(window.location.href);
+}
+};
+
+document.getElementById("clientQuoteBtn").onclick = openClientQuoteDialog;
+
+document.getElementById("downloadClientQuoteBtn").onclick = () => {
+const client = readClientForm();
+if (!client.name) return toast("Escribe al menos el nombre del cliente.");
+state.client = client;
+saveState();
+const html = buildClientQuoteHtml(client);
+const slug = client.company || client.name || "cliente";
+const filename = `cotizacion-${slug.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"")}.html`;
+downloadBlob(html, filename, "text/html;charset=utf-8");
+document.getElementById("clientQuoteDialog").close();
+toast("Cotización generada y descargada.");
+logEvent("client_quote_downloaded", `Descargó la cotización formal (${client.name}${client.company ? " — " + client.company : ""}) por ${money(countsAndTotals().includedTotal)}`, {client, total: countsAndTotals().includedTotal});
+};
+
+document.getElementById("previewClientQuoteBtn").onclick = () => {
+const client = readClientForm();
+if (!client.name) return toast("Escribe al menos el nombre del cliente.");
+state.client = client;
+saveState();
+const html = buildClientQuoteHtml(client);
+const win = window.open("", "_blank");
+if (!win) { toast("Habilita las ventanas emergentes para ver la vista previa."); return; }
+win.document.write(html);
+win.document.close();
+win.focus();
+setTimeout(() => win.print(), 350);
+logEvent("client_quote_previewed", `Abrió la vista previa/impresión de la cotización formal (${client.name}${client.company ? " — " + client.company : ""}) por ${money(countsAndTotals().includedTotal)}`, {client, total: countsAndTotals().includedTotal});
+};
+
+document.getElementById("mandatoryOnlyToggle").addEventListener("change", renderMandatoryPreview);
+
+document.getElementById("applyMandatoryBtn").onclick = () => {
+const toMove = allFeatures().filter(f => state.placements[f.id]?.type === "module" && f.mandatoryType !== "required");
+if (!toMove.length) { toast("Ya solo tienes características obligatorias incluidas."); return; }
+if (!confirm(`Esto moverá ${toMove.length} característica(s) no obligatorias a "Para después" (no se eliminan, se pueden regresar después). ¿Continuar?`)) return;
+toMove.forEach(f => { state.placements[f.id] = {type: "later"}; });
+saveState();
+document.getElementById("mandatoryOnlyToggle").checked = false;
+render();
+toast(`Cotizado solo con lo obligatorio: se movieron ${toMove.length} característica(s) a "Para después".`);
+logEvent("mandatory_only_applied", `Aplicó la vista previa de solo obligatorias: movió ${toMove.length} característica(s) no obligatorias a "Para después" (quedó en ${money(countsAndTotals().includedTotal)})`, {count: toMove.length, newTotal: countsAndTotals().includedTotal});
+};
+
+document.getElementById("restoreAllBtn").onclick = () => {
+if (!confirm("Esto volverá a colocar todas las características (obligatorias y opcionales) en su módulo original. Tus módulos y características personalizadas no se tocan. ¿Continuar?")) return;
+featureMap.forEach((feature, id) => { state.placements[id] = {type: "module", moduleId: feature.originModuleId}; });
+saveState();
+document.getElementById("mandatoryOnlyToggle").checked = false;
+render();
+toast("Se restauraron todas las características a su módulo original ($13,000).");
+logEvent("all_features_restored", "Restauró todas las características a su alcance completo original ($13,000)", {});
+};
+
+document.getElementById("addModuleBtn").onclick = () => openModuleDialog();
+document.getElementById("searchInput").addEventListener("input", e => {
+searchQuery = e.target.value.trim().toLowerCase();
+render();
+});
+document.getElementById("expandBtn").onclick = () => {
+Object.keys(state.collapsedStages).forEach(stage => state.collapsedStages[stage] = false);
+allModules().forEach(m => state.openModules[m.id] = true);
+saveState(); render();
+};
+document.getElementById("collapseBtn").onclick = () => {
+Object.keys(state.collapsedStages).forEach(stage => state.collapsedStages[stage] = true);
+state.openModules = {};
+saveState(); render();
+};
+document.getElementById("resetBtn").onclick = () => {
+if (!confirm("¿Restablecer la configuración completa? Se eliminarán módulos y características personalizadas.")) return;
+state = defaultState();
+saveState(); render(); toast("Configuración restablecida.");
+logEvent("quote_reset", "Restableció toda la configuración a las 9 fases originales ($138,250)", {});
+};
+
+document.getElementById("downloadBtn").onclick = downloadSummary;
+document.getElementById("exportBtn").onclick = exportData;
+
+function buildSummaryText() {
+const s = countsAndTotals();
+const lines = [
+"COTIZACIÓN INTERACTIVA — ECOSISTEMA WEB INTEGRAL",
+`Fecha: ${new Date().toLocaleString("es-ES")}`,
+"",
+`TOTAL SELECCIONADO: ${money(s.includedTotal)}`,
+`PARA DESPUÉS: ${money(s.laterTotal)}`,
+`NO ME INTERESA: ${money(s.noTotal)}`,
+"",
+"MÓDULOS Y CUOTAS"
+];
+
+s.activeModules.forEach((module,index) => {
+lines.push("");
+lines.push(`${index+1}. ${module.name} — ${money(moduleTotal(module.id))}`);
+featuresAtModule(module.id).forEach(feature => {
+lines.push(` • ${feature.title} — ${money(feature.price)} — ${mandatoryText(feature.mandatoryType)} — Prioridad ${feature.priority}`);
+});
+const missing = missingRequired(module.id);
+if (missing.length) lines.push(` ADVERTENCIA: faltan ${missing.length} características obligatorias.`);
+});
+
+lines.push("", "PARA DESPUÉS");
+featuresAtStatus("later").forEach(f => lines.push(` • ${f.title} — ${money(f.price)} — Origen: ${f.originModuleName}`));
+lines.push("", "NO ME INTERESA");
+featuresAtStatus("notInterested").forEach(f => lines.push(` • ${f.title} — ${money(f.price)} — Origen: ${f.originModuleName}`));
+lines.push("", "NOTA: Los valores no incluyen hosting, dominios, licencias, consumo de IA, comisiones de pasarela ni servicios externos, salvo que se indiquen expresamente.");
+return lines.join("\n");
+}
+
+function downloadSummary() {
+downloadBlob(buildSummaryText(), "resumen-cotizacion.txt", "text/plain;charset=utf-8");
+}
+
+function exportData() {
+const payload = {
+project: PROJECT.title,
+exportedAt: new Date().toISOString(),
+totals: countsAndTotals(),
+modules: allModules().map(module => ({
+id: module.id,
+name: module.name,
+target: module.target,
+subtotal: moduleTotal(module.id),
+features: featuresAtModule(module.id)
+})),
+later: featuresAtStatus("later"),
+notInterested: featuresAtStatus("notInterested")
+};
+// Remove circular/non-serializable derived arrays from totals.
+payload.totals = {
+includedTotal: payload.totals.includedTotal,
+laterTotal: payload.totals.laterTotal,
+noTotal: payload.totals.noTotal,
+includedCount: payload.totals.includedCount,
+laterCount: payload.totals.laterCount,
+noCount: payload.totals.noCount,
+activeModules: payload.totals.activeModules.length,
+warnings: payload.totals.warnings.length
+};
+downloadBlob(JSON.stringify(payload,null,2), "configuracion-cotizacion.json", "application/json;charset=utf-8");
+}
+
+function downloadBlob(content, filename, type) {
+const blob = new Blob([content], {type});
+const url = URL.createObjectURL(blob);
+const link = document.createElement("a");
+link.href = url;
+link.download = filename;
+document.body.appendChild(link);
+link.click();
+link.remove();
+URL.revokeObjectURL(url);
+}
+
+function escapeHtml(value) {
+return String(value ?? "").replace(/[&<>"']/g, char => ({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+})[char]);
+}
+
+let toastTimer;
+function toast(message) {
+const el = document.getElementById("toast");
+el.textContent = message;
+el.classList.add("show");
+clearTimeout(toastTimer);
+toastTimer = setTimeout(()=>el.classList.remove("show"), 2600);
+}
+
+async function bootstrap() {
+render();
+await loadRemoteState();
+render();
+document.getElementById("loadOverlay").classList.add("hidden");
+}
+bootstrap();
+
+/* ---------------- Tema claro / oscuro ---------------- */
+(function(){
+const KEY = "cq-theme";
+const btn = document.getElementById("themeBtn");
+const ICON = {auto:"🌗", light:"☀️", dark:"🌙"};
+const NAME = {auto:"automático", light:"claro", dark:"oscuro"};
+let current = "auto";
+try { current = localStorage.getItem(KEY) || "auto"; } catch(e) {}
+
+function apply(t){
+if(t === "auto") document.documentElement.removeAttribute("data-theme");
+else document.documentElement.setAttribute("data-theme", t);
+if(btn){
+btn.textContent = ICON[t];
+btn.title = "Tema: " + NAME[t] + " (clic para cambiar)";
+btn.setAttribute("aria-label", "Cambiar tema, ahora en " + NAME[t]);
+}
+}
+apply(current);
+if(btn) btn.onclick = () => {
+current = current === "auto" ? "light" : current === "light" ? "dark" : "auto";
+try { localStorage.setItem(KEY, current); } catch(e) {}
+apply(current);
+};
+})();
+
+</script>
+</body>
+</html>
