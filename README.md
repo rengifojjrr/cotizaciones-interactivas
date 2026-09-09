@@ -158,11 +158,12 @@ Hay dos, con el mismo motor y datos distintos. El cliente arrastra entregables e
 que pertenecen, **Para después** y **No me interesa**, y ve el total moverse en vivo. La casilla de
 *solo lo obligatorio* muestra qué queda si se deja únicamente lo esencial, sin mover nada.
 
-`monpica.html` cotiza MONPICA-SGP en dos bloques separados a propósito: el **comprometido**
-(levantamiento y fases 0 a 3, precio firme con fecha) y las **fases referenciales** (4 a 7, precio
-estimado y sin fecha). Ese archivo **no muestra horas en ninguna parte**: el precio es cerrado, y
-mostrar horas al lado invita a dividir horas entre tarifa, que no significa nada. Si se agregan
-entregables nuevos, hay que mantener esa regla.
+`monpica.html` cotiza MONPICA-SGP con tres niveles, igual que el de CCR: **fase → entregable →
+subtarea**. Son 9 fases, 29 entregables y 200 subtareas, cada una con su rango de horas y su parte
+del precio. Las fases del bloque **comprometido** (levantamiento y fases 0 a 3) llevan precio firme;
+las **referenciales** (4 a 7) llevan precio estimado y sin fecha, y se distinguen en el nombre de la
+etapa. La suma tiene que dar 66.250 comprometido, 72.000 referencial y 138.250 en total: si se
+edita el desglose, hay que volver a cuadrarla.
 
 ## Cotizador interactivo (`index.html`)
 
