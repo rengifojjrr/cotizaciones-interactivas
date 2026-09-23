@@ -608,7 +608,9 @@ ${docs.length ? docs.map(d => `
 ${d.description ? `<div class="item-desc">${esc(d.description)}</div>` : ""}
 <div class="item-meta"><span>${esc(d.proyecto)}</span><span>Publicado el ${fmtD(d.created_at)}</span></div>
 </div>
-<a class="btn primary" href="${esc(d.url)}" target="_blank" rel="noopener" data-doc="${esc(d.name)}">Abrir / descargar ↗</a>
+${String(d.url||"").startsWith("interno:")
+  ? `<button class="btn primary" data-descargar="${esc(d.id)}" data-doc="${esc(d.name)}">Descargar ↓</button>`
+  : `<a class="btn primary" href="${esc(d.url)}" target="_blank" rel="noopener" data-doc="${esc(d.name)}">Abrir / descargar ↗</a>`}
 </article>`).join("") : `<div class="empty">Todavía no hay documentos publicados.</div>`}`;
 }
 
@@ -634,6 +636,29 @@ el.onclick = e => { e.stopPropagation(); go(el.dataset.go, el.dataset.project); 
 document.querySelectorAll(".phase-head").forEach(h => {
 h.onclick = () => h.closest(".phase").classList.toggle("open");
 });
+document.querySelectorAll("[data-descargar]").forEach(b => b.addEventListener("click", async () => {
+const original = b.textContent;
+b.disabled = true; b.textContent = "Preparando…";
+try {
+const {data, error} = await sb.rpc("cq_portal_document",
+  {p_code:ACCESS.code, p_key:ACCESS.key, p_doc:b.dataset.descargar});
+if(error || !data) throw error || new Error("sin datos");
+const bin = atob(data.base64);
+const buf = new Uint8Array(bin.length);
+for(let i=0;i<bin.length;i++) buf[i] = bin.charCodeAt(i);
+const url = URL.createObjectURL(new Blob([buf], {type:data.mime || "application/pdf"}));
+const a = document.createElement("a");
+a.href = url;
+a.download = (data.nombre || "documento").replace(/[^\w\sÁÉÍÓÚÑáéíóúñ().,-]/g,"").trim() + ".pdf";
+document.body.appendChild(a); a.click(); a.remove();
+setTimeout(() => URL.revokeObjectURL(url), 4000);
+b.textContent = "Descargado ✓";
+setTimeout(() => { b.textContent = original; b.disabled = false; }, 2500);
+} catch(e) {
+b.textContent = "No se pudo descargar";
+setTimeout(() => { b.textContent = original; b.disabled = false; }, 3000);
+}
+}));
 document.querySelectorAll("[data-doc]").forEach(a => a.addEventListener("click", () => {
 sb.rpc("cq_portal_log",{p_code:ACCESS.code, p_key:ACCESS.key, p_type:"documento_abierto",
 p_summary:`El cliente abrió el documento "${a.dataset.doc}"`, p_detail:{}}).then(()=>{}, ()=>{});

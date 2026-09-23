@@ -832,6 +832,31 @@ min-height: 40px; padding-top: 9px; padding-bottom: 9px; font-size: 13px;
 .tab, .nav button { min-height: 42px; }
 .menu-card { padding: 20px; }
 }
+
+/* Guía de uso: se abre la primera vez y desde el botón «¿Cómo funciona?» */
+.guia-overlay { position:fixed; inset:0; background:var(--overlay); display:none;
+  align-items:center; justify-content:center; padding:20px; z-index:80; }
+.guia-overlay.open { display:flex; }
+.guia { background:var(--surface); border-radius:var(--radius); max-width:760px; width:100%;
+  max-height:88vh; overflow:auto; box-shadow:0 24px 60px var(--shadow-strong); }
+.guia-top { padding:22px 26px 6px; }
+.guia-top h2 { margin:0 0 6px; font-size:20px; }
+.guia-top p { margin:0; color:var(--muted); font-size:13.5px; line-height:1.5; }
+.guia-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; padding:18px 26px 6px; }
+.guia-card { border:1px solid var(--line); border-radius:12px; padding:14px 15px; background:var(--surface-soft); }
+.guia-card .ic { font-size:19px; line-height:1; margin-bottom:8px; display:block; }
+.guia-card h3 { margin:0 0 5px; font-size:13.5px; }
+.guia-card p { margin:0; font-size:12.5px; line-height:1.5; color:var(--body-text); }
+.guia-foot { display:flex; gap:10px; align-items:center; justify-content:space-between;
+  padding:14px 26px 22px; flex-wrap:wrap; }
+.guia-foot label { display:flex; gap:7px; align-items:center; font-size:12.5px; color:var(--muted); }
+@media (max-width: 780px) {
+  .guia-cards { grid-template-columns:1fr; }
+  .guia { max-height:92vh; }
+  .guia-top { padding:18px 18px 4px; }
+  .guia-cards { padding:14px 18px 4px; }
+  .guia-foot { padding:12px 18px 18px; }
+}
 </style>
 <script>
 (function(){
@@ -854,6 +879,7 @@ if (t === "dark" || t === "light") document.documentElement.setAttribute("data-t
 </div>
 <div class="toolbar">
 <button class="btn" id="copyLinkBtn">🔗 Copiar enlace de esta cotización</button>
+<button class="btn" id="guiaBtn">❓ ¿Cómo funciona?</button>
 <button class="theme-btn" id="themeBtn" title="Cambiar tema">🌗</button>
 <button class="btn primary" id="clientQuoteBtn">🧾 Cotización para el cliente</button>
 <button class="btn" id="addModuleBtn">+ Nuevo módulo</button>
@@ -2204,6 +2230,50 @@ apply(current);
 };
 })();
 
+
+/* Guía de uso. Se abre sola la primera vez de cada navegador. */
+function iniciarGuia(){
+  const LLAVE = "ecosistema-guia-v1";
+  const ov = document.getElementById("guiaOverlay");
+  const noRep = document.getElementById("guiaNoRepetir");
+  if(!ov) return;
+  const abrir = () => { ov.classList.add("open"); document.body.style.overflow = "hidden"; };
+  const cerrar = () => {
+    ov.classList.remove("open"); document.body.style.overflow = "";
+    if(noRep && noRep.checked) { try { localStorage.setItem(LLAVE, "1"); } catch(e) {} }
+  };
+  document.getElementById("guiaCerrar").onclick = cerrar;
+  ov.addEventListener("click", e => { if(e.target === ov) cerrar(); });
+  document.addEventListener("keydown", e => { if(e.key === "Escape" && ov.classList.contains("open")) cerrar(); });
+  const btn = document.getElementById("guiaBtn");
+  if(btn) btn.onclick = abrir;
+  let visto = "0";
+  try { visto = localStorage.getItem(LLAVE) || "0"; } catch(e) {}
+  if(visto !== "1") setTimeout(abrir, 900);
+}
+if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciarGuia);
+else iniciarGuia();
 </script>
+
+<div class="guia-overlay" id="guiaOverlay" role="dialog" aria-modal="true" aria-labelledby="guiaTitulo">
+<div class="guia">
+<div class="guia-top">
+<h2 id="guiaTitulo">Cómo funciona esta cotización</h2>
+<p>No es un PDF: es una cotización que usted arma. Quite lo que no necesite, deje lo que sí, y vea el precio moverse mientras decide.</p>
+</div>
+<div class="guia-cards">
+<div class="guia-card"><span class="ic">🗂️</span><h3>Todo empieza incluido</h3><p>Al entrar, el total de arriba es el proyecto completo: trece módulos con todos sus entregables. Desde ahí usted va quitando lo que no necesite, no al revés.</p></div>
+<div class="guia-card"><span class="ic">👆</span><h3>Abra y revise cada cosa</h3><p>Toque cualquier ficha y verá qué incluye, cuánto cuesta, cuántas horas lleva, qué prioridad tiene y de qué depende. Nada está escondido.</p></div>
+<div class="guia-card"><span class="ic">↔️</span><h3>Mueva lo que no necesite ahora</h3><p>Cada ficha puede irse a <b>Para después</b> o a <b>No me interesa</b>, arrastrándola o desde el botón de la ficha. El total se recalcula al instante.</p></div>
+<div class="guia-card"><span class="ic">👁️</span><h3>Pruebe sin comprometerse</h3><p>La casilla <b>Solo lo obligatorio</b> le muestra qué quedaría si dejara únicamente lo esencial, sin mover ni una ficha. Si le gusta, hay un botón para aplicarlo de verdad.</p></div>
+<div class="guia-card"><span class="ic">⚠️</span><h3>Le avisamos si algo se rompe</h3><p>Si quita algo obligatorio, aparece una alerta de alcance. No se lo impedimos: solo le decimos qué deja de funcionar si lo saca.</p></div>
+<div class="guia-card"><span class="ic">☁️</span><h3>Se guarda solo</h3><p>Todo queda guardado en el momento. Puede cerrar, volver con el mismo enlace y seguir donde iba. Cuando esté conforme, <b>Cotización para el cliente</b> arma el documento formal.</p></div>
+</div>
+<div class="guia-foot">
+<label><input type="checkbox" id="guiaNoRepetir"> No volver a mostrar esto</label>
+<button class="btn primary" id="guiaCerrar">Entendido, empecemos</button>
+</div>
+</div>
+</div>
 </body>
 </html>
