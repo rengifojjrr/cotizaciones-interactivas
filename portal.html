@@ -256,7 +256,8 @@ min-height: 40px; padding-top: 9px; padding-bottom: 9px; font-size: 13px;
   border-radius:var(--radius); padding:20px; margin:18px 0; }
 .oferta h3 { margin:0 0 4px; font-size:15.5px; }
 .oferta .cuentas { display:grid; gap:6px; margin:14px 0; font-size:13px; }
-.oferta .cuentas div { display:flex; justify-content:space-between; gap:12px; }
+.oferta .cuentas div { display:flex; justify-content:space-between; gap:12px; align-items:baseline; }
+.oferta .cuentas div > span:last-child { white-space:nowrap; flex:0 0 auto; }
 .oferta .cuentas .final { border-top:1px solid var(--green-line, var(--line)); padding-top:8px;
   margin-top:4px; font-weight:850; font-size:17px; }
 .oferta ul { margin:10px 0 0; padding-left:18px; }
