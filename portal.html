@@ -217,6 +217,59 @@ min-height: 40px; padding-top: 9px; padding-bottom: 9px; font-size: 13px;
 .tab, .nav button { min-height: 42px; }
 .menu-card { padding: 20px; }
 }
+
+/* Cotización por bloques que se abren */
+.bloques { display:grid; gap:12px; margin:18px 0; }
+.bloque { border:1px solid var(--line); border-radius:var(--radius); background:var(--surface);
+  overflow:hidden; box-shadow:0 5px 18px var(--shadow); }
+.bloque-cab { width:100%; display:flex; align-items:center; gap:14px; padding:18px 20px;
+  background:none; border:0; text-align:left; cursor:pointer; color:inherit; font:inherit; }
+.bloque-cab:hover { background:var(--surface-soft); }
+.bloque-cab .flecha { font-size:13px; color:var(--muted); transition:transform .18s; flex:0 0 auto; }
+.bloque.abierto .bloque-cab .flecha { transform:rotate(90deg); }
+.bloque-cab .txt { flex:1; min-width:0; }
+.bloque-cab .txt strong { display:block; font-size:15.5px; }
+.bloque-cab .txt span { display:block; color:var(--muted); font-size:12.5px; margin-top:3px; line-height:1.45; }
+.bloque-cab .monto { font-size:19px; font-weight:850; flex:0 0 auto; }
+.bloque-cuerpo { display:none; border-top:1px solid var(--line); }
+.bloque.abierto .bloque-cuerpo { display:block; }
+.fase { border-bottom:1px solid var(--line); }
+.fase:last-child { border-bottom:0; }
+.fase-cab { width:100%; display:flex; align-items:center; gap:12px; padding:14px 20px;
+  background:none; border:0; text-align:left; cursor:pointer; color:inherit; font:inherit; }
+.fase-cab:hover { background:var(--surface-soft); }
+.fase-cab .flecha { font-size:11px; color:var(--muted); transition:transform .18s; }
+.fase.abierta .fase-cab .flecha { transform:rotate(90deg); }
+.fase-cab .nom { flex:1; font-weight:700; font-size:13.5px; min-width:0; }
+.fase-cab .nom em { display:block; font-style:normal; font-weight:400; color:var(--muted);
+  font-size:11.5px; margin-top:2px; }
+.fase-cab .val { font-weight:750; font-size:13.5px; }
+.fase-items { display:none; padding:2px 20px 14px; }
+.fase.abierta .fase-items { display:block; }
+.ent { display:flex; gap:12px; padding:10px 0; border-top:1px dashed var(--line); }
+.ent:first-child { border-top:0; }
+.ent .ed { flex:1; min-width:0; }
+.ent .en { font-weight:650; font-size:12.5px; }
+.ent .ex { color:var(--muted); font-size:11.5px; line-height:1.5; margin-top:3px; }
+.ent .ev { font-weight:750; font-size:12.5px; white-space:nowrap; }
+.oferta { border:1px solid var(--green-line, var(--line)); background:var(--green-soft);
+  border-radius:var(--radius); padding:20px; margin:18px 0; }
+.oferta h3 { margin:0 0 4px; font-size:15.5px; }
+.oferta .cuentas { display:grid; gap:6px; margin:14px 0; font-size:13px; }
+.oferta .cuentas div { display:flex; justify-content:space-between; gap:12px; }
+.oferta .cuentas .final { border-top:1px solid var(--green-line, var(--line)); padding-top:8px;
+  margin-top:4px; font-weight:850; font-size:17px; }
+.oferta ul { margin:10px 0 0; padding-left:18px; }
+.oferta li { font-size:12.5px; line-height:1.6; margin-bottom:5px; }
+.oferta .nota { color:var(--muted); font-size:11.5px; line-height:1.55; margin-top:12px; }
+.ajustar { display:block; width:100%; text-align:center; margin:18px 0 6px; padding:16px;
+  font-size:15px; font-weight:800; border-radius:var(--radius); text-decoration:none; }
+@media (max-width: 780px) {
+  .bloque-cab { padding:15px 15px; gap:10px; }
+  .bloque-cab .monto { font-size:16px; }
+  .fase-cab, .fase-items { padding-left:15px; padding-right:15px; }
+  .ent { flex-direction:column; gap:3px; }
+}
 </style>
 <script>
 (function(){
@@ -393,7 +446,7 @@ return `
 <span class="eyebrow">${DATA.client ? "Tu espacio" : "Tu proyecto"}</span>
 <h1>${esc(DATA.client ? `Hola, ${DATA.client.name}` : (proyectoPrincipal?.project?.project_name || "Tu proyecto"))}</h1>
 <p>${esc(proyectoPrincipal?.project?.summary || "Acá tienes todo lo de tu proyecto en un solo lugar.")}</p>
-${proyectoPrincipal?.project?.hero_note ? `<div class="hero-note">${esc(proyectoPrincipal.project.hero_note)}</div>` : ""}
+
 </section>
 
 <div class="menu">
@@ -460,8 +513,7 @@ items.push(`
 </div>
 </div>
 <div style="text-align:right">
-<div style="font-size:19px;font-weight:850">${money(p.totals.total)}</div>
-<button class="btn small primary" data-go="desglose" data-project="${esc(p.project.id)}">Ver desglose →</button>
+<button class="btn primary" data-go="desglose" data-project="${esc(p.project.id)}">Ver cotización →</button>
 </div>
 </article>`);
 });
@@ -477,7 +529,7 @@ items.push(`
 <span>Actualizada: ${fmtD(q.updated_at)}</span>
 </div>
 </div>
-<a class="btn primary" href="${esc(q.cotizador || "index.html")}?q=${esc(q.id)}" target="_blank" rel="noopener">Abrir cotización ↗</a>
+<a class="btn primary" href="${esc(q.cotizador || "index.html")}?q=${esc(q.id)}" target="_blank" rel="noopener" data-doc="Cotización interactiva">✏️ Ajustar cotización ↗</a>
 </article>`);
 });
 
@@ -577,38 +629,86 @@ function renderDesglose(pid){
 const p = DATA.projects.find(x => x.project.id === pid) || DATA.projects[0];
 if(!p) return `<button class="back-link" data-go="cotizaciones">← Volver</button><div class="empty">Sin datos.</div>`;
 
-let rows = "";
-(p.phases||[]).forEach((ph,i) => {
-rows += `<tr class="phase-row"><td colspan="2">${i+1}. ${esc(ph.name)}</td><td>${money(ph.phase_total)}</td></tr>`;
-(ph.items||[]).forEach(it => {
-rows += `<tr>
-<td>${esc(it.title)}${it.mandatory!=="required"?' <span class="badge optional">Opcional</span>':""}</td>
-<td class="muted-cell">${esc(it.description||"")}</td>
-<td>${money(it.cost)}</td></tr>`;
-});
-});
-rows += `<tr class="total-row"><td colspan="2">TOTAL</td><td>${money(p.totals.total)}</td></tr>`;
+const esOpcional = ph => /^\[Opcional\]/.test(ph.name || "");
+const esServicio = ph => /^\[Servicio mensual\]/.test(ph.name || "");
+const limpia = n => String(n||"").replace(/^\[[^\]]+\]\s*/, "");
+
+const fases = p.phases || [];
+const principal = fases.filter(ph => !esOpcional(ph) && !esServicio(ph));
+const opcional  = fases.filter(esOpcional);
+const servicio  = fases.filter(esServicio);
+const suma = arr => arr.reduce((a,ph) => a + Number(ph.phase_total||0), 0);
+
+const pintaFase = ph => `
+<div class="fase">
+<button class="fase-cab" data-fase>
+<span class="flecha">▶</span>
+<span class="nom">${esc(limpia(ph.name))}${ph.timeline ? `<em>${esc(ph.timeline)}</em>` : ""}</span>
+<span class="val">${Number(ph.phase_total) ? money(ph.phase_total) : ""}</span>
+</button>
+<div class="fase-items">
+${(ph.items||[]).map(it => `
+<div class="ent">
+<div class="ed">
+<div class="en">${esc(it.title)}${it.mandatory!=="required"?' <span class="badge optional">Opcional</span>':""}</div>
+<div class="ex">${esc((it.description||"").slice(0,240))}${(it.description||"").length>240?"…":""}</div>
+</div>
+<div class="ev">${Number(it.cost) ? money(it.cost) : "Incluido"}</div>
+</div>`).join("")}
+</div>
+</div>`;
+
+const bloque = (id, titulo, sub, total, lista, abierto) => !lista.length ? "" : `
+<section class="bloque${abierto ? " abierto" : ""}" id="${id}">
+<button class="bloque-cab" data-bloque="${id}">
+<span class="flecha">▶</span>
+<span class="txt"><strong>${esc(titulo)}</strong><span>${esc(sub)}</span></span>
+<span class="monto">${total ? money(total) : ""}</span>
+</button>
+<div class="bloque-cuerpo">${lista.map(pintaFase).join("")}</div>
+</section>`;
+
+const of = p.project.oferta;
+const cajaOferta = !of ? "" : `
+<div class="oferta">
+<h3>${esc(of.titulo || "Si contrata el programa completo")}</h3>
+<div class="cuentas">
+<div><span>Proyecto principal más partes opcionales</span><span>${money(of.subtotal)}</span></div>
+<div><span>Descuento por contratar el programa completo</span><span>−${money(of.descuento)}</span></div>
+<div class="final"><span>Programa completo</span><span>${money(of.total)}</span></div>
+</div>
+${(of.incluye||[]).length ? `<strong style="font-size:13px">Y entra sin cargo:</strong>
+<ul>${of.incluye.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+${of.valor_incluido ? `<div class="nota">Son ${money(of.valor_incluido)} de desarrollo que no se facturan.</div>` : ""}
+${of.nota ? `<div class="nota">${esc(of.nota)}</div>` : ""}
+</div>`;
+
+const q = (DATA.quotes||[])[0];
+const botonAjustar = !q ? "" : `
+<a class="btn primary ajustar" href="${esc(q.cotizador || "index.html")}?q=${esc(q.id)}"
+   target="_blank" rel="noopener" data-doc="Cotización interactiva">
+✏️ Personalizar esta cotización</a>
+<p class="page-sub" style="text-align:center;margin-top:0">
+Quite lo que no necesite y vea cómo cambia el precio. Nada se pierde: todo se puede devolver.</p>`;
 
 return `
 <button class="back-link" data-go="cotizaciones">← Volver a cotizaciones</button>
 <h1 class="page-title">${esc(p.project.project_name)}</h1>
-<p class="page-sub">En qué se va cada dólar, parte por parte.</p>
+<p class="page-sub">Toque cada bloque para ver qué trae por dentro.</p>
 
-<div class="summary-cards">
-<div class="summary-card"><div class="label">Total</div><div class="value">${money(p.totals.total)}</div></div>
-<div class="summary-card"><div class="label">Alcance base</div><div class="value">${money(p.totals.required)}</div><div class="sub">lo obligatorio</div></div>
-<div class="summary-card opt"><div class="label">Opcional</div><div class="value">${money(p.totals.optional)}</div><div class="sub">complementos</div></div>
+<div class="bloques">
+${bloque("b-principal","Proyecto principal","Lo que se contrata ahora, con fecha y precio firme.",suma(principal),principal,false)}
+${bloque("b-opcional","Partes opcionales","Se pueden tomar después, una por una, dentro de los doce meses.",suma(opcional),opcional,false)}
+${bloque("b-servicio","Servicio mensual","USD 1.200 al mes, desde la entrega de la Fase 1. Lo que sostiene el sistema una vez que está funcionando.",0,servicio,false)}
 </div>
 
-<table class="money-table">
-<thead><tr><th>Entregable</th><th>Qué incluye</th><th>Inversión</th></tr></thead>
-<tbody>${rows}</tbody>
-</table>
+${cajaOferta}
+${botonAjustar}
+
 <div class="notice">
-Los valores no incluyen hosting, dominio, comisiones de la pasarela de pago, licencias ni suscripciones de terceros:
-esos se pagan directamente a cada proveedor.
+Los valores no incluyen comisiones de terceros ni licencias que se paguen directamente a cada proveedor.
 </div>
-<div style="margin-top:16px"><button class="btn primary" data-go="proyecto" data-project="${esc(p.project.id)}">Ver fases y avance →</button></div>`;
+<div style="margin-top:16px"><button class="btn" data-go="proyecto" data-project="${esc(p.project.id)}">Ver fases y avance →</button></div>`;
 }
 
 function renderDocumentos(){
@@ -649,6 +749,12 @@ return `
 function wire(){
 document.querySelectorAll("[data-go]").forEach(el => {
 el.onclick = e => { e.stopPropagation(); go(el.dataset.go, el.dataset.project); };
+});
+document.querySelectorAll("[data-bloque]").forEach(b => b.onclick = () => {
+b.closest(".bloque").classList.toggle("abierto");
+});
+document.querySelectorAll("[data-fase]").forEach(b => b.onclick = () => {
+b.closest(".fase").classList.toggle("abierta");
 });
 document.querySelectorAll(".phase-head").forEach(h => {
 h.onclick = () => h.closest(".phase").classList.toggle("open");
