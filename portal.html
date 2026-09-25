@@ -271,6 +271,8 @@ min-height: 40px; padding-top: 9px; padding-bottom: 9px; font-size: 13px;
   .fase-cab, .fase-items { padding-left:15px; padding-right:15px; }
   .ent { flex-direction:column; gap:3px; }
 }
+
+.item-card.destacada { border-color: var(--primary); box-shadow: 0 8px 26px var(--shadow); }
 </style>
 <script>
 (function(){
@@ -417,9 +419,6 @@ if(nav.view === "home") root.innerHTML = renderHome();
 else if(nav.view === "cotizaciones") root.innerHTML = renderCotizaciones();
 else if(nav.view === "avance" && DATA.projects.some(p => p.project.mostrar_avance !== false)) root.innerHTML = renderAvanceLista();
 else if(nav.view === "proyecto") root.innerHTML = renderProyecto(nav.projectId);
-else if(nav.view === "desglose") root.innerHTML = renderDesglose(nav.projectId);
-else if(nav.view === "documentos") root.innerHTML = renderDocumentos();
-else if(nav.view === "notas") root.innerHTML = renderNotas();
 
 wire();
 }
@@ -437,108 +436,70 @@ return {total, itemsDone, itemsTotal, docs, phases};
 }
 
 function renderHome(){
-const t = totalsGlobal();
-const nCot = DATA.projects.length + DATA.quotes.length;
 const proyectoPrincipal = DATA.projects[0];
-const pct = t.itemsTotal ? Math.round(t.itemsDone/t.itemsTotal*100) : 0;
+const nDocs = DATA.projects.reduce((a,p) => a + (p.documents||[]).length, 0);
+const nCot = nDocs + (DATA.quotes||[]).length;
 
 return `
 <section class="hero">
 <span class="eyebrow">${DATA.client ? "Tu espacio" : "Tu proyecto"}</span>
 <h1>${esc(DATA.client ? `Hola, ${DATA.client.name}` : (proyectoPrincipal?.project?.project_name || "Tu proyecto"))}</h1>
 <p>${esc(proyectoPrincipal?.project?.summary || "Acá tienes todo lo de tu proyecto en un solo lugar.")}</p>
-
 </section>
 
 <div class="menu">
 ${nCot ? `
 <button class="menu-card" data-go="cotizaciones">
 <div class="menu-icon">📄</div>
-<h2>Cotizaciones</h2>
-<p>El desglose de lo que cuesta cada cosa, parte por parte.</p>
-<div class="menu-count">${nCot} cotización(es)</div>
+<h2>Cotización</h2>
+<p>La propuesta y su anexo para descargar, y el cotizador para ajustarla a su medida.</p>
+<div class="menu-count">${nDocs} documento(s) y el cotizador</div>
 </button>` : ""}
-
-${(t.phases && DATA.projects.some(p => p.project.mostrar_avance !== false)) ? `
-<button class="menu-card" data-go="avance">
-<div class="menu-icon">🗺️</div>
-<h2>Fases y avance</h2>
-<p>En qué punto va el proyecto y qué falta por hacer.</p>
-<div class="menu-count">${pct}% · ${t.itemsDone} de ${t.itemsTotal} listos</div>
-</button>` : ""}
-
-${t.docs ? `
-<button class="menu-card" data-go="documentos">
-<div class="menu-icon">📁</div>
-<h2>Documentos</h2>
-<p>Propuestas y archivos del proyecto, listos para descargar.</p>
-<div class="menu-count">${t.docs} documento(s)</div>
-</button>` : ""}
-
-${DATA.quotes && DATA.quotes.length ? `
-<a class="menu-card" href="${esc(DATA.quotes[0].cotizador || "index.html")}?q=${esc(DATA.quotes[0].id)}" target="_blank" rel="noopener" data-doc="Cotización interactiva">
-<div class="menu-icon">✏️</div>
-<h2>Editar cotización</h2>
-<p>Arma la cotización a tu medida: quita lo que no necesites y mira cómo cambia el precio.</p>
-<div class="menu-count">Abrir el cotizador ↗</div>
-</a>` : ""}
 
 ${proyectoPrincipal?.project?.demo_url ? `
 <a class="menu-card" href="${esc(proyectoPrincipal.project.demo_url)}" target="_blank" rel="noopener" data-doc="Demo del sistema">
 <div class="menu-icon">🖥️</div>
 <h2>Ver el demo</h2>
-<p>Recorre el sistema por dentro: entra con un usuario, mueve una etapa y saca un reporte.</p>
+<p>Recorra el sistema por dentro: entre con un usuario, mueva una etapa y saque un reporte.</p>
 <div class="menu-count">Abrir el demo ↗</div>
 </a>` : ""}
-
-<button class="menu-card" data-go="notas">
-<div class="menu-icon">💬</div>
-<h2>Notas y preguntas</h2>
-<p>Escríbenos cualquier duda o ajuste. Lo vemos de este lado.</p>
-<div class="menu-count">${(DATA.client?.notes || "").trim() ? "Tienes notas guardadas" : "Escribir algo"}</div>
-</button>
 </div>`;
 }
 
 function renderCotizaciones(){
-const items = [];
-DATA.projects.forEach(p => {
-items.push(`
-<article class="item-card click" data-go="desglose" data-project="${esc(p.project.id)}">
-<div>
-<div class="item-name">Cotización — ${esc(p.project.project_name)}</div>
-<div class="item-desc">${esc((p.project.summary||"").slice(0,150))}${(p.project.summary||"").length>150?"…":""}</div>
-<div class="item-meta">
-<span class="badge ${esc(p.project.status)}">${esc(label(p.project.status))}</span>
-<span>${p.totals.items_total} entregables en ${p.totals.phases_total} fases</span>
-</div>
-</div>
-<div style="text-align:right">
-<button class="btn primary" data-go="desglose" data-project="${esc(p.project.id)}">Ver cotización →</button>
-</div>
-</article>`);
-});
-
-DATA.quotes.forEach(q => {
-items.push(`
-<article class="item-card">
-<div>
-<div class="item-name">${esc(q.title)}</div>
-<div class="item-desc">Cotización interactiva: puedes activar o quitar funciones y ver cómo cambia el total.</div>
-<div class="item-meta">
-<span>${q.features} característica(s)</span>
-<span>Actualizada: ${fmtD(q.updated_at)}</span>
-</div>
-</div>
-<a class="btn primary" href="${esc(q.cotizador || "index.html")}?q=${esc(q.id)}" target="_blank" rel="noopener" data-doc="Cotización interactiva">✏️ Ajustar cotización ↗</a>
-</article>`);
-});
+const docs = [];
+DATA.projects.forEach(p => (p.documents||[]).forEach(d => docs.push(d)));
+const q = (DATA.quotes||[])[0];
+const of = DATA.projects[0]?.project?.oferta;
 
 return `
 <button class="back-link" data-go="home">← Volver al inicio</button>
-<h1 class="page-title">Cotizaciones</h1>
-<p class="page-sub">Estas son tus cotizaciones. Entra a cualquiera para ver en qué se va cada dólar.</p>
-${items.length ? items.join("") : `<div class="empty">Todavía no hay cotizaciones publicadas.</div>`}`;
+<h1 class="page-title">Cotización</h1>
+<p class="page-sub">La propuesta completa para leer con calma, y el cotizador para ajustarla.</p>
+
+${docs.map(d => `
+<article class="item-card">
+<div>
+<div class="item-name">${esc(d.name)}</div>
+${d.description ? `<div class="item-desc">${esc(d.description)}</div>` : ""}
+</div>
+${String(d.url||"").startsWith("interno:")
+  ? `<button class="btn primary" data-descargar="${esc(d.id)}" data-doc="${esc(d.name)}">Descargar ↓</button>`
+  : `<a class="btn primary" href="${esc(d.url)}" target="_blank" rel="noopener" data-doc="${esc(d.name)}">Abrir ↗</a>`}
+</article>`).join("")}
+
+${q ? `
+<article class="item-card destacada">
+<div>
+<div class="item-name">✏️ Ajuste la cotización a su medida</div>
+<div class="item-desc">Quite lo que no necesite y vea cómo cambia el precio. Nada se pierde: todo se
+puede devolver, y lo que decida queda guardado.${of ? ` Si deja el programa completo, se aplica el
+descuento y el total baja a ${money(of.total)}.` : ""}</div>
+</div>
+<a class="btn primary" href="${esc(q.cotizador || "index.html")}?q=${esc(q.id)}" target="_blank" rel="noopener" data-doc="Cotización interactiva">Abrir el cotizador ↗</a>
+</article>` : ""}
+
+${!docs.length && !q ? `<div class="empty">Todavía no hay nada publicado.</div>` : ""}`;
 }
 
 function renderAvanceLista(){
