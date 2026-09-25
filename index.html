@@ -857,6 +857,24 @@ min-height: 40px; padding-top: 9px; padding-bottom: 9px; font-size: 13px;
   .guia-cards { padding:14px 18px 4px; }
   .guia-foot { padding:12px 18px 18px; }
 }
+
+/* Signos de ayuda junto a cada control */
+.ayuda { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px;
+  border-radius:50%; background:var(--badge-bg); color:var(--badge-ink); font-size:10.5px;
+  font-weight:700; margin-left:6px; cursor:help; position:relative; vertical-align:middle;
+  border:0; padding:0; font-family:inherit; flex:0 0 auto; }
+.ayuda:hover, .ayuda:focus-visible { background:var(--primary); color:#fff; outline:none; }
+.ayuda .globo { display:none; position:absolute; bottom:calc(100% + 9px); left:50%;
+  transform:translateX(-50%); width:250px; background:var(--panel); color:var(--panel-ink);
+  border-radius:10px; padding:10px 12px; font-size:11.5px; font-weight:400; line-height:1.5;
+  text-align:left; box-shadow:0 10px 28px var(--shadow-strong); z-index:60; pointer-events:none; }
+.ayuda .globo::after { content:""; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+  border:6px solid transparent; border-top-color:var(--panel); }
+.ayuda:hover .globo, .ayuda:focus-visible .globo, .ayuda.abierta .globo { display:block; }
+@media (max-width: 780px) {
+  .ayuda .globo { width:200px; left:auto; right:-8px; transform:none; }
+  .ayuda .globo::after { left:auto; right:12px; transform:none; }
+}
 </style>
 <script>
 (function(){
@@ -909,27 +927,27 @@ if (t === "dark" || t === "light") document.documentElement.setAttribute("data-t
 
 <section class="summary" aria-label="Resumen de cotización">
 <article class="summary-card current" id="currentTotalCard">
-<div class="label">Cotización actual<span class="preview-flag hidden" id="currentTotalFlag"> · vista previa</span></div>
+<div class="label">Cotización actual<span class="preview-flag hidden" id="currentTotalFlag"> · vista previa</span><button type="button" class="ayuda" aria-label="Qué es esto">i<span class="globo">Lo que cuesta hoy la cotización con lo que tienes incluido. Cambia sola cada vez que mueves algo.</span></button></div>
 <div class="value" id="currentTotal">$0</div>
 <div class="sub" id="includedCount">0 características</div>
 </article>
 <article class="summary-card later">
-<div class="label">Para desarrollar después</div>
+<div class="label">Para desarrollar después<button type="button" class="ayuda" aria-label="Qué es esto">i<span class="globo">Lo que apartas para más adelante. No se cobra ahora, pero queda escrito para no perderlo de vista.</span></button></div>
 <div class="value" id="laterTotal">$0</div>
 <div class="sub" id="laterCount">0 características</div>
 </article>
 <article class="summary-card no">
-<div class="label">No me interesa</div>
+<div class="label">No me interesa<button type="button" class="ayuda" aria-label="Qué es esto">i<span class="globo">Lo que descartas. Puedes devolverlo cuando quieras: nada se borra.</span></button></div>
 <div class="value" id="noTotal">$0</div>
 <div class="sub" id="noCount">0 características</div>
 </article>
 <article class="summary-card">
-<div class="label">Módulos con alcance</div>
+<div class="label">Módulos con alcance<button type="button" class="ayuda" aria-label="Qué es esto">i<span class="globo">Cuántos bloques del proyecto conservan al menos una cosa incluida.</span></button></div>
 <div class="value" id="activeModules">0</div>
 <div class="sub">Cuotas o entregas activas</div>
 </article>
 <article class="summary-card">
-<div class="label">Alertas de alcance</div>
+<div class="label">Alertas de alcance<button type="button" class="ayuda" aria-label="Qué es esto">i<span class="globo">Te avisa si quitaste algo obligatorio y un bloque quedó incompleto. No te lo impedimos: solo te decimos qué deja de funcionar.</span></button></div>
 <div class="value" id="warningCount">0</div>
 <div class="sub">Módulos incompletos</div>
 </article>
@@ -937,14 +955,14 @@ if (t === "dark" || t === "light") document.documentElement.setAttribute("data-t
 
 <section class="controls">
 <input class="search" id="searchInput" type="search" placeholder="Buscar módulo, característica, descripción o dependencia…">
-<button class="btn" id="expandBtn">Expandir todo</button>
+<button type="button" class="ayuda" aria-label="Qué es esto">i<span class="globo">Escribe en el buscador para encontrar cualquier cosa por nombre, descripción o de qué depende.</span></button><button class="btn" id="expandBtn">Expandir todo</button>
 <button class="btn" id="collapseBtn">Contraer todo</button>
 </section>
 
 <section class="preview-bar" id="previewBar">
 <label class="preview-toggle">
 <input type="checkbox" id="mandatoryOnlyToggle">
-<span>👁️ Vista previa: solo lo obligatorio <em>(no mueve nada, solo simula — se refleja arriba y en el resumen de cuotas)</em></span>
+<span>👁️ Vista previa: solo lo obligatorio <em>(no mueve nada, solo simula — se refleja arriba y en el resumen de cuotas)</em></span><button type="button" class="ayuda" aria-label="Qué es esto">i<span class="globo">Marca esta casilla y verás qué quedaría si dejaras solo lo indispensable, sin mover ni una ficha. Si te convence, el botón de al lado lo aplica de verdad.</span></button>
 </label>
 <div class="preview-actions">
 <button class="btn primary small" id="applyMandatoryBtn">✅ Cotizar solo lo obligatorio</button>
@@ -2253,6 +2271,13 @@ function iniciarGuia(){
 }
 if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciarGuia);
 else iniciarGuia();
+
+/* En teléfono no hay «pasar por encima»: el toque abre y cierra la ayuda. */
+document.addEventListener("click", e => {
+  const b = e.target.closest(".ayuda");
+  document.querySelectorAll(".ayuda.abierta").forEach(x => { if(x !== b) x.classList.remove("abierta"); });
+  if(b){ e.preventDefault(); e.stopPropagation(); b.classList.toggle("abierta"); }
+});
 </script>
 
 <div class="guia-overlay" id="guiaOverlay" role="dialog" aria-modal="true" aria-labelledby="guiaTitulo">

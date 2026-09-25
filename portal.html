@@ -106,6 +106,7 @@ a { color:var(--primary); }
 
 /* Menú de botones grandes */
 .menu { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+a.menu-card { text-decoration: none; color: inherit; display: block; }
 .menu-card {
 text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:18px;
 padding:22px; display:flex; flex-direction:column; gap:8px; transition:.16s ease; min-height:150px;
@@ -419,6 +420,22 @@ ${t.docs ? `
 <p>Propuestas y archivos del proyecto, listos para descargar.</p>
 <div class="menu-count">${t.docs} documento(s)</div>
 </button>` : ""}
+
+${DATA.quotes && DATA.quotes.length ? `
+<a class="menu-card" href="${esc(DATA.quotes[0].cotizador || "index.html")}?q=${esc(DATA.quotes[0].id)}" target="_blank" rel="noopener" data-doc="Cotización interactiva">
+<div class="menu-icon">✏️</div>
+<h2>Editar cotización</h2>
+<p>Arma la cotización a tu medida: quita lo que no necesites y mira cómo cambia el precio.</p>
+<div class="menu-count">Abrir el cotizador ↗</div>
+</a>` : ""}
+
+${proyectoPrincipal?.project?.demo_url ? `
+<a class="menu-card" href="${esc(proyectoPrincipal.project.demo_url)}" target="_blank" rel="noopener" data-doc="Demo del sistema">
+<div class="menu-icon">🖥️</div>
+<h2>Ver el demo</h2>
+<p>Recorre el sistema por dentro: entra con un usuario, mueve una etapa y saca un reporte.</p>
+<div class="menu-count">Abrir el demo ↗</div>
+</a>` : ""}
 
 <button class="menu-card" data-go="notas">
 <div class="menu-icon">💬</div>
