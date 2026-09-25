@@ -415,7 +415,7 @@ document.getElementById("brandSub").textContent = DATA.client ? "Tu espacio de p
 const root = document.getElementById("spaceView");
 if(nav.view === "home") root.innerHTML = renderHome();
 else if(nav.view === "cotizaciones") root.innerHTML = renderCotizaciones();
-else if(nav.view === "avance") root.innerHTML = renderAvanceLista();
+else if(nav.view === "avance" && DATA.projects.some(p => p.project.mostrar_avance !== false)) root.innerHTML = renderAvanceLista();
 else if(nav.view === "proyecto") root.innerHTML = renderProyecto(nav.projectId);
 else if(nav.view === "desglose") root.innerHTML = renderDesglose(nav.projectId);
 else if(nav.view === "documentos") root.innerHTML = renderDocumentos();
@@ -459,7 +459,7 @@ ${nCot ? `
 <div class="menu-count">${nCot} cotización(es)</div>
 </button>` : ""}
 
-${t.phases ? `
+${(t.phases && DATA.projects.some(p => p.project.mostrar_avance !== false)) ? `
 <button class="menu-card" data-go="avance">
 <div class="menu-icon">🗺️</div>
 <h2>Fases y avance</h2>
@@ -640,7 +640,7 @@ const opcional  = fases.filter(esOpcional);
 const servicio  = fases.filter(esServicio);
 const suma = arr => arr.reduce((a,ph) => a + Number(ph.phase_total||0), 0);
 
-const pintaFase = ph => `
+const pintaFase = (ph, conPrecioPorItem) => `
 <div class="fase">
 <button class="fase-cab" data-fase>
 <span class="flecha">▶</span>
@@ -652,21 +652,21 @@ ${(ph.items||[]).map(it => `
 <div class="ent">
 <div class="ed">
 <div class="en">${esc(it.title)}${it.mandatory!=="required"?' <span class="badge optional">Opcional</span>':""}</div>
-<div class="ex">${esc((it.description||"").slice(0,240))}${(it.description||"").length>240?"…":""}</div>
+<div class="ex">${esc(it.description||"")}</div>
 </div>
-<div class="ev">${Number(it.cost) ? money(it.cost) : "Incluido"}</div>
+<div class="ev">${conPrecioPorItem ? (Number(it.cost) ? money(it.cost) : "Incluido") : ""}</div>
 </div>`).join("")}
 </div>
 </div>`;
 
-const bloque = (id, titulo, sub, total, lista, abierto) => !lista.length ? "" : `
+const bloque = (id, titulo, sub, total, lista, abierto, conPrecioPorItem=true) => !lista.length ? "" : `
 <section class="bloque${abierto ? " abierto" : ""}" id="${id}">
 <button class="bloque-cab" data-bloque="${id}">
 <span class="flecha">▶</span>
 <span class="txt"><strong>${esc(titulo)}</strong><span>${esc(sub)}</span></span>
 <span class="monto">${total ? money(total) : ""}</span>
 </button>
-<div class="bloque-cuerpo">${lista.map(pintaFase).join("")}</div>
+<div class="bloque-cuerpo">${lista.map(ph => pintaFase(ph, conPrecioPorItem)).join("")}</div>
 </section>`;
 
 const of = p.project.oferta;
@@ -699,8 +699,8 @@ return `
 
 <div class="bloques">
 ${bloque("b-principal","Proyecto principal","Lo que se contrata ahora, con fecha y precio firme.",suma(principal),principal,false)}
-${bloque("b-opcional","Partes opcionales","Se pueden tomar después, una por una, dentro de los doce meses.",suma(opcional),opcional,false)}
-${bloque("b-servicio","Servicio mensual","USD 1.200 al mes, desde la entrega de la Fase 1. Lo que sostiene el sistema una vez que está funcionando.",0,servicio,false)}
+${bloque("b-opcional","Partes opcionales","Se pueden tomar después, una por una, dentro de los doce meses. El precio de cada una está cotizado por fase.",suma(opcional),opcional,false,false)}
+${bloque("b-servicio","Servicio mensual","USD 1.200 al mes, desde la entrega de la Fase 1. Lo que sostiene el sistema una vez que está funcionando.",0,servicio,false,false)}
 </div>
 
 ${cajaOferta}
@@ -709,7 +709,7 @@ ${botonAjustar}
 <div class="notice">
 Los valores no incluyen comisiones de terceros ni licencias que se paguen directamente a cada proveedor.
 </div>
-<div style="margin-top:16px"><button class="btn" data-go="proyecto" data-project="${esc(p.project.id)}">Ver fases y avance →</button></div>`;
+${p.project.mostrar_avance === false ? "" : `<div style="margin-top:16px"><button class="btn" data-go="proyecto" data-project="${esc(p.project.id)}">Ver fases y avance →</button></div>`}`;
 }
 
 function renderDocumentos(){
